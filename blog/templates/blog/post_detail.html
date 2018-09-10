@@ -1,0 +1,48 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="post">
+        {% if post.published_date %}
+            <div class="date">
+                {{ post.published_date }}
+            </div>
+		{% else %}
+			<a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+        {% endif %}
+		{% if user.is_superuser %}
+		<a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+		<a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+		{% endif %}
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.text|linebreaksbr }}</p>
+    </div>
+	<hr>
+	<h3>Comments</h3>
+	{% if user.is_authenticated %}
+	<div class="comment-button">
+		<a href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+	</div>
+	{% else %}
+	<p>Please sign up or log in to comment</p>
+	{% endif %}
+	{% for comment in post.comments.all %}
+		{% if user.is_superuser or comment.post_approved_comment %}
+		<div class="comment">
+			<img src="/w3images/bandmember.jpg" alt="Avatar">
+			<div class="date">
+				{{ comment.created_date }}
+				{% if not comment.post_approved_comment %}
+					<a class="btn btn-default" href="{% url 'post_comment_remove' pk=comment.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+					<a class="btn btn-default" href="{% url 'post_comment_approve' pk=comment.pk %}"><span class="glyphicon glyphicon-ok"></span></a>
+				{% endif %}
+			</div>
+			<strong>{{ comment.author }}</strong>
+			<p>{{ comment.text|linebreaks }}</p>
+		</div>
+		{% endif %}
+	{% empty %}
+		<p>No comments here yet :(</p>
+	{% endfor %}
+</div>
+{% endblock %}

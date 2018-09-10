@@ -1,0 +1,66 @@
+{% load staticfiles %}
+<html>
+	<head>
+		<title>Victor's blog</title>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Black+Ops+One" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="{% static 'js/blog.js' %}"></script>
+	</head>
+	<body class="body">
+		<div id="navbar">
+			<div class="navigation-menu">
+				<a class="active" href="/"><span class="glyphicon glyphicon-home"></span></a>
+				<a href="/post/"><span class="glyphicon glyphicon-list-alt"></span></a>
+				<a href="/video/"><span class="glyphicon glyphicon-play"></span></a>
+				<a href=""><span class="glyphicon glyphicon-shopping-cart"></span></a>
+			{% if user.is_superuser %}
+				<a href="{% url 'post_new' %}"><span class="glyphicon glyphicon-plus"></span></a>
+				<a href="{% url 'post_draft_list' %}"><span class="glyphicon glyphicon-edit"></span></a>
+				<a href="{% url 'video_new' %}"><span class="glyphicon glyphicon-play-circle"></span></a>
+				<a href="{% url 'video_draft_list' %}"><span class="glyphicon glyphicon-pencil"></span></a>
+			{% endif %}
+				<a style="float:right" onclick=""><span class="glyphicon glyphicon-user"></span></a>
+			{% if user.is_authenticated %}
+				<h3 class="greeting">Hello {{ user.username }}</h3>
+			{% endif %}
+			</div>
+			<div style="background-color:#000;height:2px;width:100%"></div>
+			<div class="top-menu">
+				{% if user.is_authenticated %}
+				<div class="log-out">
+					<a href="{% url 'logout' %}">Log out</a>
+				</div>
+				<div class="profile">
+					<a href="">Profile</a>
+				</div>
+				{% else %}
+				<div class="log-in">
+					<a href="{% url 'login' %}">Log in</span></a>
+				</div>
+				<div class="sign-up">
+					<a href="{% url 'signup' %}">Sign up</a>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="content container">
+		{% block content %}
+		{% endblock %}
+		</div>
+		<div class="footer">
+			<div class="social-bar">
+				<a href="#" class="facebook"><i class="fa fa-facebook"></i></a> 
+				<a href="#" class="twitter"><i class="fa fa-twitter"></i></a> 
+				<a href="#" class="google"><i class="fa fa-google"></i></a> 
+				<a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+				<a href="#" class="youtube"><i class="fa fa-youtube"></i></a> 
+			</div>
+			<div class="page-footer">
+				<h2>Footer</h2>
+			</div>
+		</div>
+	</body>
+</html>

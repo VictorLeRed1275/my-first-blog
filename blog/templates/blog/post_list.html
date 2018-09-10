@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+
+	<a href="{% url 'post_search' %}" class="search"><span class="glyphicon glyphicon-search"></span></a>
+	<br></br>
+	<br></br>
+	<div class="header-name">
+		<h1>Posts</h1>
+		<p>This is a list of all my posts. To see more detail on a post simply click on the title</p>
+	</div>
+{% for post in posts %}
+<div class="row">
+	<div class="post">
+		<div class="date">
+			<p>published: {{ post.published_date }}</p>
+		</div>
+		<h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+		<p>{{ post.text|linebreaksbr }}</p>
+		<a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
+	</div>
+</div>
+{% endfor %}
+
+{% endblock %}

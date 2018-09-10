@@ -1,0 +1,117 @@
+{% load staticfiles %}
+<html>
+	<head>
+		<title>Victor's blog</title>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Black+Ops+One" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="{% static 'js/blog.js' %}"></script>
+	</head>
+	<body class="body">
+		<div class="slideshow-container">
+			<div class="mySlides">
+				<div class="img" style="background-image:url('https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/mammals/g/gray-wolf_thumb.ngsversion.1474903828879.adapt.1900.1.JPG');"></div>
+				<div "hello">
+					<div class="welcome">
+						<h1 style="font-size:100px;color:white">Welcome</h1>
+					</div>
+				</div>
+			</div>
+
+			<div class="mySlides">
+				<div class="img" style="background-image:url('https://static1.squarespace.com/static/58051e44e6f2e1b132c6ee34/58051ee2f5e2311a8d650956/5877b729ff7c50ba8358b046/1484240766564/wolf.jpg?format=2500w');"></div>
+			</div>
+
+			<div class="mySlides">
+				<div class="img" style="background-image:url('https://www.thetimes.co.uk/imageserver/image/methode%2Ftimes%2Fprod%2Fweb%2Fbin%2Fed86cf26-f958-11e7-9a34-94e1b34681c3.jpg?crop=3369%2C1895%2C205%2C27&resize=685');"></div>
+			</div>
+		</div>
+		<div id="navbar">
+			<div class="navigation-menu">
+				<a class="active" href="/"><span class="glyphicon glyphicon-home"></span></a>
+				<a href="/post/"><span class="glyphicon glyphicon-list-alt"></span></a>
+				<a href="/video/"><span class="glyphicon glyphicon-play"></span></a>
+				<a href=""><span class="glyphicon glyphicon-shopping-cart"></span></a>
+			{% if user.is_superuser %}
+				<a href="{% url 'post_new' %}"><span class="glyphicon glyphicon-plus"></span></a>
+				<a href="{% url 'post_draft_list' %}"><span class="glyphicon glyphicon-edit"></span></a>
+				<a href="{% url 'video_new' %}"><span class="glyphicon glyphicon-play-circle"></span></a>
+				<a href="{% url 'video_draft_list' %}"><span class="glyphicon glyphicon-pencil"></span></a>
+			{% endif %}
+				<a style="float:right" onclick="logon();"><span class="glyphicon glyphicon-user"></span></a>
+			{% if user.is_authenticated %}
+				<h3 class="greeting">Hello {{ user.username }}</h3>
+			{% endif %}
+			</div>
+			<div style="background-color:#000;height:2px;width:100%"></div>
+			<div class="top-menu">
+				{% if user.is_authenticated %}
+				<div class="log-out">
+					<a href="{% url 'logout' %}">Log out</a>
+				</div>
+				<div class="profile">
+					<a href="">Profile</a>
+				</div>
+				{% else %}
+				<div class="log-in">
+					<a href="{% url 'login' %}">Log in</span></a>
+				</div>
+				<div class="sign-up">
+					<a href="{% url 'signup' %}">Sign up</a>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+		{% block content %}
+		{% endblock %}
+		<div class="footer">
+			<div class="social-bar">
+				<a href="#" class="facebook"><i class="fa fa-facebook"></i></a> 
+				<a href="#" class="twitter"><i class="fa fa-twitter"></i></a> 
+				<a href="#" class="google"><i class="fa fa-google"></i></a> 
+				<a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+				<a href="#" class="youtube"><i class="fa fa-youtube"></i></a> 
+			</div>
+			<div class="page-footer">
+				<h2>Footer</h2>
+			</div>
+		</div>
+	</body>
+	{% block javascript %}
+<script>
+function logon() {
+	alert('hello');
+}
+
+var slideIndex = 0;
+showSlides();
+
+function showSlides() {
+    var i;
+    var slides = document.getElementsByClassName("mySlides");
+    for (i = 0; i < slides.length; i++) {
+       slides[i].style.display = "none";  
+    }
+    slideIndex++;
+    if (slideIndex > slides.length) {slideIndex = 1}    
+    slides[slideIndex-1].style.display = "block";  
+    setTimeout(showSlides, 5000); // Change image every 2 seconds
+}
+
+var navbar = document.getElementById("navbar");
+var sticky = navbar.offsetTop;
+
+function stickynavbar() {
+	if (window.pageYOffset >= sticky) {
+		navbar.classList.add("sticky")
+	} else {
+		navbar.classList.remove("sticky");
+	}
+}
+window.onscroll = function() {stickynavbar()};
+
+</script>
+	{% endblock %}
+</html>
