@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>Color palette by Paletton.com</title>
+	<meta name="generator" content="Paletton.com">
+
+<style type="text/css">
+
+/* Palette color codes */
+/* Feel free to copy&paste color codes to your application */
+
+.primary-1 { background-color: #892129 }
+.primary-2 { background-color: #A01A24 }
+.primary-0 { background-color: #AF111D }
+.primary-3 { background-color: #F00113 }
+.primary-4 { background-color: #FB1828 }
+
+.secondary-1-1 { background-color: #8C4F22 }
+.secondary-1-2 { background-color: #A5551B }
+.secondary-1-0 { background-color: #B45611 }
+.secondary-1-3 { background-color: #F76901 }
+.secondary-1-4 { background-color: #FF7A18 }
+
+.secondary-2-1 { background-color: #6D1A4F }
+.secondary-2-2 { background-color: #801558 }
+.secondary-2-0 { background-color: #8C0E5D }
+.secondary-2-3 { background-color: #C00179 }
+.secondary-2-4 { background-color: #DD1592 }
+
+.complement-1 { background-color: #28741C }
+.complement-2 { background-color: #268816 }
+.complement-0 { background-color: #21950E }
+.complement-3 { background-color: #1CCC01 }
+.complement-4 { background-color: #32E415 }
+
+/* end */
+
+
+body {
+	margin:0; padding: 2em;
+	background: #fff;
+	color: #000;
+	font: 12px/1.33 "Segoe UI", "Helvetica Neue", Helvetica, sans-serif;
+	text-align:left;
+	}
+h1 {
+	margin: 0.5em 0;
+	font-size: 200%;
+	}
+p {
+	margin: 0.5em 0;
+	}
+
+.color-table {
+	margin: 2em 2em 5em;
+	border-collapse:collapse;
+	border:none;
+	border-spacing:0;
+	font-size:100%;
+	}
+.color-table th {
+	padding: 0 1em 0 0;
+	text-align: right;
+	vertical-align: middle;
+	font-size: 100%;
+	font-weight: normal;
+	border: none;
+	}
+.color-table td.sample {
+	width:6em; height:6em;
+	padding: 10px;
+	text-align:center;
+	vertical-align:middle;
+	font-size:90%;
+	border: 1px solid white;
+	white-space:nowrap;
+	}
+.color-table td.sample-0 {
+	width:18em;
+	}
+.color-table.small td.sample {
+	width:3em; height:3em;
+	padding:0;
+	border:none;
+	}
+.color-table.small td.sample-0 {
+	width:9em;
+	}
+.color-table .white { margin-bottom:0.2em; color:white }
+.color-table .black { margin-top:0.2em; color:black }
+
+hr {
+	margin: 2em 0 1em 0;
+	border:none;
+	border-bottom:1px solid silver;
+	}
+#footer {
+	padding:1em;
+	text-align:center;
+	font-size:80%;
+	}
+
+</style>
+
+</head>
+<body>
+
+<h1>Color Palette by Paletton.com</h1>
+<p>Palette URL: <a href="http://paletton.com/#uid=c5A2M0r570ksUmyohhBqKkEvSuYs+Hk">http://paletton.com/#uid=c5A2M0r570ksUmyohhBqKkEvSuYs+Hk</a></p>
+
+<table class="color-table">
+	<tr>
+		<th>Primary color:</th>
+		<td class="sample sample-1 primary-1">
+			<div class="white">#892129</div>
+			<div class="black">#892129</div>
+		</td>
+		<td class="sample sample-2 primary-2">
+			<div class="white">#A01A24</div>
+			<div class="black">#A01A24</div>
+		</td>
+		<td class="sample sample-0 primary-0">
+			<div class="white">#AF111D</div>
+			<div class="black">#AF111D</div>
+		</td>
+		<td class="sample sample-3 primary-3">
+			<div class="white">#F00113</div>
+			<div class="black">#F00113</div>
+		</td>
+		<td class="sample sample-4 primary-4">
+			<div class="white">#FB1828</div>
+			<div class="black">#FB1828</div>
+		</td>
+	</tr>
+	<tr>
+		<th>Secondary color (1):</th>
+		<td class="sample sample-1 secondary-1-1">
+			<div class="white">#8C4F22</div>
+			<div class="black">#8C4F22</div>
+		</td>
+		<td class="sample sample-2 secondary-1-2">
+			<div class="white">#A5551B</div>
+			<div class="black">#A5551B</div>
+		</td>
+		<td class="sample sample-0 secondary-1-0">
+			<div class="white">#B45611</div>
+			<div class="black">#B45611</div>
+		</td>
+		<td class="sample sample-3 secondary-1-3">
+			<div class="white">#F76901</div>
+			<div class="black">#F76901</div>
+		</td>
+		<td class="sample sample-4 secondary-1-4">
+			<div class="white">#FF7A18</div>
+			<div class="black">#FF7A18</div>
+		</td>
+	</tr>
+	<tr>
+		<th>Secondary color (2):</th>
+		<td class="sample sample-1 secondary-2-1">
+			<div class="white">#6D1A4F</div>
+			<div class="black">#6D1A4F</div>
+		</td>
+		<td class="sample sample-2 secondary-2-2">
+			<div class="white">#801558</div>
+			<div class="black">#801558</div>
+		</td>
+		<td class="sample sample-0 secondary-2-0">
+			<div class="white">#8C0E5D</div>
+			<div class="black">#8C0E5D</div>
+		</td>
+		<td class="sample sample-3 secondary-2-3">
+			<div class="white">#C00179</div>
+			<div class="black">#C00179</div>
+		</td>
+		<td class="sample sample-4 secondary-2-4">
+			<div class="white">#DD1592</div>
+			<div class="black">#DD1592</div>
+		</td>
+	</tr>
+	<tr>
+		<th>Complement color:</th>
+		<td class="sample sample-1 complement-1">
+			<div class="white">#28741C</div>
+			<div class="black">#28741C</div>
+		</td>
+		<td class="sample sample-2 complement-2">
+			<div class="white">#268816</div>
+			<div class="black">#268816</div>
+		</td>
+		<td class="sample sample-0 complement-0">
+			<div class="white">#21950E</div>
+			<div class="black">#21950E</div>
+		</td>
+		<td class="sample sample-3 complement-3">
+			<div class="white">#1CCC01</div>
+			<div class="black">#1CCC01</div>
+		</td>
+		<td class="sample sample-4 complement-4">
+			<div class="white">#32E415</div>
+			<div class="black">#32E415</div>
+		</td>
+	</tr>
+</table>
+
+<table class="color-table small">
+	<tr>
+		<th>Primary color:</th>
+		<td class="sample sample-1 primary-1"></td>
+		<td class="sample sample-2 primary-2"></td>
+		<td class="sample sample-0 primary-0"></td>
+		<td class="sample sample-3 primary-3"></td>
+		<td class="sample sample-4 primary-4"></td>
+	</tr>
+	<tr>
+		<th>Secondary color (1):</th>
+		<td class="sample sample-1 secondary-1-1"></td>
+		<td class="sample sample-2 secondary-1-2"></td>
+		<td class="sample sample-0 secondary-1-0"></td>
+		<td class="sample sample-3 secondary-1-3"></td>
+		<td class="sample sample-4 secondary-1-4"></td>
+	</tr>
+	<tr>
+		<th>Secondary color (2):</th>
+		<td class="sample sample-1 secondary-2-1"></td>
+		<td class="sample sample-2 secondary-2-2"></td>
+		<td class="sample sample-0 secondary-2-0"></td>
+		<td class="sample sample-3 secondary-2-3"></td>
+		<td class="sample sample-4 secondary-2-4"></td>
+	</tr>
+	<tr>
+		<th>Complement color:</th>
+		<td class="sample sample-1 complement-1"></td>
+		<td class="sample sample-2 complement-2"></td>
+		<td class="sample sample-0 complement-0"></td>
+		<td class="sample sample-3 complement-3"></td>
+		<td class="sample sample-4 complement-4"></td>
+	</tr>
+</table>
+
+<p>
+See the HTML source for more details.<br>
+Use the <em>Save / Save As...</em> command in your browser to store the document for latter use.
+</p>
+
+<hr>
+
+<p id="footer">Generated by <a href="http://paletton.com">Paletton.com</a> &copy; 2002-2014</p>
+
+</body>
+</html>

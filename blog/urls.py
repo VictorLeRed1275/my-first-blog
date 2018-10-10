@@ -26,4 +26,8 @@ urlpatterns = [
 	url(r'^video/comment/(?P<pk>\d+)/approve/$', views.video_comment_approve, name='video_comment_approve'),
 	url(r'^video/comment/(?P<pk>\d+)/remove/$', views.video_comment_remove, name='video_comment_remove'),
 	url(r'^accounts/signup/$', views.signup, name='signup'),
+	url(r'^profile/edit/$', views.update_profile, name="profile_edit"),
+	url(r'^support/$', views.contact_support, name="support"),
+	url(r'^support/list/$', views.enquiry_list, name="support_list"),
+	url(r'^enquiry/(?P<pk>\d+)/remove/$', views.enquiry_remove, name='enquiry_remove'),
 ]

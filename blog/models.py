@@ -78,7 +78,26 @@ class Profile(models.Model):
 	birth_date = models.DateField(null=True, blank=True)
 	
 @receiver(post_save, sender=User)
-def update_user_profile(sender, instance, created, **kwargs):
-	if created:
-		Profile.objects.create(user=instance)
-	instance.profile.save()
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
+	
+TOPIC_CHOICES = (
+	('General', 'General enquiry'),
+	('Bug', 'Bug report'),
+	('Suggestion', 'Suggestion'),
+	('Profile', 'Profile'),
+	('Security', 'Security'),
+	('Other', 'Other'),
+)
+	
+class Contact(models.Model):
+	name = models.CharField(max_length=30)
+	email = models.EmailField()
+	topic = models.CharField(max_length=30, choices=TOPIC_CHOICES, default=1)
+	message = models.TextField(max_length=1000)
+	published_date = models.DateTimeField(default=timezone.now)

@@ -10,7 +10,7 @@
 		<script src="{% static 'js/blog.js' %}"></script>
 	</head>
 	<body class="body">
-		<div id="navbar">
+		<div id="navbar" style="position:fixed;width:100%;">
 			<div class="navigation-menu">
 				<a class="active" href="/"><span class="glyphicon glyphicon-home"></span></a>
 				<a href="/post/"><span class="glyphicon glyphicon-list-alt"></span></a>
@@ -21,20 +21,21 @@
 				<a href="{% url 'post_draft_list' %}"><span class="glyphicon glyphicon-edit"></span></a>
 				<a href="{% url 'video_new' %}"><span class="glyphicon glyphicon-play-circle"></span></a>
 				<a href="{% url 'video_draft_list' %}"><span class="glyphicon glyphicon-pencil"></span></a>
+				<a href="{% url 'support_list' %}"><span class="glyphicon glyphicon-cog"></span></a>
 			{% endif %}
-				<a style="float:right" onclick=""><span class="glyphicon glyphicon-user"></span></a>
+				<a id="user" style="float:right"><span class="glyphicon glyphicon-user"></span></a>
 			{% if user.is_authenticated %}
 				<h3 class="greeting">Hello {{ user.username }}</h3>
 			{% endif %}
 			</div>
 			<div style="background-color:#000;height:2px;width:100%"></div>
-			<div class="top-menu">
+			<div id="top-menu" class="top-menu" style="display:none;">
 				{% if user.is_authenticated %}
 				<div class="log-out">
 					<a href="{% url 'logout' %}">Log out</a>
 				</div>
 				<div class="profile">
-					<a href="">Profile</a>
+					<a href="{% url 'profile_edit' %}">Profile</a>
 				</div>
 				{% else %}
 				<div class="log-in">
@@ -54,13 +55,31 @@
 			<div class="social-bar">
 				<a href="#" class="facebook"><i class="fa fa-facebook"></i></a> 
 				<a href="#" class="twitter"><i class="fa fa-twitter"></i></a> 
-				<a href="#" class="google"><i class="fa fa-google"></i></a> 
-				<a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+				<a href="#" class="google"><i class="fa fa-google"></i></a>
 				<a href="#" class="youtube"><i class="fa fa-youtube"></i></a> 
 			</div>
 			<div class="page-footer">
-				<h2>Footer</h2>
+				<h3>Support</h3>
+				<a href="{% url 'support' %}">Contact support</a><br>
+				<a href="">FAQ</a><br>
+				<a href="">Terms & conditions</a>
 			</div>
 		</div>
 	</body>
+	{% block javascript %}
+<script>
+var user = document.getElementById('user');
+var top_menu = document.getElementById("top-menu");
+var logonDisplay = false;
+user.onclick = function() {
+	if (logonDisplay == false) {
+		top_menu.style.display = "block";
+		logonDisplay = true;
+	} else if (logonDisplay == true) {
+		top_menu.style.display = "none";
+		logonDisplay = false;
+	}
+}
+</script>
+	{% endblock %}
 </html>

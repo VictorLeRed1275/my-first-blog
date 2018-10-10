@@ -1,24 +1,19 @@
-.hello {
-    position: relative;
-    text-align: center;
-    color: white;
-}
-
 .welcome {
-	transform: translateZ(-999px) scale(2);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+	background-color: #999;
 }
 
-#header {
-    position: fixed; /* Make it stick/fixed */
-    top: 0; /* Stay on top */
-    width: 100%; /* Full width */
-    transition: top 0.3s; /* Transition effect when sliding down (and up) */
+.img4 {
+	min-height:300px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	top: 0px;
 }
 
+#navbar {
+	z-index: 2;
+}
 .navigation-menu {
 	background-color: #555;
 	overflow: hidden;
@@ -59,45 +54,26 @@ strong {
 	color: #000000;
 }
 
-.edit-menu {
-	float: right;
-	width: 67.5px;
-	background-color: #555;
-	width: 67.5px;
-}
-
-.edit-menu a {
-	display: block;
-	text-align: center;
-	padding:12px;
-	transition: all 0.3s ease;
-	color: white;
-	font-size: 27px;
-}
-
-.edit-menu a:hover {
-	background-color: #000
-}
-
 .top-menu, .top-menu:hover, .top-menu:visited {
     color: #ffffff;
-    float: right;
 	width: 90px;
 	overflow: auto;
+	position: absolute;
+	right: 0;
 }
 
 .log-out a, .log-in a, .sign-up a, .profile a {
-    text-align: center; /* Center-align text */
-    transition: all 0.3s ease; /* Add transition for hover effects */
-    color: white; /* White text color */
-    font-size: 15px; /* Increased font size */
+    text-align: center;
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 15px;
 	float: right;
 	width: 90px;
 	padding: 5px;
 }
 
 .log-out a:hover, .log-in a:hover, .sign-up a:hover, .profile a:hover {
-    background-color: #000; /* Add a hover color */
+    background-color: #000;
 }
 
 .log-in, .sign-up, .log-out, .profile {
@@ -106,26 +82,18 @@ strong {
 	color: white;
 }
 
-.content {
-	margin-left: 20px;
-}
-
-#footer {
-    position: fixed; /* Make it stick/fixed */
-    bottom: 0; /* Stay on top */
-    width: 100%; /* Full width */
-    transition: top 0.3s; /* Transition effect when sliding down (and up) */
-}
-
 .footer {
-	margin-top: 30px;
+	right: 0;
+	left: 0;
 }
+
 .page-footer {
-    padding: 20px;
+    padding-left: 10px;
+	padding-top: 1px;
 	margin-left: 30px;
-    text-align: left;
     background: #ddd;
-	height: 155;
+	height: 124px;
+	text-align: center;
 }
 
 /* Style the icon bar links */
@@ -164,63 +132,13 @@ strong {
 	color: white;
 }
 
-.linkedin {
-	background: #007bb5;
-	color: white;
-}
-
 .youtube {
 	background: #bb0000;
 	color: white;
 }
 
-.row {
-	flex: 100%;
-	background-color: #373536;
-	padding: 20px;
-	margin-left: 55px;
-	margin-bottom: 15px;
-}
-
-.side {
-	width: 100%;
-    background-color: #696969;
-    padding: 20px;
-}
-
-.main {   
-    background-color: #373536;
-    padding: 20px;
-}
-
-.video {
-    margin-bottom: 70px;
-}
-
 .video h2 a, .video h2 a:visited {
     color: #000000;
-}
-
-.video-row {  
-    display: -ms-flexbox; /* IE10 */
-    display: flex;
-    -ms-flex-wrap: wrap; /* IE10 */
-    flex-wrap: wrap;
-	margin-left: 55px;
-}
-
-.left {
-    -ms-flex: 0px; /* IE10 */
-    flex: 0px;
-    background-color: #505050;
-    padding: 20px;
-}
-
-.right {   
-    -ms-flex: 0%; /* IE10 */
-    flex: 0%;
-    background-color: #373536;
-    padding: 20px;
 }
 
 .date {
@@ -298,60 +216,26 @@ strong {
 	color: black;
 }
 
-.header-name {
-	margin-left: 55px;
-}
-
 .sticky {
-  position: fixed;
-  top: 0;
-  width: 100%;
+	position: fixed;
+	top: 0;
+	width: 100%;
 }
 
-.img {
-	min-height: 556px;
+.sticky + .content {
+	padding-top: 70px;
+}
+
+.container {
+	padding-top: 70px;
+}
+
+.img1, .img2, .img3 {
+	min-width: 100%;
+	height: 556px;
 	background-attachment: fixed;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-}
-
-/* Slideshow container */
-.slideshow-container {
-	max-height: 556px;
-	position: relative;
-	margin: auto;
-}
-
-/* Caption text */
-.text {
-	color: #f2f2f2;
-	font-size: 15px;
-	padding: 8px 12px;
-	position: absolute;
-	bottom: 8px;
-	width: 100%;
-	text-align: center;
-}
-
-/* Fading animation */
-.fade {
-	animation-name: fade;
-	animation-duration: 1.5s;
-	transition: smooth;
-}
-
-@-webkit-keyframes fade {
-	from {opacity: .4} 
-	to {opacity: 1}
-}
-
-@keyframes fade {
-	from {opacity: .4} 
-	to {opacity: 1}
-}
-
-/* On smaller screens, decrease text size */
-@media only screen and (max-width: 300px) {
-	.text {font-size: 11px}
+	top: 0;
 }

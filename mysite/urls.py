@@ -22,8 +22,8 @@ from . import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-	url(r'^accounts/login/$', views.login, name='login'),
-	url(r'^accounts/logout/$', views.logout, name='logout', kwargs={'next_page': '/'}),
+	url(r'^accounts/login/$', views.LoginView.as_view(), name='login'),
+	url(r'^accounts/logout/$', views.LogoutView.as_view(), name='logout'),
 	url(r'^static/(?P<path>.*)$', static.serve, {'document_root': settings.STATIC_ROOT}),
     url(r'', include('blog.urls')),
 ]

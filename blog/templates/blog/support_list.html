@@ -1,0 +1,11 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+{% for enquiry in enquiries %}
+<h2>{{ enquiry.topic }}</h2>
+<p style="float:left;width:50%;font-size:18px;"><strong>{{ enquiry.name }}</strong> ({{ enquiry.email }})</p>
+<p style="float:right;width:50%;font-size:18px;">{{ enquiry.published_date }}</p>
+<p>{{ enquiry.message }}</p>
+<a class="btn btn-default" href="{% url 'enquiry_remove' pk=enquiry.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+<a class="btn btn-default" href=""><span class="glyphicon glyphicon-envelope"></span></a>
+{% endfor %}
+{% endblock %}

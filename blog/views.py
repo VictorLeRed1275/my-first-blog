@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, render_to_response, redirect
 from django.db.models import Q
 from django.utils import timezone
-from .models import Post, PostComment, Video, VideoComment, Profile
-from .forms import PostForm, PostCommentForm, VideoCommentForm, VideoForm, SignUpForm
+from .models import Post, PostComment, Video, VideoComment, Profile, Contact
+from .forms import PostForm, PostCommentForm, VideoCommentForm, VideoForm, SignUpForm, UserForm, ProfileForm, ContactForm
 from django.contrib.auth.decorators import login_required
 from django.db import models
 from django.contrib.auth import login, authenticate
@@ -22,11 +22,31 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
-
+	
 def home(request):
 	com = VideoComment.objects.filter(approved_comment=True)
 	videos = Video.objects.filter(comments__in=com)
 	return render(request, 'blog/home.html', {'videos': videos})
+	
+@login_required
+def update_profile(request):
+	if request.method == 'POST':
+		user_form = UserForm(request.POST, instance=request.user)
+		profile_form = ProfileForm(request.POST, instance=request.user.profile)
+		if user_form.is_valid() and profile_form.is_valid():
+			user_form.save()
+			profile_form.save()
+			messages.success(request, _('Your profile was successfully updated!'))
+			return redirect('settings:profile')
+		else:
+			messages.error(request, _('Please correct the error below.'))
+	else:
+		user_form = UserForm(instance=request.user)
+		profile_form = ProfileForm(instance=request.user.profile)
+	return render(request, 'blog/profile.html', {
+		'user_form': user_form,
+		'profile_form': profile_form
+	})
 	
 def post_search(request):
 	query = request.GET.get('q', '')
@@ -145,7 +165,7 @@ def video_edit(request, pk):
 		return redirect('video_detail', pk=video.pk)
 	else:
 		form = VideoForm(instance=video)
-	return render(request, 'blog/video_new.html', {'form': form})
+	return render(request, 'blog/new_video.html', {'form': form})
 
 @login_required
 def video_draft_list(request):
@@ -215,3 +235,24 @@ def video_comment_remove(request, pk):
     comment = get_object_or_404(VideoComment, pk=pk)
     comment.delete()
     return redirect('video_detail', pk=comment.video.pk)
+	
+def contact_support(request):
+	if request.method == 'POST':
+		form = ContactForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect('home')
+	else:
+		form = ContactForm()
+	return render(request, 'blog/support.html', {'form': form})
+	
+@login_required
+def enquiry_list(request):
+	enquiries = Contact.objects.order_by('published_date')
+	return render(request, 'blog/support_list.html', {'enquiries': enquiries})
+	
+@login_required
+def enquiry_remove(request, pk):
+    enquiry = get_object_or_404(Contact, pk=pk)
+    enquiry.delete()
+    return redirect('support_list')
