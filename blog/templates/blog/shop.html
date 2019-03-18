@@ -1,0 +1,56 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+	<div class="img3" style="background-image:url('https://www.thetimes.co.uk/imageserver/image/methode%2Ftimes%2Fprod%2Fweb%2Fbin%2Fed86cf26-f958-11e7-9a34-94e1b34681c3.jpg');"></div>
+	<br>
+	<br>
+	<div class="header-name">
+		<h1>Merchandising</h1>
+		<p>This is a list of all my merchandise. To see more detail on an item simply click on the title</p>
+	</div>
+	<div class="list">
+		<div class="sort-filter-search">
+			<p>Sort by: </p>
+			<div class="dropdown">
+				<div id="select-dropbtn" class="dropbtn"></div><i id="select-drop" class="btndrop glyphicon glyphicon-chevron-down" style="font-size: 10px;"></i>
+				<div id="select" class="dropdown-content">
+					<div id="date" class="sl drop-active-select">Date</div>
+					<div id="title" class="sl">Title</div>
+					<div id="comment" class="sl">Comments</div>
+				</div>
+			</div>
+			<div class="dropdown">
+				<div id="dropbtn" class="dropbtn"></div><i id="overlay-drop" class="btndrop glyphicon glyphicon-chevron-down" style="font-size: 10px;"></i>
+				<div id="overlay-dropdown" class="dropdown-content">
+					<div id="th-large" class="th"><i class="glyphicon glyphicon-th-large"></i></div>
+					<div id="th-list" class="th drop-active"><i class="glyphicon glyphicon-th-list"></i></div>
+				</div>
+			</div>
+			<form action="." method="GET" class="search-button">
+				<input type="text" name="q" placeholder="Search...">
+				<button type="submit">
+					<i class="glyphicon glyphicon-search"></i>
+				</button>
+			</form>
+		</div>
+		<div id="sort">
+		</div>
+	</div>
+	{% block javascript %}
+<script>
+var image3 = document.querySelector(".img3");
+function setTranslate(xPos, yPos, el) {
+	el.style.transform = "translate3d(" + xPos + ", " + yPos + "px, 0)";
+}
+window.addEventListener("DOMContentLoaded", scrollLoop, false);
+var xScrollPosition;
+var yScrollPosition;
+
+function scrollLoop() {
+	xScrollPosition = window.scrollX;
+	yScrollPosition = window.scrollY;
+	setTranslate(0, yScrollPosition / -3, image3);
+	requestAnimationFrame(scrollLoop);
+}
+</script>
+	{% endblock %}
+{% endblock %}

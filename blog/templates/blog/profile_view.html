@@ -1,0 +1,25 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="list">
+	<div class="list-container">
+		<div class="profile-view">
+			<h1>{{ profile.user }}</h1>
+			{% if user.username %}
+			<a href="{% url 'profile_edit' %}">Edit</a>
+			{% endif %}
+			<hr>
+			<div style="width:50%;display:inline-block;text-align:right;">
+				<a href="/media/{{ profile.profile_picture }}" class="profile-picture" style="background-image: url('/media/{{ profile.profile_picture }}');"></a>
+			</div>
+			<div class="profile-detail">
+				<p><label>First name: </label>{{ profile.first_name }}</p>
+				<p><label>Last name: </label>{{ profile.last_name }}</p>
+				<p><label>Bio: </label>{{ profile.bio }}</p>
+				<p><label>Location: </label>{{ profile.location }}</p>
+				<p><label>Birth date: </label>{{ profile.birth_date }}</p>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

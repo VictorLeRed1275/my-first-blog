@@ -1,11 +1,13 @@
 from django.shortcuts import render, get_object_or_404, render_to_response, redirect
 from django.db.models import Q
 from django.utils import timezone
-from .models import Post, PostComment, Video, VideoComment, Profile, Contact
-from .forms import PostForm, PostCommentForm, VideoCommentForm, VideoForm, SignUpForm, UserForm, ProfileForm, ContactForm
+from .models import Post, PostComment, Profile, Contact
+from .forms import PostForm, PostCommentForm, SignUpForm, UserForm, ProfileForm, ContactForm
 from django.contrib.auth.decorators import login_required
 from django.db import models
 from django.contrib.auth import login, authenticate
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 
 def signup(request):
     if request.method == 'POST':
@@ -24,9 +26,7 @@ def signup(request):
     return render(request, 'registration/signup.html', {'form': form})
 	
 def home(request):
-	com = VideoComment.objects.filter(approved_comment=True)
-	videos = Video.objects.filter(comments__in=com)
-	return render(request, 'blog/home.html', {'videos': videos})
+	return render(request, 'blog/home.html')
 	
 @login_required
 def update_profile(request):
@@ -36,10 +36,7 @@ def update_profile(request):
 		if user_form.is_valid() and profile_form.is_valid():
 			user_form.save()
 			profile_form.save()
-			messages.success(request, _('Your profile was successfully updated!'))
-			return redirect('settings:profile')
-		else:
-			messages.error(request, _('Please correct the error below.'))
+			return redirect('home')
 	else:
 		user_form = UserForm(instance=request.user)
 		profile_form = ProfileForm(instance=request.user.profile)
@@ -47,46 +44,46 @@ def update_profile(request):
 		'user_form': user_form,
 		'profile_form': profile_form
 	})
+
+def view_profile(request, pk):
+	profile = get_object_or_404(Profile, pk=pk)
+	return render(request, 'blog/profile_view.html', {'profile': profile})
 	
-def post_search(request):
+def shop_list(request):
+	return render(request, 'blog/shop.html')
+
+def post_list(request):
+	posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
 	query = request.GET.get('q', '')
 	if query:
 		qset = (
 			Q(title__icontains=query) |
-			Q(author__first_name__icontains=query) |
-			Q(author__last_name__icontains=query)
+			Q(text__icontains=query)
 		)
 		results = Post.objects.filter(qset).distinct()
 	else:
 		results = []
-	return render_to_response("blog/post_search.html", {
-		'results': results,
-		'query': query,
+	return render(request, 'blog/post_list.html', {
+		'posts': posts,
+		"results": results,
+		"query": query
 	})
-	
-def video_search(request):
-	query = request.GET.get('q', '')
-	if query:
-		qset = (
-			Q(title__icontains=query) |
-			Q(author__first_name__icontains=query) |
-			Q(author__last_name__icontains=query)
-		)
-		results = Video.objects.filter(qset).distinct()
-	else:
-		results = []
-	return render_to_response("blog/video_search.html", {
-		'results': results,
-		'query': query,
-	})
-	
-def post_list(request):
-	posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-	return render(request, 'blog/post_list.html', {'posts': posts})
 	
 def post_detail(request, pk):
 	post = get_object_or_404(Post, pk=pk)
-	return render(request, 'blog/post_detail.html', {'post': post})
+	if request.method == "POST":
+		form = PostCommentForm(request.POST)
+		if form.is_valid():
+			comment = form.save(commit=False)
+			comment.post = post
+			comment.save()
+			return redirect('post_detail', pk=post.pk)
+	else:
+		form = PostCommentForm()
+	return render(request, 'blog/post_detail.html', {
+		'post': post,
+		'form': form,
+	})
 	
 @login_required
 def post_new(request):
@@ -132,86 +129,6 @@ def post_remove(request, pk):
     post.delete()
     return redirect('post_list')
 	
-def video_list(request):
-	videos = Video.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-	return render(request, 'blog/video_list.html', {'videos': videos})
-	
-def video_detail(request, pk):
-	video = get_object_or_404(Video, pk=pk)
-	return render(request, 'blog/video_detail.html', {'video': video})
-	
-@login_required
-def video_new(request):
-	if request.method == "POST":
-		form = VideoForm(request.POST)
-		if form.is_valid():
-			video = form.save(commit=False)
-			video.author = request.user
-			video.save()
-		return redirect('video_detail', pk=video.pk)
-	else:
-		form = VideoForm()
-	return render(request, 'blog/new_video.html', {'form': form})
-	
-@login_required
-def video_edit(request, pk):
-	video = get_object_or_404(Video, pk=pk)
-	if request.method == "POST":
-		form = VideoForm(request.POST, instance=video)
-		if form.is_valid():
-			video = form.save(commit=False)
-			video.author = request.user
-			video.save()
-		return redirect('video_detail', pk=video.pk)
-	else:
-		form = VideoForm(instance=video)
-	return render(request, 'blog/new_video.html', {'form': form})
-
-@login_required
-def video_draft_list(request):
-    videos = Video.objects.filter(published_date__isnull=True).order_by('created_date')
-    return render(request, 'blog/video_draft_list.html', {'videos': videos})
-
-@login_required
-def video_publish(request, pk):
-    video = get_object_or_404(Video, pk=pk)
-    video.publish()
-    return redirect('video_detail', pk=pk)
-
-@login_required
-def video_remove(request, pk):
-    video = get_object_or_404(Video, pk=pk)
-    video.delete()
-    return redirect('video_list')
-	
-@login_required
-def add_comment_to_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    if request.method == "POST":
-        form = PostCommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.save()
-            return redirect('post_detail', pk=post.pk)
-    else:
-        form = PostCommentForm()
-    return render(request, 'blog/add_comment_to_post.html', {'form': form})
-	
-@login_required
-def add_comment_to_video(request, pk):
-    video = get_object_or_404(Video, pk=pk)
-    if request.method == "POST":
-        form = VideoCommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.video = video
-            comment.save()
-            return redirect('video_detail', pk=video.pk)
-    else:
-        form = VideoCommentForm()
-    return render(request, 'blog/add_comment_to_video.html', {'form': form})
-	
 @login_required
 def post_comment_approve(request, pk):
     comment = get_object_or_404(PostComment, pk=pk)
@@ -223,18 +140,6 @@ def post_comment_remove(request, pk):
     comment = get_object_or_404(PostComment, pk=pk)
     comment.delete()
     return redirect('post_detail', pk=comment.post.pk)
-	
-@login_required
-def video_comment_approve(request, pk):
-    comment = get_object_or_404(VideoComment, pk=pk)
-    comment.approve()
-    return redirect('video_detail', pk=comment.video.pk)
-
-@login_required
-def video_comment_remove(request, pk):
-    comment = get_object_or_404(VideoComment, pk=pk)
-    comment.delete()
-    return redirect('video_detail', pk=comment.video.pk)
 	
 def contact_support(request):
 	if request.method == 'POST':

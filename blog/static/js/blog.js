@@ -17,42 +17,46 @@ showSlides();
 function showSlides() {
     var i;
     var slides = document.getElementsByClassName("mySlides");
+	var dots = document.getElementsByClassName("dot");
     for (i = 0; i < slides.length; i++) {
-       slides[i].style.display = "none";  
+       slides[i].style.display = "none";
     }
     slideIndex++;
-    if (slideIndex > slides.length) {slideIndex = 1}    
-    slides[slideIndex-1].style.display = "block";  
+    if (slideIndex > slides.length) {slideIndex = 1}
+    for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active-dot", "");
+    }	
+    slides[slideIndex-1].style.display = "block";
+	dots[slideIndex-1].className += " active-dot";
     setTimeout(showSlides, 5000); // Change image every 2 seconds
 }
 
-var navbar = document.getElementById("navbar");
-var sticky = navbar.offsetTop;
-
-function stickynavbar() {
-	if (window.pageYOffset >= sticky) {
-		navbar.classList.add("sticky")
+window.onscroll = function() {scrollFunc()};
+var header = document.getElementById("navbar");
+var sticky = header.offsetTop;
+function scrollFunc() {
+	if (window.pageYOffset > sticky) {
+		header.classList.add("sticky");
 	} else {
-		navbar.classList.remove("sticky");
+		header.classList.remove("sticky");
 	}
 }
-window.onscroll = function() {stickynavbar()};
 
 var image1 = document.querySelector(".img1");
 var image2 = document.querySelector(".img2");
 var image3 = document.querySelector(".img3");
-var image4 = document.querySelector(".img4");
 function setTranslate(xPos, yPos, el) {
 	el.style.transform = "translate3d(" + xPos + ", " + yPos + "px, 0)";
 }
-window.addEventListener("DOMContentLoaded", scrollLoop1, false);
+window.addEventListener("DOMContentLoaded", scrollLoop, false);
 var xScrollPosition;
 var yScrollPosition;
-xScrollPosition = window.scrollX;
-yScrollPosition = window.scrollY;
-function scrollLoop1() {
-	setTranslate(0, yScrollPosition * -0.2, image1);
-	setTranslate(0, yScrollPosition * -0.2, image2);
-	setTranslate(0, yScrollPosition * -0.2, image3);
-	requestAnimationFrame(scrollLoop1);
+
+function scrollLoop() {
+	xScrollPosition = window.scrollX;
+	yScrollPosition = window.scrollY;
+	setTranslate(0, yScrollPosition / -3, image1);
+	setTranslate(0, yScrollPosition / -3, image2);
+	setTranslate(0, yScrollPosition / -3, image3);
+	requestAnimationFrame(scrollLoop);
 }

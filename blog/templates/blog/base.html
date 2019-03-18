@@ -6,21 +6,19 @@
 		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 		<link rel="stylesheet" href="{% static 'css/blog.css' %}">
 		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Black+Ops+One" />
+		<link href='https://fonts.googleapis.com/css?family=Dosis' rel='stylesheet'>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-		<script src="{% static 'js/blog.js' %}"></script>
+		<script src="{% static 'js/blog_base.js' %}"></script>
 	</head>
-	<body class="body">
-		<div id="navbar" style="position:fixed;width:100%;">
+	<body>
+		<div id="navbar" class="sticky">
 			<div class="navigation-menu">
 				<a class="active" href="/"><span class="glyphicon glyphicon-home"></span></a>
 				<a href="/post/"><span class="glyphicon glyphicon-list-alt"></span></a>
-				<a href="/video/"><span class="glyphicon glyphicon-play"></span></a>
-				<a href=""><span class="glyphicon glyphicon-shopping-cart"></span></a>
+				<a href="/shop/"><span class="glyphicon glyphicon-shopping-cart"></span></a>
 			{% if user.is_superuser %}
 				<a href="{% url 'post_new' %}"><span class="glyphicon glyphicon-plus"></span></a>
 				<a href="{% url 'post_draft_list' %}"><span class="glyphicon glyphicon-edit"></span></a>
-				<a href="{% url 'video_new' %}"><span class="glyphicon glyphicon-play-circle"></span></a>
-				<a href="{% url 'video_draft_list' %}"><span class="glyphicon glyphicon-pencil"></span></a>
 				<a href="{% url 'support_list' %}"><span class="glyphicon glyphicon-cog"></span></a>
 			{% endif %}
 				<a id="user" style="float:right"><span class="glyphicon glyphicon-user"></span></a>
@@ -28,14 +26,13 @@
 				<h3 class="greeting">Hello {{ user.username }}</h3>
 			{% endif %}
 			</div>
-			<div style="background-color:#000;height:2px;width:100%"></div>
 			<div id="top-menu" class="top-menu" style="display:none;">
 				{% if user.is_authenticated %}
 				<div class="log-out">
 					<a href="{% url 'logout' %}">Log out</a>
 				</div>
 				<div class="profile">
-					<a href="{% url 'profile_edit' %}">Profile</a>
+					<a href="{% url 'profile_view' pk=user.pk %}">Profile {{ user.pk }}</a>
 				</div>
 				{% else %}
 				<div class="log-in">
@@ -47,11 +44,11 @@
 				{% endif %}
 			</div>
 		</div>
-		<div class="content container">
+		<div class="content-container">
 		{% block content %}
 		{% endblock %}
 		</div>
-		<div class="footer">
+		<div class="footer" style="margin-top:0px;">
 			<div class="social-bar">
 				<a href="#" class="facebook"><i class="fa fa-facebook"></i></a> 
 				<a href="#" class="twitter"><i class="fa fa-twitter"></i></a> 
@@ -66,20 +63,6 @@
 			</div>
 		</div>
 	</body>
-	{% block javascript %}
-<script>
-var user = document.getElementById('user');
-var top_menu = document.getElementById("top-menu");
-var logonDisplay = false;
-user.onclick = function() {
-	if (logonDisplay == false) {
-		top_menu.style.display = "block";
-		logonDisplay = true;
-	} else if (logonDisplay == true) {
-		top_menu.style.display = "none";
-		logonDisplay = false;
-	}
-}
-</script>
-	{% endblock %}
+	<script src="{% static 'js/blog_base.js' %}"></script>
+
 </html>

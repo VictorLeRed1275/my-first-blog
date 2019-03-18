@@ -1,22 +1,90 @@
-.welcome {
-	background-color: #999;
+@import url(../fonts/nemoy/nemoy.css);
+
+.mySlides {
+	display: none;
 }
 
-.img4 {
-	min-height:300px;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-attachment: fixed;
-	top: 0px;
+.header-name {
+	color: white;
+	text-align: center;
+	margin-bottom: 100px;
+}
+
+.header-name h1 {
+	font-family: "NemoyMedium";
+	color: white;
+	text-align: center;
+	margin-top: 100px;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+	z-index: 1;
+	height: 12px;
+	width: 12px;
+	margin: 0 2px;
+	background-color: #FFF;
+	border-radius: 50%;
+	display: inline-block;
+	transition: background-color 0.6s ease;
+	opacity: .5;
+	margin-left: 8px;
+	margin-right: 8px;
+}
+
+.active-dot {
+	background-color: #FFF;
+	opacity: 1;
+	-webkit-animation-name: fade;
+	-webkit-animation-duration: 1.5s;
+	animation-name: fade;
+	animation-duration: 1.5s;
+}
+
+.dot-box {
+	text-align:center;
+	margin-bottom: 30px;
+	margin-top:508px;
+}
+
+.list {
+	padding: 85px 85px 85px 85px;
+	background-color: #c4c4c4;
+}
+
+.list-container {
+	background-color: #d1d1d1;
+	padding: 10px 10px 10px 10px;
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.box-container {
+	width: 49.8%;
+	background-color: #d1d1d1;
+	padding: 10px 10px 10px 10px;
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+	display: inline-block;
+}
+
+.list h1 {
+	font-family: "NemoyLight";
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.list p {
+	font-size: 18px;
+	
 }
 
 #navbar {
 	z-index: 2;
 }
+
 .navigation-menu {
-	background-color: #555;
+	top: 0;
 	overflow: hidden;
+	
 }
 
 .navigation-menu a {
@@ -25,33 +93,77 @@
 	text-align: center;
 	padding: 16px;
 	transition: all 0.3s ease;
-	color: white;
-	font-size: 36px;
+	color: #f8f7f7;
+	font-size: 38px;
 }
 
 .greeting {
 	overflow: auto;
+	font-family: "NemoyMedium";
 	float: right;
-	font-size: 25px;
+	font-size: 23px;
 	padding: 3px;
 	margin-right: 10px;
+	color: white;
 }
 
 .navigation-menu a:hover {
-	background-color: #000
-}
-
-.active {
-	background-color: #AF111C;
+	background-color: #414141
 }
 
 h1, h2, h3, h4 {
-    font-family: "Black Ops One", cursive;
+    font-family: "NemoyLight";
 	color: black;
+}
+
+p, a {
+	font-family: "Dosis";
 }
 
 strong {
 	color: #000000;
+	font-family: "Dosis";
+	font-size: 20px;
+}
+
+hr {
+	border-color: #444;
+}
+
+button {
+	padding: 9px;
+	background: black;
+	color: white;
+	border: none;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	font-size: 18.5px;
+}
+
+button:hover {
+	background-color: #717171;
+}
+
+iframe {
+	border: none;
+}
+
+.button {
+	float: left;
+	padding: 9px;
+	background: black;
+	color: white;
+	border: none;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	font-size: 18.5px;
+	margin: 24px 3px 0 3px;
+}
+
+.button:hover {
+	background-color: #717171;
+	color: white;
+	text-decoration: none;
 }
 
 .top-menu, .top-menu:hover, .top-menu:visited {
@@ -85,13 +197,14 @@ strong {
 .footer {
 	right: 0;
 	left: 0;
+	margin-top: 260px;
 }
 
 .page-footer {
     padding-left: 10px;
 	padding-top: 1px;
 	margin-left: 30px;
-    background: #ddd;
+    background: #999;
 	height: 124px;
 	text-align: center;
 }
@@ -141,23 +254,189 @@ strong {
     color: #000000;
 }
 
+.video {
+	min-height: 300px;
+	margin-bottom: 10px;
+}
+
+.list-container .left {
+	width: 42%;
+	display: inline-block;
+}
+
+.list-container .right {
+	width: 57%;
+	display: inline-block;
+}
+
 .date {
     color: #828282;
 }
 
-.search, .search:hover, .search:visited {
-    color: black;
-    float: left;
-    font-size: 26pt;
-    margin-right: 20px;
+
+/* Dropdown Button */
+.dropbtn {
+	color: black;
+	background-color: white;
+    padding: 9px;
+    font-size: 18px;
+    border: none;
+	float: left;
+	display:inline-block;
+	
+}
+#dropbtn {
+	margin-left: 50px
 }
 
-.post {
-    margin-bottom: 70px;
+#overlay-dropdown {
+	margin-left: 50px
+}
+
+.comment-sort {
+	display: inline-block;
+}
+
+.date-time {
+}
+
+.btndrop {
+	cursor: pointer;
+	background: black;
+	color: white;
+	font-size: 10px;
+	padding: 13px 3px 13px 3px;
+	display: inline-block;
+	float: right;
+	margin-top: -1px;
+}
+
+/* Dropdown button on hover & focus */
+.btndrop:hover, .btndrop:focus {
+    background-color: #717171;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-height: 72px;
+    z-index: 1;
+	margin-top: 36px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content i {
+	float: left;
+    color: black;
+    padding: 9px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content i:hover {background-color: #717171}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
+
+.sort-filter-search i {
+	font-size: 18px;
+	display: inline-block;
+}
+.sort-filter-search {
+	margin-bottom: 10px;
+}
+
+.search-button {
+	width:300px;
+	display: inline-block;
+	right: 0;
+	margin-left: 496px;
+}
+
+.dropdown {
+	float: left;
+}
+
+/* Style the search field */
+form.search-button input[type=text] {
+	font-family: "Dosis";
+	padding: 5px;
+	font-size: 18.5px;
+	border: none;
+	float: left;
+	width: 80%;
+	background: white;
+}
+
+/* Style the submit button */
+form.search-button button {
+	float: left;
+	width: 20%;
+	padding: 9px;
+	background: black;
+	color: white;
+	border: none;
+	border-left: none; /* Prevent double borders */
+	cursor: pointer;
+}
+
+form.search-button button:hover {
+	background: #717171;
+}
+
+/* Clear floats */
+form.search-button::after {
+	content: "";
+	clear: both;
+	display: table;
+}
+#select-dropbtn {
+	font-family: "Dosis";
+	color: black;
+	background-color: white;
+	width: 200px;
+	padding: 5px;
+	font-size: 18.5px;
+}
+.sl:hover {
+	background-color: #717171;
+	cursor: pointer;
+}
+.sl {
+	font-family: "Dosis";
+	width:200px;
+	padding: 5px;
+	font-size: 18.5px;
+	background-color: white;
+}
+.sort-filter-search p {
+	padding: 5px;
+	float: left;
+	font-size: 18.5px;
+	display: inline-block;
+	color: black;
+}
+
+.sort-filter-search option:hover, .sort-filter-search option:focus  {
+	background-color: ##717171;
 }
 
 .post h2 a, .post h2 a:visited {
     color: #000000;
+}
+
+.post {
+	min-height: 300px;
+	margin-bottom: 10px;
 }
 
 .comment-button {
@@ -180,62 +459,115 @@ strong {
 }
 
 .comment {
-    margin: 20px 0px 20px 20px;
-	border: 2px solid #000;
-    background-color: #a0a0a0;
-    border-radius: 5px;
-    padding: 10px;
+	margin: 20px 0 20px 0;
 }
 
-/* Clear floats */
-.comment::after {
-    content: "";
-    clear: both;
-}
-
-.comment img {
-    float: left;
-    max-width: 60px;
-    width: 100%;
-    margin-right: 20px;
-    border-radius: 50%;
-}
-
-.comment p {
-	color: #000000;
-}
 .save {
     float: right;
 }
 
 .post-form textarea, .post-form input {
     width: 100%;
+	border: none;
+	font-family: "Dosis";
+	padding: 5px;
+	font-size: 18.5px;
+	background: white;
+	margin-bottom: 10px;
+	max-height: 150px;
+}
+
+.post-form select {
+	border: none;
+	font-family: "Dosis";
+	padding: 5px;
+	font-size: 18.5px;
+	background: white;
+	margin-bottom: 10px;
+	max-height: 150px;
 }
 
 .post-form p {
+	font-size: 18.5px;
 	color: black;
 }
+
+.profile-view p label {
+	width: 100px;
+	float:left;
+	display: inline-block;
+}
+.profile-view p div {
+	display: inline-block;
+	max-width:400px;
+	float:left;
+}
+
 
 .sticky {
 	position: fixed;
 	top: 0;
 	width: 100%;
+	background-color: black;
+	-webkit-animation-name: fade;
+	-webkit-animation-duration: 1.5s;
+	animation-name: fade;
+	animation-duration: 1.5s;
+	box-shadow: 0 5px 7px 0 rgba(0, 0, 0, 0.2);
 }
 
 .sticky + .content {
 	padding-top: 70px;
 }
 
-.container {
+.content-container {
 	padding-top: 70px;
+
 }
 
+
+@-webkit-keyframes fade {
+	from {opacity: .4} 
+	to {opacity: 1}
+}
+
+@keyframes fade {
+	from {opacity: .4} 
+	to {opacity: 1}
+}
 .img1, .img2, .img3 {
 	min-width: 100%;
-	height: 556px;
-	background-attachment: fixed;
+	min-height: 137%;
+	position: fixed;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
 	top: 0;
+	left:0;
+	right: 0;
+	bottom: 0;
+	z-index: -3;
+	transform: translate3d(0px, 0px, 0px);
+}
+
+* {
+	margin:0;
+	padding:0;
+	box-sizing: border-box;
+}
+
+.profile-detail {
+	display: inline-block;
+	margin-left: 20;
+	max-width: 50%;
+}
+
+.profile-picture {
+	width:450;
+	height:300;
+	top:0;
+	display:inline-block;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
