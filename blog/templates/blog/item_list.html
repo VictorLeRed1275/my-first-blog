@@ -1,0 +1,57 @@
+{% extends 'blog/base.html' %}
+{% load staticfiles %}
+{% block content %}
+	<div class="img3" style="background-image:url('{% static 'images/main(3).jpg' %}');"></div>
+	<br>
+	<br>
+	<div class="header-name">
+		<h1>Merchandising</h1>
+		<p>This is a list of all my merchandise. To see more detail on an item simply click on the title</p>
+	</div>
+	<div class="list">
+		{% for item in items %}
+		<div class="item-container post list-container">
+			<h2>{{ item.title }}</h2>
+			<div class="date">
+				<p>{{ item.published_date|date:'F d, Y' }}</p>
+			</div>
+			<a href="{% url 'item_detail' pk=item.pk %}"><img src='/media/{{ item.item_picture }}' style="width:100%;"/></a>
+			<p>{{ item.description }}</p>
+			<div style="float:right;display:inline-block;margin:25 0 0 0;">Reviews: 
+				<div class="comment-count">{{ item.reviews.count }}</div>
+			</div>
+			<div style="float:left;display:inline-block;margin:25 0 0 -4;">
+				{% for a in cart %}
+				{% if a.item.pk != item.pk %}
+				<a class="button" href="{% url 'cart_add' pk=item.pk %}">Add to cart</a>
+				{% else %}
+				<a class="button" href="{% url 'cart_remove' pk=a.pk %}">Remove from cart</a>
+				{% endif %}
+				{% empty %}
+				<a class="button" href="{% url 'cart_add' pk=item.pk %}">Add to cart</a>
+				{% endfor %}
+			</div>
+		</div>
+		{% empty %}
+		<p>There are no current posts available</p>
+		{% endfor %}
+	</div>
+	{% block javascript %}
+<script>
+var image3 = document.querySelector(".img3");
+function setTranslate(xPos, yPos, el) {
+	el.style.transform = "translate3d(" + xPos + ", " + yPos + "px, 0)";
+}
+window.addEventListener("DOMContentLoaded", scrollLoop, false);
+var xScrollPosition;
+var yScrollPosition;
+
+function scrollLoop() {
+	xScrollPosition = window.scrollX;
+	yScrollPosition = window.scrollY;
+	setTranslate(0, yScrollPosition / -3, image3);
+	requestAnimationFrame(scrollLoop);
+}
+</script>
+	{% endblock %}
+{% endblock %}

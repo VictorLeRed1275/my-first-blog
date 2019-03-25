@@ -1,0 +1,69 @@
+{% extends 'blog/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+	<div class="list">
+		<div class="list-container">
+			{% if item.published_date %}
+				<div class="date">
+					{{ item.published_date|date:'F d, Y' }}
+				</div>
+				<br/>
+			{% else %}
+				<a class="button" href="{% url 'item_publish' pk=item.pk %}">Publish</a>
+			{% endif %}
+			{% if user.is_superuser %}
+			<a class="button" href="{% url 'item_edit' pk=item.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+			<a class="button" href="{% url 'item_remove' pk=item.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+			{% endif %}
+			<h1>{{ item.title }}</h1>
+			<img src='/media/{{ item.item_picture }}' style="width:50%;height: 75%;object-fit: cover;"/>
+			<p>{{ item.description|linebreaksbr }}</p><br/>
+			{% for a in cart %}
+			{% if a.item.pk != item.pk %}
+			<a class="button" href="{% url 'cart_add' pk=item.pk %}">Add to cart</a>
+			{% else %}
+			<a class="button" href="{% url 'cart_remove' pk=a.pk %}">Remove from cart</a>
+			{% endif %}
+			{% empty %}
+			<a class="button" href="{% url 'cart_add' pk=item.pk %}">Add to cart</a>
+			{% endfor %}
+			<br/>
+			<hr/>
+			<h3>Reviews</h3>
+			{% if user.is_authenticated %}
+			<form method="POST" class="post-form">
+				{% csrf_token %}
+				{% for field in form %}
+				<p>
+					{% render_field field placeholder=field.label %}
+					{% for error in field.errors %}
+						<small style="color: red">{{ error }}</small>
+					{% endfor %}
+				</p>
+				{% endfor %}
+				<button type="submit">Submit</button>
+			</form>
+			{% else %}
+			<p>Please sign up or log in to comment</p>
+			{% endif %}
+			{% for review in item.reviews.all %}
+			<div class="comment">
+				<div class="date">
+					{{ review.created_date }}
+					{% if user.is_superuser %}
+					<a class="button" href="{% url 'item_review_remove' pk=review.pk %}" style="float:right"><span class="glyphicon glyphicon-remove"></span></a>
+					{% endif %}
+				</div>
+				<img class="comment-user" src='/media/{{ review.author.profile.profile_picture }}'/>
+				<div style="padding-top:5px;display:inline-block">
+					<strong>{{ review.author }}</strong>
+				</div>
+				{{ review.rating }}
+				<p>{{ review.text|linebreaks }}</p>
+			</div>
+			{% empty %}
+				<p>No reviews here yet</p>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'blog/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+	<div class="list">
+		<div class="list-container">
+			<h2>Login</h2>
+			<div class="account-login">
+				<a href="{% url 'social:begin' 'facebook' %}" class="facebook"><i class="fa fa-facebook"></i>Facebook</a>
+				<a href="{% url 'social:begin' 'google-oauth2' %}" class="google"><i class="fa fa-google"></i>Google</a>
+				<a href="{% url 'social:begin' 'twitter' %}" class="twitter"><i class="fa fa-twitter"></i>Twitter</a>
+			</div>
+			<div class="decorated"><span>or</span></div>
+			<form method="post" action="{% url 'login' %}" class="post-form">
+				{% csrf_token %}
+				{% for field in form %}
+				<p>
+					{% render_field field placeholder=field.label %}
+					{% for error in field.errors %}
+						<small style="color: red">{{ error }}</small>
+					{% endfor %}
+				</p>
+				{% endfor %}
+				<button type="submit">Login</button>
+			</form>
+			<!--<a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>
+			<a href="{% url 'social:begin' 'twitter' %}">Login with Twitter</a><br>-->
+			<br/>
+			<hr/>
+			Don't have an account yet? <a href="{% url 'signup' %}">Sign up</a><br/>
+			<a href="{% url 'password_reset' %}">Forgot password?</a>
+		</div>
+	</div>
+{% endblock %}

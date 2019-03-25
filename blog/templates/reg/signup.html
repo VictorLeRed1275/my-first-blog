@@ -1,0 +1,31 @@
+{% extends 'blog/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+	<div class="list">
+		<div class="list-container">
+			<h2>Sign up</h2>
+			<div class="account-login">
+				<a href="{% url 'social:begin' 'facebook' %}" class="facebook"><i class="fa fa-facebook"></i>Facebook</a>
+				<a href="{% url 'social:begin' 'google-oauth2' %}" class="google"><i class="fa fa-google"></i>Google</a>
+				<a href="{% url 'social:begin' 'twitter' %}" class="twitter"><i class="fa fa-twitter"></i>Twitter</a>
+			</div>
+			<div class="decorated"><span>or</span></div>
+			<form method="post" action="{% url 'signup' %}" class="post-form">
+				{% csrf_token %}
+				{% for field in form %}
+				<p>
+					{% render_field field placeholder=field.label %}
+					{% for error in field.errors %}
+						<small style="color: red">{{ error }}</small>
+					{% endfor %}
+				</p>
+				{% endfor %}
+				<button type="submit">Sign up</button>
+			</form>
+
+			<br/>
+			<hr/>
+			Already have an existing account? <a href="{% url 'login' %}">Log in</a>
+		</div>
+	</div>
+{% endblock %}

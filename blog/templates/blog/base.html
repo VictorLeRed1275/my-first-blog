@@ -2,47 +2,33 @@
 <html>
 	<head>
 		<title>Victor's blog</title>
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap-theme.min.css">
 		<link rel="stylesheet" href="{% static 'css/blog.css' %}">
-		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Black+Ops+One" />
-		<link href='https://fonts.googleapis.com/css?family=Dosis' rel='stylesheet'>
+		<!--<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Black+Ops+One" />-->
+		<link rel="stylesheet" type="text/css" href="{% static 'css/Dosis.css' %}">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-		<script src="{% static 'js/blog_base.js' %}"></script>
+		<script src="{% static 'js/base.js' %}"></script>
 	</head>
 	<body>
 		<div id="navbar" class="sticky">
-			<div class="navigation-menu">
-				<a class="active" href="/"><span class="glyphicon glyphicon-home"></span></a>
-				<a href="/post/"><span class="glyphicon glyphicon-list-alt"></span></a>
-				<a href="/shop/"><span class="glyphicon glyphicon-shopping-cart"></span></a>
-			{% if user.is_superuser %}
-				<a href="{% url 'post_new' %}"><span class="glyphicon glyphicon-plus"></span></a>
-				<a href="{% url 'post_draft_list' %}"><span class="glyphicon glyphicon-edit"></span></a>
-				<a href="{% url 'support_list' %}"><span class="glyphicon glyphicon-cog"></span></a>
-			{% endif %}
-				<a id="user" style="float:right"><span class="glyphicon glyphicon-user"></span></a>
-			{% if user.is_authenticated %}
-				<h3 class="greeting">Hello {{ user.username }}</h3>
-			{% endif %}
-			</div>
-			<div id="top-menu" class="top-menu" style="display:none;">
-				{% if user.is_authenticated %}
-				<div class="log-out">
-					<a href="{% url 'logout' %}">Log out</a>
-				</div>
-				<div class="profile">
-					<a href="{% url 'profile_view' pk=user.pk %}">Profile {{ user.pk }}</a>
-				</div>
-				{% else %}
-				<div class="log-in">
-					<a href="{% url 'login' %}">Log in</span></a>
-				</div>
-				<div class="sign-up">
-					<a href="{% url 'signup' %}">Sign up</a>
-				</div>
+				<div class="navigation-menu">
+					<a class="active" href="/">Home</a>
+					<a href="/post/">Blog</a>
+					<a href="/shop/">Shop</a>
+					<a href="{% url 'contact' %}">Contact</a>
+				{% if user.is_superuser %}
+					<a href="{% url 'dev_tools' %}">Development tools</a>
 				{% endif %}
-			</div>
+				{% if user.is_authenticated %}
+					<a href="{% url 'profile_view' pk=user.pk %}" id="user" style="background-image: url('/media/{{ user.profile.profile_picture }}');"></a>
+					<div class="greeting" style="padding: 16px;">{{ user.username }}</div>
+				{% else %}
+					<div class="greeting"><a href="{% url 'login' %}">Log in</a></div>
+					<div class="greeting"><a href="{% url 'signup' %}">Sign up</a></div>
+				{% endif %}
+				</div>
+				<!-- <div style="background-color:#1e1f1f;height:2px;width:100%"></div> -->
 		</div>
 		<div class="content-container">
 		{% block content %}
@@ -57,7 +43,6 @@
 			</div>
 			<div class="page-footer">
 				<h3>Support</h3>
-				<a href="{% url 'support' %}">Contact support</a><br>
 				<a href="">FAQ</a><br>
 				<a href="">Terms & conditions</a>
 			</div>

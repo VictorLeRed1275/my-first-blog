@@ -1,14 +1,36 @@
 {% extends 'blog/base.html' %}
+{% load widget_tweaks %}
 {% block content %}
 <div class="list">
+	<h1>Edit profile</h1>
 	<div class="list-container">
-		<h1>Edit profile</h1>
-		<p>Adding to your profile is optional, not mandatory. If you enter nothing onto the form and save it, you will not be 
-		prompted to finish the form.
+		{% if user.username %}
+			<div class="profile-menu">
+				<a href="{% url 'profile_view' pk=user.pk %}">Profile</a>
+				<a href="{% url 'profile_edit' %}">Edit</a>
+				<a href="{% url 'cart' pk=user.pk %}">Cart</a>
+				<a href="">Settings</a>
+				<a href="{% url 'logout' %}">Log out</a>
+			</div>
+			{% endif %}
 		<form method="post" class="post-form" enctype="multipart/form-data">
-			{% csrf_token %}
-			{{ user_form.as_p }}
-			{{ profile_form.as_p }}
+				{% csrf_token %}
+				{% for field in user_form %}
+				<p>
+					{% render_field field placeholder=field.label %}
+					{% for error in field.errors %}
+						<small style="color: red">{{ error }}</small>
+					{% endfor %}
+				</p>
+				{% endfor %}
+				{% for field in profile_form %}
+				<p>
+					{% render_field field placeholder=field.label %}
+					{% for error in field.errors %}
+						<small style="color: red">{{ error }}</small>
+					{% endfor %}
+				</p>
+				{% endfor %}
 			<button type="submit">Save changes</button>
 		</form>
 	</div>

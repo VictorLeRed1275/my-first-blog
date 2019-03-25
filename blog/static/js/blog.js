@@ -1,16 +1,3 @@
-var user = document.getElementById('user');
-var top_menu = document.getElementById("top-menu");
-var logonDisplay = false;
-user.onclick = function() {
-	if (logonDisplay == false) {
-		top_menu.style.display = "block";
-		logonDisplay = true;
-	} else if (logonDisplay == true) {
-		top_menu.style.display = "none";
-		logonDisplay = false;
-	}
-}
-
 var slideIndex = 0;
 showSlides();
 

@@ -1,69 +1,34 @@
 {% extends 'blog/base.html' %}
+{% load staticfiles %}
 {% block content %}
-	<div class="img1" style="background-image:url('https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/mammals/g/gray-wolf_thumb.ngsversion.1474903828879.adapt.1900.1.JPG');"></div>
+	<div class="img1" style="background-image:url('{% static 'images/main(2).jpg' %}');"></div>
 	<br>
 	<br>
 	<div class="header-name">
 		<h1>Posts</h1>
 		<p>This is a list of all my posts. To see more detail on a post simply click on the title</p>
 	</div>
-	<div class="list">
-		<div class="sort-filter-search">
-			<p>Sort by: </p>
-			<div class="dropdown">
-				<div id="select-dropbtn" class="dropbtn"></div><i id="select-drop" class="btndrop glyphicon glyphicon-chevron-down" style="font-size: 10px;"></i>
-				<div id="select" class="dropdown-content">
-					<div id="date" class="sl drop-active-select">Date</div>
-					<div id="title" class="sl">Title</div>
-					<div id="comment" class="sl">Comments</div>
-				</div>
-			</div>
-			<div class="dropdown">
-				<div id="dropbtn" class="dropbtn"></div><i id="overlay-drop" class="btndrop glyphicon glyphicon-chevron-down" style="font-size: 10px;"></i>
-				<div id="overlay-dropdown" class="dropdown-content">
-					<div id="th-large" class="th"><i class="glyphicon glyphicon-th-large"></i></div>
-					<div id="th-list" class="th drop-active"><i class="glyphicon glyphicon-th-list"></i></div>
-				</div>
-			</div>
-			<form action="." method="GET" class="search-button">
-				<input type="text" name="q" value="{{ query|escape }}" placeholder="Search...">
-				<button type="submit">
-					<i class="glyphicon glyphicon-search"></i>
-				</button>
-			</form>
-		</div>
-		<div id="sort">
-    {% if query %}
-		{% if results %}
-			{% for post in results %}
-			<div class="item-container post list-container">
-				<div class="date">
-					<p>published: {{ post.published_date }}<div class="date-time">{{ post.published_date|date:'Y-m-d H:i' }}</div></p>
-				</div>
-				<h2><a href="{% url 'post_detail' pk=post.pk %}" class="name">{{ post.title }}</a></h2>
-				<p>{{ post.text|linebreaksbr }}</p>
-				<a href="{% url 'post_detail' pk=post.pk %}">Comments: <div class="comment-sort">{{ post.approved_comments.count }}</div></a>
-			</div>
-			{% empty %}
-			<p>There are no current posts available</p>
-			{% endfor %}
-		{% else %}
-			<p>No posts found with this title</p>
-		{% endif %}
-	{% else %}
 		{% for post in posts %}
-			<div class="item-container post list-container">
+		<div class="post-picture" style="background-image:url('/media/{{ post.post_picture }}');"></div>
+		<div class="list">
+			<div class="post list-container">
+				<h2>{{ post.title }}</h2>
 				<div class="date">
-					<p>published: {{ post.published_date }}<div class="date-time">{{ post.published_date|date:'Y-m-d H:i' }}</div></p>
+					<p>{{ post.published_date|date:'F d, Y' }}</p>
 				</div>
-				<h2><a href="{% url 'post_detail' pk=post.pk %}" class="name">{{ post.title }}</a></h2>
-				<p>{{ post.text|linebreaksbr }}</p>
-				<a href="{% url 'post_detail' pk=post.pk %}">Comments: <div class="comment-sort">{{ post.approved_comments.count }}</div></a>
+				<br/>
+				<p>{{ post.text|linebreaksbr|truncatewords:100 }}</p>
+				<a href="{% url 'post_detail' pk=post.pk %}" class="button" style="display:inline-block;float:none;margin:10 0 0 0;">Read more</a>
+				<div style="float:right;display:inline-block;margin:25 0 0 0;">Comments: 
+					<div class="comment-count">{{ post.comments.count }}</div>
+				</div>
 			</div>
+		</div>
 		{% empty %}
+		<div class="list">
 			<p>There are no current posts available</p>
+		</div>
 		{% endfor %}
-	{% endif %}
 		</div>
 	</div>
 	{% block javascript %}

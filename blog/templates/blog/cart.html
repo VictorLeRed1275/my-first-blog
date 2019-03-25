@@ -1,0 +1,36 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<div class="list">
+	<h1>Cart</h1>
+	<div class="list-container">
+		{% if user.username %}
+			<div class="profile-menu">
+				<a href="{% url 'profile_view' pk=user.pk %}">Profile</a>
+				<a href="{% url 'profile_edit' %}">Edit</a>
+				<a href="{% url 'cart' pk=user.pk %}">Cart</a>
+				<a href="">Settings</a>
+				<a href="{% url 'logout' %}">Log out</a>
+			</div>
+		{% endif %}
+		<a class="button" href="">Check out</a><br/>
+		{% for a in cart %}
+		<div class="item-container post list-container">
+			<h2>{{ a.item.title }}</h2>
+			<div class="date">
+				<p>{{ a.item.published_date|date:'F d, Y' }}</p>
+			</div>
+			<a href="{% url 'item_detail' pk=a.item.pk %}"><img src='/media/{{ a.item.item_picture }}' style="width:100%;"/></a>
+			<p>{{ a.item.description }}</p>
+			<div style="float:right;display:inline-block;margin:25 0 0 0;">Reviews: 
+				<div class="comment-count">{{ a.item.reviews.count }}</div>
+			</div>
+			<div style="float:left;display:inline-block;margin:25 0 0 -4;">
+				<a class="button" href="{% url 'cart_remove' pk=a.pk %}">Remove from cart</a>
+			</div>
+		</div>
+		{% empty %}
+		<p>There are no current posts available</p>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}

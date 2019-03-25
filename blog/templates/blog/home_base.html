@@ -2,11 +2,13 @@
 <html>
 	<head>
 		<title>Victor's blog</title>
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+		<link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
 		<link rel="stylesheet" href="{% static 'css/blog.css' %}">
-		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Black+Ops+One" />
-		<link href='https://fonts.googleapis.com/css?family=Dosis' rel='stylesheet'>
+		<!--<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Black+Ops+One" />-->
+		<link rel="stylesheet" type="text/css" href="{% static 'css/Dosis.css' %}">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="{% static 'js/blog.js' %}"></script>
 		<script src="{% static 'js/jquery.js' %}"></script>
@@ -16,47 +18,31 @@
 		<div class="parallax">
 			<div class="banner">
 				<div class="mySlides">
-					<div class="img1" style="background-image:url('https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/mammals/g/gray-wolf_thumb.ngsversion.1474903828879.adapt.1900.1.JPG');"></div>
+					<div class="img1" style="background-image:url('{% static 'images/main(1).jpg' %}');"></div>
 				</div>
 				<div class="mySlides">
-					<div class="img2" style="background-image:url('https://static1.squarespace.com/static/58051e44e6f2e1b132c6ee34/58051ee2f5e2311a8d650956/5877b729ff7c50ba8358b046/1484240766564/wolf.jpg');"></div>
+					<div class="img2" style="background-image:url('{% static 'images/main(2).jpg' %}');"></div>
 				</div>
 				<div class="mySlides">
-					<div class="img3" style="background-image:url('https://www.thetimes.co.uk/imageserver/image/methode%2Ftimes%2Fprod%2Fweb%2Fbin%2Fed86cf26-f958-11e7-9a34-94e1b34681c3.jpg');"></div>
+					<div class="img3" style="background-image:url('{% static 'images/main(3).jpg' %}');"></div>
 				</div>
 			</div>
 			<div id="navbar">
 				<div class="navigation-menu">
-					<a class="active" href="/"><span class="glyphicon glyphicon-home"></span></a>
-					<a href="/post/"><span class="glyphicon glyphicon-list-alt"></span></a>
-					<a href="/shop/"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+					<a class="active" href="/">Home</a>
+					<a href="/post/">Blog</a>
+					<a href="/shop/">Shop</a>
+					<a href="{% url 'contact' %}">Contact</a>
 				{% if user.is_superuser %}
-					<a href="{% url 'post_new' %}"><span class="glyphicon glyphicon-plus"></span></a>
-					<a href="{% url 'post_draft_list' %}"><span class="glyphicon glyphicon-edit"></span></a>
-					<a href="{% url 'support_list' %}"><span class="glyphicon glyphicon-cog"></span></a>
+					<a href="{% url 'dev_tools' %}">Development tools</a>
 				{% endif %}
-					<a id="user" style="float:right"><span class="glyphicon glyphicon-user"></span></a>
 				{% if user.is_authenticated %}
-					<h3 class="greeting">Hello {{ user.username }}</h3>
+					<a href="{% url 'profile_view' pk=user.pk %}" id="user" style="background-image: url('/media/{{ user.profile.profile_picture }}');"></a>
+					<div class="greeting" style="padding: 16px;">{{ user.username }}</div>
+				{% else %}
+					<div class="greeting"><a href="{% url 'login' %}">Log in</a></div>
+					<div class="greeting"><a href="{% url 'signup' %}">Sign up</a></div>
 				{% endif %}
-				</div>
-				<!-- <div style="background-color:#1e1f1f;height:2px;width:100%"></div> -->
-				<div id="top-menu" class="top-menu" style="display:none;">
-					{% if user.is_authenticated %}
-					<div class="log-out">
-						<a href="{% url 'logout' %}">Log out</a>
-					</div>
-					<div class="profile">
-						<a href="{% url 'profile_view' pk=user.pk %}">Profile</a>
-					</div>
-					{% else %}
-					<div class="log-in">
-						<a href="{% url 'login' %}">Log in</span></a>
-					</div>
-					<div class="sign-up">
-						<a href="{% url 'signup' %}">Sign up</a>
-					</div>
-					{% endif %}
 				</div>
 			</div>
 			<div class="content">
@@ -78,7 +64,6 @@
 			</div>
 			<div class="page-footer">
 				<h3>Support</h3>
-				<a href="{% url 'support' %}">Contact support</a><br>
 				<a href="">FAQ</a><br>
 				<a href="">Terms & conditions</a>
 			</div>
