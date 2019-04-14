@@ -1,0 +1,241 @@
+URLs:
+
+	url(r'^cart/remove/(?P<pk>\d+)/$', views.cart_remove, name='cart_remove'),
+	url(r'^cart/add/(?P<pk>\d+)/$', views.cart_add, name='cart_add'),
+	url(r'^cart/(?P<pk>\d+)/$', views.cart, name='cart'),
+	url(r'^checkout/(?P<pk>\d+)/$', views.checkout, name='checkout'),
+    url(r'^payment_process/$', views.payment_process, name='payment_process' ),
+    url(r'^payment_done/$', views.payment_done, name='payment_done'),
+    url(r'^payment_canceled/$', views.payment_canceled, name='payment_canceled'),
+	url(r'^shop/review/(?P<pk>\d+)/remove/$', views.item_review_remove, name='item_review_remove'),
+	url(r'^shop/$', views.item_list, name='item_list'),
+    url(r'^shop/(?P<pk>\d+)/$', views.item_detail, name='item_detail'),
+	url(r'^shop/new/$', views.item_new, name='item_new'),
+	url(r'^shop/(?P<pk>\d+)/edit/$', views.item_edit, name='item_edit'),
+	url(r'^shop/drafts/$', views.item_draft_list, name='item_draft_list'),
+	url(r'^shop/(?P<pk>\d+)/publish/$', views.item_publish, name='item_publish'),
+	url(r'^shop/(?P<pk>\d+)/remove/$', views.item_remove, name='item_remove'),
+
+Views:
+	
+@csrf_exempt	
+def payment_done(request):
+    return render(request,'blog/payment_done.html')
+	
+@csrf_exempt	
+def payment_canceled(request):
+    return render(request,'blog/payment_canceled.html')
+
+def payment_process(request):
+	host = request.get_host()
+	paypal_dict = {
+		'business': settings.PAYPAL_RECEIVER_EMAIL ,
+		'amount': '100',
+		'item_name': 'Item_Name_xyz',
+		'invoice': ' Test Payment Invoice',
+		'currency_code': 'USD',
+		'notify_url': 'http://{}{}'.format(host, reverse('paypal-ipn')),
+		'return_url': 'http://{}{}'.format(host, reverse('payment_done')),
+		'cancel_return': 'http://{}{}'.format(host, reverse('payment_canceled')),
+	}
+	form = PayPalPaymentsForm(initial=paypal_dict)
+	return render(request, 'blog/payment.html', {'form': form })
+	
+@login_required
+def cart_remove(request, pk):
+    cart = get_object_or_404(Cart, pk=pk)
+    cart.delete()
+    return redirect('home')
+	
+@login_required
+def cart_add(request, pk):
+	form = CartForm(request.POST)
+	cart = form.save(commit=False)
+	cart.user = request.user
+	cart.add_to_cart = True
+	cart.item = get_object_or_404(Item, pk=pk)
+	cart.save()
+	return redirect('cart', pk=request.user.pk)
+	
+@login_required
+def cart(request, pk):
+	cart = Cart.objects.filter(user=request.user.pk).order_by('item').reverse()
+	return render(request, 'blog/cart.html', {'cart': cart})
+	
+@login_required
+def checkout(request, pk):
+	total = 0
+	cart = Cart.objects.filter(user=request.user.pk).order_by('item').reverse()
+	for checkout in cart:
+		total += checkout.item.price
+	if request.method == "POST":
+		form = OrderForm(request.POST)
+		if form.is_valid():
+			order = form.save(commit=False)
+			order.user = request.user
+			order.cart.add(cart)
+			order.total = total
+			order.save()
+			return redirect('cart', pk=request.user.pk)
+	else:
+		form = OrderForm()
+	return render(request, 'blog/checkout.html', {
+		'form': form, 
+		'total': total,
+		'cart': cart})
+
+def item_list(request):
+	cart = Cart.objects.filter(user=request.user.pk).order_by('item').reverse()
+	item_listing = Item.objects.filter(published_date__lte=timezone.now()).order_by('published_date').reverse()
+	page = request.GET.get('page', 1)
+
+	paginator = Paginator(item_listing, 24)
+	try:
+		items = paginator.page(page)
+	except PageNotAnInteger:
+		items = paginator.page(1)
+	except EmptyPage:
+		items = paginator.page(paginator.num_pages)
+	
+	return render(request, 'blog/item_list.html', {
+		'items': items, 
+		'cart': cart}
+	)
+	
+def item_detail(request, pk):
+	cart = Cart.objects.filter(user=request.user.pk).order_by('item').reverse()
+	item = get_object_or_404(Item, pk=pk)
+	if request.method == "POST":
+		form = ItemReviewForm(request.POST)
+		if form.is_valid():
+			review = form.save(commit=False)
+			review.item = item
+			review.save()
+			return redirect('item_detail', pk=item.pk)
+	else:
+		form = ItemReviewForm()
+	return render(request, 'blog/item_detail.html', {
+		'item': item,
+		'form': form,
+		'cart': cart
+	})
+	
+@login_required
+def item_new(request):
+	if request.method == "POST":
+		form = ItemForm(request.POST, request.FILES)
+		if form.is_valid():
+			item= form.save(commit=False)
+			item.author = request.user
+			item.save()
+			return redirect('item_detail', pk=item.pk)
+	else:
+		form = ItemForm()
+	return render(request, 'blog/item_edit.html', {'form': form})
+
+@login_required
+def item_draft_list(request):
+    items = Item.objects.filter(published_date__isnull=True).order_by('created_date')
+    return render(request, 'blog/item_draft_list.html', {'items': items})
+	
+@login_required
+def item_edit(request, pk):
+	item = get_object_or_404(Item, pk=pk)
+	if request.method == "POST":
+		form = ItemForm(request.POST, request.FILES, instance=item)
+		if form.is_valid():
+			item = form.save(commit=False)
+			item.author = request.user
+			item.save()
+		return redirect('item_detail', pk=item.pk)
+	else:
+		form = ItemForm(instance=item)
+	return render(request, 'blog/item_edit.html', {'form': form})
+	
+@login_required
+def item_publish(request, pk):
+    item = get_object_or_404(Item, pk=pk)
+    item.publish()
+    return redirect('item_detail', pk=pk)
+	
+@login_required
+def item_remove(request, pk):
+    item = get_object_or_404(Item, pk=pk)
+    item.delete()
+    return redirect('item_list')
+
+@login_required
+def item_review_remove(request, pk):
+    review = get_object_or_404(ItemReview, pk=pk)
+    review.delete()
+    return redirect('item_detail', pk=review.item.pk)
+	
+Froms:
+
+class ItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = ('title', 'description', 'item_picture', 'price')
+
+class ItemReviewForm(forms.ModelForm):
+    class Meta:
+        model = ItemReview
+        fields = ('rating', 'review',)
+		
+class CartForm(forms.ModelForm):
+	class Meta:
+		model = Cart
+		fields = ()
+		
+class OrderForm(forms.ModelForm):
+	class Meta:
+		model = Order
+		fields = ('first_name','last_name','address','country','city','state','zip_code')
+		
+Models:
+
+		
+class Item(models.Model):
+	author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+	title = models.CharField(max_length=200, help_text='Needs to be short and catchy. A maximum of 200 characters')
+	description = models.TextField()
+	item_picture = models.ImageField(upload_to='item_pictures/')
+	price = models.DecimalField(max_digits=6, decimal_places=2)
+	created_date = models.DateTimeField(default=timezone.now)
+	published_date = models.DateTimeField(blank=True, null=True)
+
+	def publish(self):
+		self.published_date = timezone.now()
+		self.save()
+
+	def __str__(self):
+		return self.title
+		
+class ItemReview(models.Model):
+	item = models.ForeignKey('blog.Item', on_delete=models.CASCADE, related_name='reviews')
+	author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+	rating = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(0)])
+	review = models.TextField(blank=True, null=True)
+	created_date = models.DateTimeField(default=timezone.now)
+
+	def __str__(self):
+		return self.text
+
+class Cart(models.Model):
+	item = models.ForeignKey('blog.Item', on_delete=models.CASCADE, related_name='carts')
+	user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+	add_to_cart = models.BooleanField(default=False)
+	
+class Order(models.Model):
+	user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+	first_name = models.CharField(max_length=30, help_text='A maximum of 30 characters')
+	last_name = models.CharField(max_length=30, help_text='A maximum of 30 characters')
+	address = models.CharField(max_length=50, help_text='A maximum of 50 characters')
+	country = models.CharField(max_length=50, help_text='A maximum of 50 characters')
+	city = models.CharField(max_length=50, help_text='A maximum of 50 characters')
+	state = models.CharField(max_length=50, help_text='A maximum of 50 characters')
+	zip_code = models.IntegerField()
+	cart = models.ManyToManyField(Cart, blank=True)
+	total = models.DecimalField(default=0.00, max_digits=6, decimal_places=2)
+	order_date = models.DateTimeField(default=timezone.now)
+	

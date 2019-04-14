@@ -1,0 +1,50 @@
+{% load staticfiles %}
+<html>
+	<head>
+		<title>Victor's blog</title>
+		<style>
+			@import url({% static 'fonts/nemoy/nemoy.css' %});
+
+			h1, h2, h3, h4 {
+				font-family: "NemoyLight";
+			}
+			body {
+				position: fixed;
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				background-image: url('{% static 'images/404(1).jpg' %}');
+				width: 99%;
+				height: 100%;
+				height: auto;
+				position: relative;
+			}
+
+			.header-name {
+				color: white;
+				text-align: center;
+				background: rgb(0, 0, 0);
+				background: rgba(0, 0, 0, 0.5);
+				width: 500px;
+				height: auto;
+				margin: 0 auto;
+				padding: 10px;
+				position: relative;
+				border: 3px solid #f1f1f1;
+			}
+
+			.header-name h1 {
+				font-family: "NemoyMedium";
+				color: white;
+				text-align: center;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div class="header-name">
+			<h1>404</h1>
+			<h2>Page not found</h1>
+		</div>
+	</body>
+</html>

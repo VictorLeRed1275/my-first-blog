@@ -10,17 +10,32 @@
 			<div class="profile-menu">
 				<a href="{% url 'profile_view' pk=user.pk %}">Profile</a>
 				<a href="{% url 'profile_edit' %}">Edit</a>
-				<a href="{% url 'cart' pk=user.pk %}">Cart</a>
-				<a href="">Settings</a>
 				<a href="{% url 'logout' %}">Log out</a>
 			</div>
 			{% endif %}
 			<div class="profile-detail">
-				<p><label>First name: </label>{{ profile.first_name }}</p>
-				<p><label>Last name: </label>{{ profile.last_name }}</p>
-				<p><label>Bio: </label>{{ profile.bio }}</p>
-				<p><label>Location: </label>{{ profile.location }}</p>
-				<p><label>Birth date: </label>{{ profile.birth_date }}</p>
+				<table>
+					<tr>
+						<td><label>First name: </label></td>
+						<td>{{ profile.first_name }}</td>
+					</tr>
+					<tr>
+						<td><label>Last name: </label></td>
+						<td>{{ profile.last_name }}</td>
+					</tr>
+					<tr>
+						<td><label>Bio: </label></td>
+						<td>{{ profile.bio }}</td>
+					</tr>
+					<tr>
+						<td><label>Location: </label></td>
+						<td>{{ profile.location }}</td>
+					</tr>
+					<tr>
+						<td><label>Birth date: </label></td>
+						<td>{{ profile.birth_date }}</td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</div>

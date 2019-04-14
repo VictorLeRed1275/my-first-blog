@@ -6,9 +6,7 @@
 	{% if user.is_superuser %}
 		<div class="profile-menu">
 			<a href="{% url 'post_new' %}">New blog post</a>
-			<a href="{% url 'item_new' %}">New shop item</a>
 			<a href="{% url 'post_draft_list' %}">Blog post drafts</a>
-			<a href="{% url 'item_draft_list' %}">Shop item drafts</a>
 			<a href="{% url 'contact_list' %}">Support</a>
 		</div>
 	{% else %}

@@ -16,6 +16,7 @@
 			<a class="button" href="{% url 'item_remove' pk=item.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
 			{% endif %}
 			<h1>{{ item.title }}</h1>
+			<center><strong>${{ item.price }}</strong></center>
 			<img src='/media/{{ item.item_picture }}' style="width:50%;height: 75%;object-fit: cover;"/>
 			<p>{{ item.description|linebreaksbr }}</p><br/>
 			{% for a in cart %}
@@ -51,7 +52,9 @@
 				<div class="date">
 					{{ review.created_date }}
 					{% if user.is_superuser %}
-					<a class="button" href="{% url 'item_review_remove' pk=review.pk %}" style="float:right"><span class="glyphicon glyphicon-remove"></span></a>
+					<a class="button" href="{% url 'item_review_remove' pk=review.pk %}" style="float:right">
+						<span class="glyphicon glyphicon-remove"></span>
+					</a>
 					{% endif %}
 				</div>
 				<img class="comment-user" src='/media/{{ review.author.profile.profile_picture }}'/>

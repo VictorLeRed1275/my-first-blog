@@ -1,30 +1,50 @@
 {% extends 'blog/home_base.html' %}
 {% load staticfiles %}
-	{% block content %}
+{% block content %}
+{% load hitcount_tags %}
 	<div class="list">
 		<div class="list-container">
-			<h1>Welcome</h1>
-			<p>What's up and welcome to the website of <-EnterNameHere->. This is primarily a blogging website where I blog 
-			about the places I visit, the people I meet and the experiences I gather. This site is also used as an online 
-			store for my merchendising. Have fun exploring my site and discover blog posts that you enjoy. Create an account 
-			so that you can stay notified on when new blogs or shop items are posted</p>
-		</div>
-	</div>
-	<div class="list" style="margin-top: 300px;">
-		<div class="list-container">
-			<h1>About</h1>
-			<p>If you don't already know who I am my real name is Vihan Le Roux. I was born in South Africa and lived there 
-			for my entire childhood. I love traveling, especially long and "boring" rides across a country or state. It gives
-			me time to think and admire the little things. On top of that, I might even see places along the journey that I did
-			not intend to see. I like to photograph and videograph these moments and share them with the people who appreciate 
-			it. But it's not always fun. Budgeting plays a huge roll in where I get to go. My job pays for most of my trips but
-			it is not my only source. I get sponsorships, donations and patronage from people who like my content and wish to 
-			support me. This keeps the content coming and the travels going. I hope you enjoy my content and follow me on the 
-			sites down below.</p>
+			<img src="{% static 'images/profile.jpg' %}" class="about-photo"/>
+			<div id="about">
+				<h1>About</h1>
+				<p>Hi. I am Vihan, also known as Victor. I consider myself a professional web designer, photographer, video 
+				editor and writer. I have about a year's worth of experience working as a front and back-end developer, but I still
+				know what I'm doing. I work only to impress my clients and their potential clients with amazing websites that are 
+				easily memorable. If you are looking for a website that will leave your competition in the dust please contact me.
+				</p>
+			</div>
+			<br/>
+			<h1 id="skill">Skills</h1>
+			<p>Web Design:</p>
+			<div class="skill">
+				<div class="skill-progress skill-one">90%</div>
+			</div>
+			<p>Writing:</p>
+			<div class="skill">
+				<div class="skill-progress skill-two">80%</div>
+			</div>
+			<p>Photography:</p>
+			<div class="skill">
+				<div class="skill-progress skill-three">65%</div>
+			</div>
+			<p>Photo and Video Editing:<p/>
+			<div class="skill">
+				<div class="skill-progress skill-four">60%</div>
+			</div>
+			<br/>
+			<h1>Reputation</h1>
+			<br/>
+			<br/>
+			<div class="job-board">
+				<div class="job-tile"><h3 class="amount" data="1">0</h3>Connections</div>
+				<div class="job-tile"><h3 class="amount" data="3">0</h3>Projects</div>
+				<div class="job-tile"><h3 class="amount" data="3">0</h3>Clients</div>
+				<div class="job-tile"><h3 class="amount" data="5">0</h3>Consultations</div>
+			</div>
 		</div>
 	</div>
 	<div class="post-picture" style="background-image:url('{% static 'images/extra(1).jpg' %}');"></div>
-	<div class="header-name" style="margin-top:-300px;">
+	<div class="header-name">
 		<h1>Popular posts</h1>
 	</div>
 		{% for post in posts %}
@@ -38,8 +58,8 @@
 				<br/>
 				<p>{{ post.text|linebreaksbr|truncatewords:100 }}</p>
 				<a href="{% url 'post_detail' pk=post.pk %}" class="button" style="display:inline-block;float:none;margin:10 0 0 0;">Read more</a>
-				<div style="float:right;display:inline-block;margin:25 0 0 0;">Comments: 
-					<div class="comment-count">{{ post.approved_comments.count }}</div>
+				<div style="float:right;display:inline-block;margin:25 0 0 0;">Reads: 
+					<div class="comment-count">{% get_hit_count for post %}</div>
 				</div>
 			</div>
 		</div>

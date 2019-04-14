@@ -1,13 +1,15 @@
 {% extends 'blog/base.html' %}
 {% load staticfiles %}
 {% block content %}
-	<div class="img1" style="background-image:url('{% static 'images/main(2).jpg' %}');"></div>
+{% load hitcount_tags %}
+	<div class="img1" style="background-image:url('{% static 'images/main(1).jpg' %}');"></div>
 	<br>
 	<br>
-	<div class="header-name">
+	<div class="header-name" style="margin-top:380px">
 		<h1>Posts</h1>
 		<p>This is a list of all my posts. To see more detail on a post simply click on the title</p>
 	</div>
+
 		{% for post in posts %}
 		<div class="post-picture" style="background-image:url('/media/{{ post.post_picture }}');"></div>
 		<div class="list">
@@ -19,8 +21,8 @@
 				<br/>
 				<p>{{ post.text|linebreaksbr|truncatewords:100 }}</p>
 				<a href="{% url 'post_detail' pk=post.pk %}" class="button" style="display:inline-block;float:none;margin:10 0 0 0;">Read more</a>
-				<div style="float:right;display:inline-block;margin:25 0 0 0;">Comments: 
-					<div class="comment-count">{{ post.comments.count }}</div>
+				<div style="float:right;display:inline-block;margin:25 0 0 0;">Reads:
+					<div class="comment-count">{% get_hit_count for post %}</div>
 				</div>
 			</div>
 		</div>
@@ -29,8 +31,28 @@
 			<p>There are no current posts available</p>
 		</div>
 		{% endfor %}
-		</div>
-	</div>
+	<div class="extra-picture" style="background-image:url('{% static 'images/extra(1).jpg' %}');"></div>
+	{% if posts.has_other_pages %}
+	<ul class="paginator">
+		{% if posts.has_previous %}
+		<li><a href="?page={{ posts.previous_page_number }}" class="button">&laquo;</a></li>
+		{% else %}
+		<li class="disabled"><span class="button">&laquo;</span></li>
+		{% endif %}
+		{% for i in posts.paginator.page_range %}
+			{% if posts.number == i %}
+		<li class="active"><span class="button">{{ i }}</span></li>
+			{% else %}
+		<li><a href="?page={{ i }}" class="button">{{ i }}</a></li>
+			{% endif %}
+		{% endfor %}
+		{% if posts.has_next %}
+		<li><a href="?page={{ posts.next_page_number }}" class="button">&raquo;</a></li>
+		{% else %}
+		<li class="disabled"><span class="button">&raquo;</span></li>
+		{% endif %}
+	</ul>
+	{% endif %}
 	{% block javascript %}
 <script>
 var image1 = document.querySelector(".img1");

@@ -1,52 +1,19 @@
-@import url(../fonts/nemoy/nemoy.css);
-@import url(../fonts/dosis/Dosis.css);
-
-@-webkit-keyframes fade {
-	from {opacity: .4} 
-	to {opacity: 1}
-}
-
-@keyframes fade {
-	from {opacity: .4} 
-	to {opacity: 1}
-}
-
-body {
-	font-family: "Raleway", sans-serif;
-	background-color: black;
-}
-
-* {
-	margin:0;
-	padding:0;
-	box-sizing: border-box;
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-	-webkit-box-shadow: 0 0 0 30px #fff inset;
-	background-color:rgba(0, 0, 0, 0.5);
-}
-
-h1, h2, h3, h4 {
-    font-family: "NemoyLight";
-	color: black;
-}
+@media only screen and (min-width: 600px) {
+	h1, h2, h3, h4 {
+		font-size: 50px;
+	}
+	
+	body {
+		font-size: 35px;
+	}
+	
+	.navigation-menu a {
+		font-size: 40px;
+	}
 
 strong {
 	color: #000000;
 	font-size: 20px;
-}
-
-hr {
-	border: 0.5px solid #999;
 }
 
 button {
@@ -59,22 +26,9 @@ button {
 	font-size: 18.5px;
 }
 
-button:hover {
-	background-color: #717171;
-}
-
-iframe {
-	border: none;
-}
-
-.mySlides {
-	background-color: black;
-	z-index:-100 !important;
-}
-
 .img1, .img2, .img3 {
 	min-width: 100%;
-	min-height: 137%;
+	min-height: 100%;
 	position: fixed;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -87,26 +41,6 @@ iframe {
 	transform: translate3d(0px, 0px, 0px);
 }
 
-.slide-center {
-	position:absolute;
-	top:45%;
-	left: 0;
-	right: 0;
-	width: 500px;
-	margin: auto;
-	padding: 10px;
-	background-color: black;
-	background: rgb(0, 0, 0);
-	background: rgba(0, 0, 0, 0.5);
-	border: 3px solid #f1f1f1;
-	transition: opacity 1s ease-in-out;
-	opacity: 0;
-}
-
-.slide-center h1, .slide-center p {
-	color:white;
-	text-align: center;
-}
 
 #top-scroll {
   display: none; /* Hidden by default */
@@ -123,42 +57,6 @@ iframe {
   border-radius: 50px; /* Rounded corners */
   font-size: 20px; /* Increase font size */
   text-align:center;
-}
-
-#top-scroll:hover {
-  background-color: #717171; /* Add a dark-grey background on hover */
-}
-
-.slide {
-	z-index:-100 !important;
-	position:absolute;
-	background-color: black;
-	transition: opacity 1s ease-in-out;
-	opacity: 0;
-}
-
-#navbar {
-	z-index: 2;
-}
-
-.navigation-menu {
-	top: 0;
-	overflow: hidden;
-}
-
-.navigation-menu a {
-	float: left;
-	text-align: center;
-	padding: 16px;
-	transition: all 0.3s ease;
-	color: white;
-	font-size: 20px;
-	font-family: "NemoyMedium";
-	text-decoration:none;
-}
-
-.navigation-menu a:hover {
-	background-color: #464646
 }
 
 #user {
@@ -188,13 +86,12 @@ iframe {
 }
 
 .sticky + .content {
-	padding-top: 60px;
+	padding-top: 85px;
 }
 
 .dot-box {
 	text-align:center;
 	margin-bottom: 30px;
-	margin-top:515px;
 }
 
 /* The dots/bullets/indicators */
@@ -204,7 +101,7 @@ iframe {
 	width: 12px;
 	margin: 0 2px;
 	background-color: none;
-	border: 0.5px solid #444;
+	border: 0.5px solid white;
 	border-radius: 50%;
 	display: inline-block;
 	transition: background-color 0.6s ease;
@@ -214,8 +111,11 @@ iframe {
 }
 
 .active-dot {
-	background-color: #444;
-	transition: opacity 1s ease-in-out;
+	background-color: #FFF;
+	-webkit-animation-name: fade;
+	-webkit-animation-duration: 1.5s;
+	animation-name: fade;
+	animation-duration: 1.5s;
 }
 
 .sticky {
@@ -289,62 +189,6 @@ iframe {
 	box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
 }
 
-.about-photo {
-	text-align: center;
-	width: 200px;
-	height: 200px;
-	display:block;
-	margin: 20px auto;
-	border-radius: 100px;
-	opacity:0;
-	transition: all 1.8s ease;
-}
-
-.skill {
-	width: 100%; /* Full width */
-	background-color: #ddd; /* Grey background */
-	transition: all 1.8s ease;
-	opacity:0;
-}
-
-.skill-progress {
-	text-align: right; /* Right-align text */
-	padding: 5px; /* Add some padding */
-	color: white; /* White text color */
-	background-color: black;
-	transition: all 1.8s ease;
-	width: 0%;
-}
-
-.skill-progress:hover {
-	background-color: #464646;
-	transition: all 0.3s ease;
-}
-
-.job-board {
-	background-color: black;
-	width: 100%;
-}
-
-.job-tile {
-	text-align: center;
-	display: inline-block;
-	width: 25%;
-	margin-right: -4px;
-	padding-top:30px;
-	padding-bottom:30px;
-	color:white;
-	transition: all 0.3s ease;
-}
-
-.job-tile h3 {
-	color:white;
-}
-
-.job-tile:hover {
-	background-color: #464646;
-}
-
 .post {
 	min-height: 300px;
 	margin-bottom: 10px;
@@ -388,39 +232,6 @@ iframe {
 	display:inline-block;
 	margin-right:-6;
 	text-align: center;
-}
-
-.analytics {
-	border-bottom: 0.5px solid #999;
-}
-
-.vote {
-	float: right;
-	background-color: black;
-	height:26px;
-}
-
-.vote a {
-	text-align: center;
-	margin: auto;
-	left:0;
-	right:0;
-	transition: all 0.3s ease;
-	color: white;
-	text-decoration:none;
-	padding: 3 6 3 6;
-	display:inline-block;
-	background-color: black;
-	height:26px;
-}
-
-.vote a:hover {
-	background-color: #464646;
-}
-
-.vote-count {
-	display:inline-block;
-	color: white;
 }
 
 .comment-count {
@@ -631,29 +442,38 @@ iframe {
 	background-size: cover;
 }
 
+.footer {
+	right: 0;
+	left: 0;
+}
+
 .page-footer {
+	padding-top: 1px;
     background: #a2a0a0;
-	height: 100px;
+	height: 124px;
 	text-align: center;
 }
 
 /* Style the icon bar links */
 .page-footer a {
-	display:inline-block;
-	font-size: 15px;
-	padding: 7.5px;
-	width:35px;
-	height: 35px;
-	margin-right:-4px;
-	margin-top: 25px;
+	text-align: center;
+	padding: 8px;
+	width: 30px;
+	height: 30px;
 	transition: all 0.3s ease;
+	color: white;
+	font-size: 15px;
 }
 
 /* Style the social media icons with color, if you want */
 .page-footer a:hover {
-	text-decoration: none;
+	background-color: #000;
 	color:white;
-	background-color: #464646;
+}
+
+.page-footer {
+	width: 31px;
+	float: left;
 }
 
 .facebook {
@@ -681,14 +501,10 @@ iframe {
 	color: white;
 }
 
-.copyright {
-	margin-top: 10px;
-}
-
 /* The Modal (background) */
 .modal-pop {
 	color: white;
-	display: none; /* Hidden by default */
+	display: block; /* Hidden by default */
 	position: fixed; /* Stay in place */
 	z-index: 1; /* Sit on top */
 	left: 0;
@@ -726,4 +542,5 @@ iframe {
 	color: white;
 	text-decoration: none;
 	cursor: pointer;
+}
 }

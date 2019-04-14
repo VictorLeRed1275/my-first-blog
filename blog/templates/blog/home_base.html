@@ -2,36 +2,51 @@
 <html>
 	<head>
 		<title>Victor's blog</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap-theme.min.css">
-		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-		<link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
-		<link rel="stylesheet" href="{% static 'css/blog.css' %}">
-		<!--<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Black+Ops+One" />-->
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-theme.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
+		<!--<link rel="stylesheet" href="{% static 'css/min_device.css' %}">-->
 		<link rel="stylesheet" type="text/css" href="{% static 'css/Dosis.css' %}">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="{% static 'js/blog.js' %}"></script>
 		<script src="{% static 'js/jquery.js' %}"></script>
-		<script src="{% static 'js/main.js' %}"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	</head>
 	<body>
+		<div id="top"></div>
 		<div class="parallax">
 			<div class="banner">
 				<div class="mySlides">
-					<div class="img1" style="background-image:url('{% static 'images/main(1).jpg' %}');"></div>
+					<div class="img1 slide" style="background-image:url('{% static 'images/main(1).jpg' %}');"></div>
+					<div class="slide-center">
+						<h1>Photography</h1>
+						<p>Taking your photos so you don't have to</p>
+					</div>
 				</div>
 				<div class="mySlides">
-					<div class="img2" style="background-image:url('{% static 'images/main(2).jpg' %}');"></div>
+					<div class="img2 slide" style="background-image:url('{% static 'images/main(2).jpg' %}');"></div>
+					<div class="slide-center">
+						<h1>Web design</h1>
+						<p>A beautifull website without any hastle</p>
+					</div>
 				</div>
 				<div class="mySlides">
-					<div class="img3" style="background-image:url('{% static 'images/main(3).jpg' %}');"></div>
+					<div class="img3 slide" style="background-image:url('{% static 'images/main(3).jpg' %}');"></div>
+					<div class="slide-center">
+						<h1>Video editing</h1>
+						<p>Profesional level performance at ease</p>
+					</div>
 				</div>
 			</div>
 			<div id="navbar">
 				<div class="navigation-menu">
 					<a class="active" href="/">Home</a>
 					<a href="/post/">Blog</a>
-					<a href="/shop/">Shop</a>
 					<a href="{% url 'contact' %}">Contact</a>
 				{% if user.is_superuser %}
 					<a href="{% url 'dev_tools' %}">Development tools</a>
@@ -43,29 +58,40 @@
 					<div class="greeting"><a href="{% url 'login' %}">Log in</a></div>
 					<div class="greeting"><a href="{% url 'signup' %}">Sign up</a></div>
 				{% endif %}
+					<a href="#top" id="top-scroll" >T</a>
 				</div>
 			</div>
 			<div class="content">
 				<div class="dot-box">
-					<span class="dot"></span> 
-					<span class="dot"></span> 
-					<span class="dot"></span> 
+					<span class="dot" onclick="currentDiv(1)"></span> 
+					<span class="dot" onclick="currentDiv(2)"></span> 
+					<span class="dot" onclick="currentDiv(3)"></span> 
 				</div>
 			{% block content %}
 			{% endblock %}
 			</div>
 		<div>
-		<div class="footer">
-			<div class="social-bar">
-				<a href="#" class="facebook"><i class="fa fa-facebook"></i></a> 
-				<a href="#" class="twitter"><i class="fa fa-twitter"></i></a> 
-				<a href="#" class="google"><i class="fa fa-google"></i></a>
-				<a href="#" class="youtube"><i class="fa fa-youtube"></i></a> 
-			</div>
-			<div class="page-footer">
-				<h3>Support</h3>
-				<a href="">FAQ</a><br>
-				<a href="">Terms & conditions</a>
+		
+		<div class="page-footer">
+			<a href="#" class="facebook"><i class="fa fa-facebook"></i></a> 
+			<a href="#" class="twitter"><i class="fa fa-twitter"></i></a> 
+			<a href="#" class="google"><i class="fa fa-google"></i></a>
+			<a href="#" class="youtube"><i class="fa fa-youtube"></i></a>
+			<div class="copyright">©2019 Victor's blog. All rights reserved.<div/>
+		</div>
+		<div id="myModal" class="modal-pop">
+			<!-- Modal content -->
+			<div class="modal-pop-content">
+				<span class="modal-close"><h3 style="color:white;">X</h3></span>
+				<h3 style="color:white;">Notice</h3>
+				<p style="color:white;">This site is open to the public for a limited time only. It is undergoing a testing phase
+				because some of the features are faulty. How ever we encourage you to explore the site and see what it has to
+				offer. And if you encounter bugs or problems with certain features or even have a suggestion for improving on
+				the site and its content, please do not hesitate to contact us.</p>
+				<h3 style="color:white;">Disclaimer</h3>
+				<p>The URL of this site is only temporary and will change once the site is ready for lauch. If you wish to 
+				be apart of the mailing list to receive an email for when the website will be officially launched please fill
+				in and submit a contact form. Be warned that the data you have entered before launch will no longer exist.</p>
 			</div>
 		</div>
 	</body>
@@ -75,7 +101,6 @@
 </script>
 <script src="{% static 'js/blog.js' %}"></script>
 <script src="{% static 'js/jquery.js' %}"></script>
-<script src="{% static 'js/main.js' %}"></script>
 	{% endblock %}
 
 </html>

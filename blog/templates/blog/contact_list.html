@@ -7,8 +7,10 @@
 		<p style="float:left;width:50%;font-size:18px;"><strong>{{ enquiry.name }}</strong> ({{ enquiry.email }})</p>
 		<p style="float:right;width:50%;font-size:18px;">{{ enquiry.published_date }}</p>
 		<p>{{ enquiry.message }}</p>
-		<a class="button" href="{% url 'enquiry_remove' pk=enquiry.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+		<a class="button" href="{% url 'contact_remove' pk=enquiry.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
 		<a class="button" href=""><span class="glyphicon glyphicon-envelope"></span></a>
+		{% empty %}
+		<p>No one has tried to contact you yet</p>
 		{% endfor %}
 	</div>
 </div>

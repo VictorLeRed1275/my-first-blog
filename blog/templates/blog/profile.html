@@ -8,8 +8,6 @@
 			<div class="profile-menu">
 				<a href="{% url 'profile_view' pk=user.pk %}">Profile</a>
 				<a href="{% url 'profile_edit' %}">Edit</a>
-				<a href="{% url 'cart' pk=user.pk %}">Cart</a>
-				<a href="">Settings</a>
 				<a href="{% url 'logout' %}">Log out</a>
 			</div>
 			{% endif %}

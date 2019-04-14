@@ -1,10 +1,10 @@
 {% extends 'blog/base.html' %}
 {% load staticfiles %}
 {% block content %}
-	<div class="img3" style="background-image:url('{% static 'images/main(3).jpg' %}');"></div>
+	<div class="img2" style="background-image:url('{% static 'images/main(2).jpg' %}');"></div>
 	<br>
 	<br>
-	<div class="header-name">
+	<div class="header-name" style="margin-top:380px">
 		<h1>Merchandising</h1>
 		<p>This is a list of all my merchandise. To see more detail on an item simply click on the title</p>
 	</div>
@@ -17,9 +17,11 @@
 			</div>
 			<a href="{% url 'item_detail' pk=item.pk %}"><img src='/media/{{ item.item_picture }}' style="width:100%;"/></a>
 			<p>{{ item.description }}</p>
+			<center><strong>${{ item.price }}</strong></center>
 			<div style="float:right;display:inline-block;margin:25 0 0 0;">Reviews: 
 				<div class="comment-count">{{ item.reviews.count }}</div>
 			</div>
+			{% if user.is_authenticated %}
 			<div style="float:left;display:inline-block;margin:25 0 0 -4;">
 				{% for a in cart %}
 				{% if a.item.pk != item.pk %}
@@ -31,14 +33,37 @@
 				<a class="button" href="{% url 'cart_add' pk=item.pk %}">Add to cart</a>
 				{% endfor %}
 			</div>
+			{% endif %}
 		</div>
 		{% empty %}
-		<p>There are no current posts available</p>
+		<p>There are no current items available</p>
 		{% endfor %}
 	</div>
+	<div class="extra-picture" style="background-image:url('{% static 'images/extra(1).jpg' %}');"></div>
+	{% if items.has_other_pages %}
+	<ul class="paginator">
+		{% if items.has_previous %}
+		<li><a href="?page={{ items.previous_page_number }}" class="button">&laquo;</a></li>
+		{% else %}
+		<li class="disabled"><span class="button">&laquo;</span></li>
+		{% endif %}
+		{% for i in items.paginator.page_range %}
+			{% if items.number == i %}
+		<li class="active"><span class="button">{{ i }}</span></li>
+			{% else %}
+		<li><a href="?page={{ i }}" class="button">{{ i }}</a></li>
+			{% endif %}
+		{% endfor %}
+		{% if items.has_next %}
+		<li><a href="?page={{ items.next_page_number }}" class="button"></a></li>
+		{% else %}
+		<li class="disabled"><span class="button">&raquo;</span></li>
+		{% endif %}
+	</ul>
+	{% endif %}
 	{% block javascript %}
 <script>
-var image3 = document.querySelector(".img3");
+var image2 = document.querySelector(".img2");
 function setTranslate(xPos, yPos, el) {
 	el.style.transform = "translate3d(" + xPos + ", " + yPos + "px, 0)";
 }
@@ -49,7 +74,7 @@ var yScrollPosition;
 function scrollLoop() {
 	xScrollPosition = window.scrollX;
 	yScrollPosition = window.scrollY;
-	setTranslate(0, yScrollPosition / -3, image3);
+	setTranslate(0, yScrollPosition / -3, image2);
 	requestAnimationFrame(scrollLoop);
 }
 </script>

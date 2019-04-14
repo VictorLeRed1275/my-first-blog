@@ -12,7 +12,7 @@
 				<a href="{% url 'logout' %}">Log out</a>
 			</div>
 		{% endif %}
-		<a class="button" href="">Check out</a><br/>
+		<a class="button" href="{% url 'checkout' pk=user.pk %}">Check out</a><br/>
 		{% for a in cart %}
 		<div class="item-container post list-container">
 			<h2>{{ a.item.title }}</h2>
@@ -21,6 +21,7 @@
 			</div>
 			<a href="{% url 'item_detail' pk=a.item.pk %}"><img src='/media/{{ a.item.item_picture }}' style="width:100%;"/></a>
 			<p>{{ a.item.description }}</p>
+			<center><strong>${{ a.item.price }}</strong></center>
 			<div style="float:right;display:inline-block;margin:25 0 0 0;">Reviews: 
 				<div class="comment-count">{{ a.item.reviews.count }}</div>
 			</div>
@@ -29,7 +30,7 @@
 			</div>
 		</div>
 		{% empty %}
-		<p>There are no current posts available</p>
+		<p>Your cart is empty</p>
 		{% endfor %}
 	</div>
 </div>

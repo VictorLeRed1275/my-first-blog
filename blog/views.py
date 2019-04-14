@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, render_to_response, redirect
 from django.db.models import Q
 from django.utils import timezone
-from .models import Post, PostComment, Profile, Contact, Item, ItemReview, Cart
-from .forms import PostForm, PostCommentForm, SignUpForm, UserForm, ProfileForm, ContactForm, ItemForm, ItemReviewForm, CartForm
+from .models import Post, PostComment, Profile, Contact
+from .forms import PostForm, PostCommentForm, SignUpForm, UserForm, ProfileForm, ContactForm
 from django.contrib.auth.decorators import login_required
 from django.db import models
 from django.contrib.auth import login, authenticate
@@ -18,6 +18,20 @@ from .tokens import account_activation_token
 from django.core.mail import send_mail
 
 from django.contrib.auth.models import User
+
+from paypal.standard.forms import PayPalPaymentsForm
+from django.urls import reverse
+
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+from django.db.models import Count
+from django.views.decorators.csrf import csrf_exempt
+
+from hitcount.models import HitCount
+from hitcount.views import HitCountMixin
+
+def error_404_view(request, exception):
+    return render(request,'blog/404.html')
 	
 def signup(request):
 	if request.method == 'POST':
@@ -61,43 +75,25 @@ def activate(request, uidb64, token, backend='django.contrib.auth.backends.Model
         return redirect('home')
     else:
         return render(request, 'blog/account_activation_invalid.html')
-	
+
 def home(request):
 	posts = []
 	count = 0
-	first_posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('comments').reverse()
+	hit_count = HitCount.objects.annotate(num_hit=Count('hit')).order_by('-num_hit')
+	print(hit_count)
+	first_posts = Post.objects.annotate(num_comments=Count('comments')).order_by('-num_comments')
 	for post in first_posts:
-		if count < 3:
-			posts.append(post)
-			count += 1
-		else:
-			break
+		if post not in posts:
+			if count < 3:
+				posts.append(post)
+				count += 1
+			else:
+				break
 	return render(request, 'blog/home.html', {'posts': posts})
 	
 @login_required
 def dev_tools(request):
 	return render(request, 'blog/development_tools.html')
-	
-@login_required
-def cart_remove(request, pk):
-    cart = get_object_or_404(Cart, pk=pk)
-    cart.delete()
-    return redirect('home')
-	
-@login_required
-def cart_add(request, pk):
-	form = CartForm(request.POST)
-	cart = form.save(commit=False)
-	cart.user = request.user
-	cart.add_to_cart = True
-	cart.item = get_object_or_404(Item, pk=pk)
-	cart.save()
-	return redirect('cart', pk=request.user.pk)
-	
-@login_required
-def cart(request, pk):
-	cart = Cart.objects.filter(user=request.user.pk).order_by('item').reverse()
-	return render(request, 'blog/cart.html', {'cart': cart})
 
 @login_required
 def view_profile(request, pk):
@@ -122,13 +118,26 @@ def update_profile(request):
 	})
 
 def post_list(request):
-	posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date').reverse()
+	post_listing = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date').reverse()
+	page = request.GET.get('page', 1)
+
+	paginator = Paginator(post_listing, 10)
+	try:
+		posts = paginator.page(page)
+	except PageNotAnInteger:
+		posts = paginator.page(1)
+	except EmptyPage:
+		posts = paginator.page(paginator.num_pages)
+	
 	return render(request, 'blog/post_list.html', {
 		'posts': posts,
 	})
 	
 def post_detail(request, pk):
 	post = get_object_or_404(Post, pk=pk)
+	votecount = post.votes.count()
+	viewcount = HitCount.objects.get_for_object(post)
+	hit_count_response = HitCountMixin.hit_count(request, viewcount)
 	if request.method == "POST":
 		form = PostCommentForm(request.POST)
 		if form.is_valid():
@@ -142,6 +151,7 @@ def post_detail(request, pk):
 	return render(request, 'blog/post_detail.html', {
 		'post': post,
 		'form': form,
+		'votecount': votecount
 	})
 	
 @login_required
@@ -194,78 +204,17 @@ def post_comment_remove(request, pk):
     comment.delete()
     return redirect('post_detail', pk=comment.post.pk)
 	
-def item_list(request):
-	cart = Cart.objects.filter(user=request.user.pk).order_by('item').reverse()
-	items = Item.objects.filter(published_date__lte=timezone.now()).order_by('published_date').reverse()
-	return render(request, 'blog/item_list.html', {'items': items, 'cart': cart})
-	
-def item_detail(request, pk):
-	cart = Cart.objects.filter(user=request.user.pk).order_by('item').reverse()
-	item = get_object_or_404(Item, pk=pk)
-	if request.method == "POST":
-		form = ItemReviewForm(request.POST)
-		if form.is_valid():
-			review = form.save(commit=False)
-			review.item = item
-			review.save()
-			return redirect('item_detail', pk=item.pk)
-	else:
-		form = ItemReviewForm()
-	return render(request, 'blog/item_detail.html', {
-		'item': item,
-		'form': form,
-		'cart': cart
-	})
-	
 @login_required
-def item_new(request):
-	if request.method == "POST":
-		form = ItemForm(request.POST, request.FILES)
-		if form.is_valid():
-			item= form.save(commit=False)
-			item.author = request.user
-			item.save()
-			return redirect('item_detail', pk=item.pk)
-	else:
-		form = ItemForm()
-	return render(request, 'blog/item_edit.html', {'form': form})
+def vote_up(request, pk):
+	post = get_object_or_404(Post, pk=pk)
+	post.votes.up(request.user.pk)
+	return redirect('post_detail', pk=post.pk)
 
 @login_required
-def item_draft_list(request):
-    items = Item.objects.filter(published_date__isnull=True).order_by('created_date')
-    return render(request, 'blog/item_draft_list.html', {'items': items})
-	
-@login_required
-def item_edit(request, pk):
-	item = get_object_or_404(Item, pk=pk)
-	if request.method == "POST":
-		form = ItemForm(request.POST, request.FILES, instance=item)
-		if form.is_valid():
-			item = form.save(commit=False)
-			item.author = request.user
-			item.save()
-		return redirect('item_detail', pk=item.pk)
-	else:
-		form = ItemForm(instance=item)
-	return render(request, 'blog/item_edit.html', {'form': form})
-	
-@login_required
-def item_publish(request, pk):
-    item = get_object_or_404(Item, pk=pk)
-    item.publish()
-    return redirect('item_detail', pk=pk)
-	
-@login_required
-def item_remove(request, pk):
-    item = get_object_or_404(Item, pk=pk)
-    item.delete()
-    return redirect('item_list')
-
-@login_required
-def item_review_remove(request, pk):
-    review = get_object_or_404(ItemReview, pk=pk)
-    review.delete()
-    return redirect('item_detail', pk=review.item.pk)
+def vote_down(request, pk):
+	post = get_object_or_404(Post, pk=pk)
+	post.votes.down(request.user.pk)
+	return redirect('post_detail', pk=post.pk)
 	
 def contact(request):
 	if request.method == 'POST':
