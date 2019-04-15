@@ -14,6 +14,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
+from django.views.decorators.http import condition
 
 from django.core.mail import send_mail
 
@@ -29,6 +30,18 @@ from django.views.decorators.csrf import csrf_exempt
 
 from hitcount.models import HitCount
 from hitcount.views import HitCountMixin
+
+from django.core.cache import cache
+
+def cache_view(request):
+	cache_key = 'my_unique_key' # needs to be unique
+	cache_time = 86400 # time in seconds for cache to be valid
+	data = cache.get(cache_key) # returns None if no key-value pair
+	if not data:
+		my_service = Service()
+		data = service.get_data()
+		cache.set(cache_key, data, cache_time)
+	return JsonResponse(data, safe=False)
 
 def error_404_view(request, exception):
     return render(request,'blog/404.html')

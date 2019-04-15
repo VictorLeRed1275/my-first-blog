@@ -9,13 +9,12 @@
 		<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
 		<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-theme.min.css' %}">
 		<link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
-		<!--<link rel="stylesheet" href="{% static 'css/min_device.css' %}">-->
+		<link rel="stylesheet" href="{% static 'css/min_device.css' %}">
 		<link rel="stylesheet" type="text/css" href="{% static 'css/Dosis.css' %}">
 		<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="{% static 'js/blog.js' %}"></script>
 		<script src="{% static 'js/jquery.js' %}"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	</head>
 	<body>
 		<div id="top"></div>
@@ -55,6 +54,7 @@
 					<a href="{% url 'profile_view' pk=user.pk %}" id="user" style="background-image: url('/media/{{ user.profile.profile_picture }}');"></a>
 					<div class="greeting" style="padding: 16px;">{{ user.username }}</div>
 				{% else %}
+					<a href="{% url 'login' %}" class="user" id="user" style="background-image: url('/media/profile_pictures/user.png');"></a>
 					<div class="greeting"><a href="{% url 'login' %}">Log in</a></div>
 					<div class="greeting"><a href="{% url 'signup' %}">Sign up</a></div>
 				{% endif %}
@@ -96,11 +96,11 @@
 		</div>
 	</body>
 	{% block javascript %}
-<script>
+	<script>
 
-</script>
-<script src="{% static 'js/blog.js' %}"></script>
-<script src="{% static 'js/jquery.js' %}"></script>
+	</script>
+	<script src="{% static 'js/blog.js' %}"></script>
+	<script src="{% static 'js/jquery.js' %}"></script>
 	{% endblock %}
 
 </html>

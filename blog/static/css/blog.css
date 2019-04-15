@@ -13,13 +13,7 @@
 
 body {
 	font-family: "Raleway", sans-serif;
-	background-color: black;
-}
-
-* {
-	margin:0;
-	padding:0;
-	box-sizing: border-box;
+	background-color: #eee;
 }
 
 input:-webkit-autofill,
@@ -42,11 +36,11 @@ h1, h2, h3, h4 {
 
 strong {
 	color: #000000;
-	font-size: 20px;
+	font-size: 1.45em;
 }
 
 hr {
-	border: 0.5px solid #999;
+	border: 0.05em solid #999;
 }
 
 button {
@@ -74,7 +68,7 @@ iframe {
 
 .img1, .img2, .img3 {
 	min-width: 100%;
-	min-height: 137%;
+	min-height: 100%;
 	position: fixed;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -92,13 +86,13 @@ iframe {
 	top:45%;
 	left: 0;
 	right: 0;
-	width: 500px;
+	width: 35em;
 	margin: auto;
-	padding: 10px;
+	padding: 1em;
 	background-color: black;
 	background: rgb(0, 0, 0);
 	background: rgba(0, 0, 0, 0.5);
-	border: 3px solid #f1f1f1;
+	border: 0.3em solid #f1f1f1;
 	transition: opacity 1s ease-in-out;
 	opacity: 0;
 }
@@ -109,19 +103,19 @@ iframe {
 }
 
 #top-scroll {
-  display: none; /* Hidden by default */
-  position: fixed; /* Fixed/sticky position */
-  bottom: 20px; /* Place the button at the bottom of the page */
-  right: 30px; /* Place the button 30px from the right */
-  z-index: 99; /* Make sure it does not overlap */
-  border: none; /* Remove borders */
-  outline: none; /* Remove outline */
-  background-color: black; /* Set a background color */
-  color: white; /* Text color */
-  cursor: pointer; /* Add a mouse pointer on hover */
-  padding: 9px 15px; /* Some padding */
-  border-radius: 50px; /* Rounded corners */
-  font-size: 20px; /* Increase font size */
+  display: none;
+  position: fixed;
+  bottom: 1.5em;
+  right: 2em;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  padding: 9 15;
+  border-radius: 50%;
+  font-size: 1.45em;
   text-align:center;
 }
 
@@ -149,10 +143,10 @@ iframe {
 .navigation-menu a {
 	float: left;
 	text-align: center;
-	padding: 16px;
+	padding: 0.78em;
 	transition: all 0.3s ease;
 	color: white;
-	font-size: 20px;
+	font-size: 1.45em;
 	font-family: "NemoyMedium";
 	text-decoration:none;
 }
@@ -162,9 +156,9 @@ iframe {
 }
 
 #user {
-	border-radius: 22.5px;
-	width: 45px;
-	height: 45px;
+	border-radius: 50%;
+	width: 2.2em;
+	height: 2.2em;
 	margin: 7.5 10 7.5 5;
 	top: 0;
 	transition: all 0.3s ease;
@@ -175,41 +169,51 @@ iframe {
 }
 
 #user:hover {
-	border-radius: 10px;
+	border-radius: 22%;
 	cursor: pointer;
+}
+
+.user {
+	display: none;
 }
 
 .greeting {
 	overflow: auto;
 	font-family: "NemoyMedium";
 	float: right;
-	font-size: 20px;
 	color: white;
+	font-size: 1.45em;
+	padding: 0.78em;
 }
 
 .sticky + .content {
-	padding-top: 60px;
+	padding-top: 4.3em;
+}
+
+.content {
+	position: relative;
+	min-height: 100%;
 }
 
 .dot-box {
 	text-align:center;
-	margin-bottom: 30px;
-	margin-top:515px;
+	margin-bottom: 2.2em;
+	margin-top:36.8em;
 }
 
 /* The dots/bullets/indicators */
 .dot {
 	z-index: 1;
-	height: 12px;
-	width: 12px;
-	margin: 0 2px;
+	height: 1em;
+	width: 1em;
+	margin: 0 2;
 	background-color: none;
-	border: 0.5px solid #444;
+	border: 0.05em solid #444;
 	border-radius: 50%;
 	display: inline-block;
 	transition: background-color 0.6s ease;
-	margin-left: 8px;
-	margin-right: 8px;
+	margin-left: 0.5em;
+	margin-right: 0.5em;
 	cursor: pointer;
 }
 
@@ -227,12 +231,13 @@ iframe {
 	-webkit-animation-duration: 1.5s;
 	animation-name: fade;
 	animation-duration: 1.5s;
-	box-shadow: 0 5px 7px 0 rgba(0, 0, 0, 0.2);
+	box-shadow: 0 5 7 0 rgba(0, 0, 0, 0.2);
 }
 
 .content-container {
-	padding-top: 60px;
-
+	padding-top: 4.3em;
+	position: relative;
+	min-height: 100vh;
 }
 
 .header-name {
@@ -240,15 +245,15 @@ iframe {
 	text-align: center;
 	background: rgb(0, 0, 0);
 	background: rgba(0, 0, 0, 0.5);
-	width: 500px;
+	width: 30em;
 	margin: auto;
-	padding: 10px;
-	margin-top:-95px;
+	padding: 1em;
+	margin-top:-7.6em;
 	position:relative;
-	bottom: 200px;
+	bottom: 14em;
 	left: 0;
 	right: 0;
-	border: 3px solid #f1f1f1;
+	border: 0.3em solid #f1f1f1;
 }
 
 .header-name h1 {
@@ -258,44 +263,40 @@ iframe {
 }
 
 .post-picture {
-	padding-top: 100px;
 	background-attachment: fixed;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
 	width:100%;
-	height:500px;
+	height:35em;
 	display: block;
 }
 
 .list {
-	padding: 48.7px 85px;
+	padding: 3.5em 5em;
 	background-color: #eee;
 }
 
 .list h1 {
 	font-family: "NemoyLight";
 	text-align: center;
-	margin-bottom: 10px;
 }
 
 .list p {
-	font-size: 18px;
+	font-size: 1.3em;
 }
 
 .list-container {
 	background-color: #fff;
-	padding: 10px 10px 10px 10px;
+	padding: 1em;
 	box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
 }
 
 .about-photo {
 	text-align: center;
-	width: 200px;
-	height: 200px;
 	display:block;
-	margin: 20px auto;
-	border-radius: 100px;
+	margin: 2em auto;
+	border-radius: 50%;
 	opacity:0;
 	transition: all 1.8s ease;
 }
@@ -309,7 +310,7 @@ iframe {
 
 .skill-progress {
 	text-align: right; /* Right-align text */
-	padding: 5px; /* Add some padding */
+	padding: 0.4em; /* Add some padding */
 	color: white; /* White text color */
 	background-color: black;
 	transition: all 1.8s ease;
@@ -330,9 +331,9 @@ iframe {
 	text-align: center;
 	display: inline-block;
 	width: 25%;
-	margin-right: -4px;
-	padding-top:30px;
-	padding-bottom:30px;
+	margin-right: -0.2em;
+	padding-top:2.5em;
+	padding-bottom:2.5em;
 	color:white;
 	transition: all 0.3s ease;
 }
@@ -345,11 +346,6 @@ iframe {
 	background-color: #464646;
 }
 
-.post {
-	min-height: 300px;
-	margin-bottom: 10px;
-}
-
 .post h2 a, .post h2 a:visited {
     color: #000000;
 }
@@ -359,14 +355,13 @@ iframe {
 }
 
 .button {
-	padding: 9px;
+	padding: 0.55em;
 	background: black;
 	color: white;
 	border: none;
 	cursor: pointer;
 	transition: all 0.3s ease;
-	font-size: 18.5px;
-	margin: 24px 3px 0 3px;
+	font-size: 1.3em;
 	display: inline-block;
 }
 
@@ -379,6 +374,7 @@ iframe {
 .button-half {
 	width:50%;
 	display:inline-block;
+	margin: 0 0 0 0;
 	margin-right:-6;
 	text-align: center;
 }
@@ -391,7 +387,7 @@ iframe {
 }
 
 .analytics {
-	border-bottom: 0.5px solid #999;
+	border-bottom: 0.05em solid #999;
 }
 
 .vote {
@@ -431,13 +427,12 @@ iframe {
 }
 
 .extra-picture {
-	padding-top: 100px;
 	background-attachment: fixed;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
 	width:100%;
-	height:300px;
+	height:35em;
 	display: block;
 }
 
@@ -448,17 +443,17 @@ iframe {
 	right: 0;
 	text-align: center;
 	text-decoration: none;
-	bottom: 280px;
-	margin-bottom: -46px;
+	bottom: 32em;
+	margin-bottom: -5.2em;
 }
 
 .paginator a {
 	text-decoration: none;
 }
 
-.paginator li {
-	padding: 10px;
-	margin-left: -30px;
+.paginator div {
+	padding: 1em;
+	margin-left: -2.3em;
 	display: inline-block;
 }
 .paginator .active span, .paginator .disabled span {
@@ -633,19 +628,23 @@ iframe {
 
 .page-footer {
     background: #a2a0a0;
-	height: 100px;
+	height: 8em;
 	text-align: center;
+	position: relative;
+	right: 0;
+	bottom: 0;
+	left: 0;
 }
 
 /* Style the icon bar links */
 .page-footer a {
 	display:inline-block;
-	font-size: 15px;
-	padding: 7.5px;
-	width:35px;
-	height: 35px;
-	margin-right:-4px;
-	margin-top: 25px;
+	font-size: 1.2em;
+	padding: 0.6em;
+	width:2.1em;
+	height: 2.1em;
+	margin-right:-0.25em;
+	margin-top: 1.6em;
 	transition: all 0.3s ease;
 }
 
