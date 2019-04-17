@@ -1,29 +1,32 @@
 {% extends 'blog/base.html' %}
 {% load widget_tweaks %}
 {% block content %}
-<div class="list">
+<div class="list topless">
 	<h1>New post</h1>
 	<div class="list-container">
 	{% if user.is_superuser %}
 		<div class="profile-menu">
-			<a href="{% url 'post_new' %}">New blog post</a>
-			<a href="{% url 'post_draft_list' %}">Blog post drafts</a>
-			<a href="{% url 'contact_list' %}">Support</a>
+			<a href="{% url 'post_new' %}">New</a>
+			<a href="{% url 'post_draft_list' %}">Drafts</a>
+			<a href="{% url 'contact_list' %}">Contact</a>
 		</div>
 	{% else %}
 		<h1>Warning</h3>
 		<p>You are not authorised to use development tools</p>
 	{% endif %}
 		<form method="post" class="post-form" enctype="multipart/form-data">
-			{% csrf_token %}
-			{% for field in form %}
-			<p>
-				{% render_field field placeholder=field.label %}
-				{% for error in field.errors %}
-					<small style="color: red">{{ error }}</small>
+				{% for field in form %}
+				<p>
+					{% if field.errors %}
+						{% render_field field style="border-bottom: 0.5px solid red;" placeholder=field.label %}
+						{% for error in field.errors %}
+							<small style="color: red">{{ error }}</small>
+						{% endfor %}
+					{% else %}
+						{% render_field field placeholder=field.label %}
+					{% endif %}
+				</p>
 				{% endfor %}
-			</p>
-			{% endfor %}
 			<button type="submit">Save</button>
 		</form>
 	</div>

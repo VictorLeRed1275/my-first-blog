@@ -14,10 +14,14 @@
 				{% csrf_token %}
 				{% for field in form %}
 				<p>
-					{% render_field field placeholder=field.label %}
-					{% for error in field.errors %}
-						<small style="color: red">{{ error }}</small>
-					{% endfor %}
+					{% if field.errors %}
+						{% render_field field style="border-bottom: 0.5px solid red;" placeholder=field.label %}
+						{% for error in field.errors %}
+							<small style="color: red">{{ error }}</small>
+						{% endfor %}
+					{% else %}
+						{% render_field field placeholder=field.label %}
+					{% endif %}
 				</p>
 				{% endfor %}
 				<button type="submit">Sign up</button>

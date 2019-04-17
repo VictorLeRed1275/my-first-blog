@@ -1,7 +1,7 @@
 {% extends 'blog/base.html' %}
 {% load widget_tweaks %}
 {% block content %}
-<div class="list">
+<div class="list topless">
 	<h1>Edit profile</h1>
 	<div class="list-container">
 		{% if user.username %}
@@ -9,24 +9,35 @@
 				<a href="{% url 'profile_view' pk=user.pk %}">Profile</a>
 				<a href="{% url 'profile_edit' %}">Edit</a>
 				<a href="{% url 'logout' %}">Log out</a>
+			{% if user.is_superuser %}
+				<a href="{% url 'dev_tools' %}">Tools</a>
+			{% endif %}
 			</div>
 			{% endif %}
 		<form method="post" class="post-form" enctype="multipart/form-data">
 				{% csrf_token %}
 				{% for field in user_form %}
 				<p>
-					{% render_field field placeholder=field.label %}
-					{% for error in field.errors %}
-						<small style="color: red">{{ error }}</small>
-					{% endfor %}
+					{% if field.errors %}
+						{% render_field field style="border-bottom: 0.5px solid red;" placeholder=field.label %}
+						{% for error in field.errors %}
+							<small style="color: red">{{ error }}</small>
+						{% endfor %}
+					{% else %}
+						{% render_field field placeholder=field.label %}
+					{% endif %}
 				</p>
 				{% endfor %}
 				{% for field in profile_form %}
 				<p>
-					{% render_field field placeholder=field.label %}
-					{% for error in field.errors %}
-						<small style="color: red">{{ error }}</small>
-					{% endfor %}
+					{% if field.errors %}
+						{% render_field field style="border-bottom: 0.5px solid red;" placeholder=field.label %}
+						{% for error in field.errors %}
+							<small style="color: red">{{ error }}</small>
+						{% endfor %}
+					{% else %}
+						{% render_field field placeholder=field.label %}
+					{% endif %}
 				</p>
 				{% endfor %}
 			<button type="submit">Save changes</button>

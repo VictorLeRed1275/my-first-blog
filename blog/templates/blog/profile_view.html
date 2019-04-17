@@ -1,7 +1,7 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-<div class="list">
+<div class="list topless">
 	<a href="/media/{{ profile.profile_picture }}" class="profile-picture" style="background-image: url('/media/{{ profile.profile_picture }}');"></a>
 	<h1>{{ profile.user }}</h1>
 	<div class="list-container">
@@ -11,6 +11,9 @@
 				<a href="{% url 'profile_view' pk=user.pk %}">Profile</a>
 				<a href="{% url 'profile_edit' %}">Edit</a>
 				<a href="{% url 'logout' %}">Log out</a>
+			{% if user.is_superuser %}
+				<a href="{% url 'dev_tools' %}">Tools</a>
+			{% endif %}
 			</div>
 			{% endif %}
 			<div class="profile-detail">

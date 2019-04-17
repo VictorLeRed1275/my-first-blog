@@ -46,7 +46,7 @@ def user_pic_dir(instance, filename):
 	
 		
 class Profile(models.Model):
-	profile_picture = models.ImageField(upload_to=user_pic_dir, default='profile_pictures/user.png')
+	profile_picture = models.ImageField(upload_to=user_pic_dir, default='../static/images/user.png')
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	first_name = models.CharField(max_length=30, null=True, blank=True, help_text='A maximum of 30 characters')
 	last_name = models.CharField(max_length=30, null=True, blank=True, help_text='A maximum of 30 characters')
@@ -54,9 +54,6 @@ class Profile(models.Model):
 	location = models.CharField(max_length=30, blank=True, help_text='A maximum of 30 characters')
 	birth_date = models.DateField(null=True, blank=True, help_text='Format: YYYY-MM-DD.')
 	email_confirmed = models.BooleanField(default=False)
-	
-	def __str__(self):
-		return self.user
 	
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

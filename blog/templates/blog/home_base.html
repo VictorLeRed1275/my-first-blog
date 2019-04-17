@@ -17,6 +17,9 @@
 		<script src="{% static 'js/jquery.js' %}"></script>
 	</head>
 	<body>
+		<div class="load-container">
+			<div class="loader"></div>
+		</div>
 		<div id="top"></div>
 		<div class="parallax">
 			<div class="banner">
@@ -44,33 +47,42 @@
 			</div>
 			<div id="navbar">
 				<div class="navigation-menu">
-					<a class="active" href="/">Home</a>
-					<a href="/post/">Blog</a>
-					<a href="{% url 'contact' %}">Contact</a>
-				{% if user.is_superuser %}
-					<a href="{% url 'dev_tools' %}">Development tools</a>
-				{% endif %}
+					<div class="menu-bars">
+						<div class="bar1"></div>
+						<div class="bar2"></div>
+						<div class="bar3"></div>
+					</div>
+					<a class="main" href="{% url 'home' %}">Home</a>
+					<a class="main" href="{% url 'post_list' %}">Blog</a>
+					<a class="main" href="{% url 'contact' %}">Contact</a>
+					
 				{% if user.is_authenticated %}
 					<a href="{% url 'profile_view' pk=user.pk %}" id="user" style="background-image: url('/media/{{ user.profile.profile_picture }}');"></a>
-					<div class="greeting" style="padding: 16px;">{{ user.username }}</div>
+					<div class="greeting" style="font-size: 1.45em;padding: 0.78em;">{{ user.username }}</div>
 				{% else %}
-					<a href="{% url 'login' %}" class="user" id="user" style="background-image: url('/media/profile_pictures/user.png');"></a>
+					<a href="{% url 'login' %}" class="user" id="user" style="background-image: url('{% static 'images/user.png' %}');"></a>
 					<div class="greeting"><a href="{% url 'login' %}">Log in</a></div>
 					<div class="greeting"><a href="{% url 'signup' %}">Sign up</a></div>
 				{% endif %}
+					<div class="main-menu">
+						<a href="{% url 'home' %}">Home</a>
+						<a href="{% url 'post_list' %}">Blog</a>
+						<a href="{% url 'contact' %}">Contact</a>
+					</div>
 					<a href="#top" id="top-scroll" >T</a>
 				</div>
 			</div>
-			<div class="content">
 				<div class="dot-box">
 					<span class="dot" onclick="currentDiv(1)"></span> 
 					<span class="dot" onclick="currentDiv(2)"></span> 
 					<span class="dot" onclick="currentDiv(3)"></span> 
 				</div>
+			<div class="content">
+
 			{% block content %}
 			{% endblock %}
 			</div>
-		<div>
+		</div>
 		
 		<div class="page-footer">
 			<a href="#" class="facebook"><i class="fa fa-facebook"></i></a> 
@@ -95,12 +107,6 @@
 			</div>
 		</div>
 	</body>
-	{% block javascript %}
-	<script>
-
-	</script>
 	<script src="{% static 'js/blog.js' %}"></script>
 	<script src="{% static 'js/jquery.js' %}"></script>
-	{% endblock %}
-
 </html>

@@ -61,6 +61,37 @@ iframe {
 	border: none;
 }
 
+.loader {
+	border: 1em solid #eee; /* Light grey */
+	border-top: 1em solid #000; /* Blue */
+	border-radius: 50%;
+	width: 6em;
+	height: 6em;
+	animation: spin 2s linear infinite;
+	position:absolute;
+	top:45vh;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
+.load-container {
+	color: white;
+	position: fixed; /* Stay in place */
+	z-index: 200; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: black;
+	opacity: 0.9;
+}
+
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
 .mySlides {
 	background-color: black;
 	z-index:-100 !important;
@@ -135,6 +166,38 @@ iframe {
 	z-index: 2;
 }
 
+.menu-bars {
+	display: inline-block;
+	cursor: pointer;
+	display: none;
+	padding: 0.8em;
+}
+
+.bar1, .bar2, .bar3 {
+	width: 2.5em;
+	height: 0.35em;
+	background-color: white;
+	margin: 0.42em 0;
+	transition: 0.4s;
+}
+
+/* Rotate first bar */
+.change .bar1 {
+	-webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
+	transform: rotate(-45deg) translate(-9px, 6px) ;
+}
+
+/* Fade out the second bar */
+.change .bar2 {
+	opacity: 0;
+}
+
+/* Rotate last bar */
+.change .bar3 {
+	-webkit-transform: rotate(45deg) translate(-8px, -8px) ;
+	transform: rotate(45deg) translate(-8px, -8px) ;
+}
+
 .navigation-menu {
 	top: 0;
 	overflow: hidden;
@@ -182,23 +245,31 @@ iframe {
 	font-family: "NemoyMedium";
 	float: right;
 	color: white;
-	font-size: 1.45em;
-	padding: 0.78em;
+}
+
+.main-menu {
+	display:none;
 }
 
 .sticky + .content {
-	padding-top: 4.3em;
+	padding-top: 1000px;
 }
 
 .content {
 	position: relative;
 	min-height: 100%;
+	margin-top: 100vh;
 }
 
 .dot-box {
+	position:absolute;
+	top:92vh;
+	left: 0;
+	right: 0;
+	margin: auto;
 	text-align:center;
-	margin-bottom: 2.2em;
-	margin-top:36.8em;
+	margin-top:;
+	margin-bottom:;
 }
 
 /* The dots/bullets/indicators */
@@ -208,7 +279,7 @@ iframe {
 	width: 1em;
 	margin: 0 2;
 	background-color: none;
-	border: 0.05em solid #444;
+	border: 0.05em solid #fff;
 	border-radius: 50%;
 	display: inline-block;
 	transition: background-color 0.6s ease;
@@ -218,7 +289,7 @@ iframe {
 }
 
 .active-dot {
-	background-color: #444;
+	background-color: #fff;
 	transition: opacity 1s ease-in-out;
 }
 
@@ -235,9 +306,9 @@ iframe {
 }
 
 .content-container {
-	padding-top: 4.3em;
 	position: relative;
 	min-height: 100vh;
+	margin-top: 100vh;
 }
 
 .header-name {
@@ -245,15 +316,14 @@ iframe {
 	text-align: center;
 	background: rgb(0, 0, 0);
 	background: rgba(0, 0, 0, 0.5);
-	width: 30em;
-	margin: auto;
+	width: 35em;
 	padding: 1em;
-	margin-top:-7.6em;
-	position:relative;
-	bottom: 14em;
+	border: 0.3em solid #f1f1f1;
+	top:-60vh;
+	position:absolute;
 	left: 0;
 	right: 0;
-	border: 0.3em solid #f1f1f1;
+	margin: auto;
 }
 
 .header-name h1 {
@@ -270,6 +340,10 @@ iframe {
 	width:100%;
 	height:35em;
 	display: block;
+}
+
+.post-picture-detail {
+	height:100vh;
 }
 
 .list {
@@ -529,6 +603,11 @@ iframe {
 	background-color: #464646
 }
 
+.topless {
+	margin-top:-100vh;
+	padding-top:19.5vh;
+}
+
 .account-login a {
 	padding: 9px;
 	color: white;
@@ -687,7 +766,6 @@ iframe {
 /* The Modal (background) */
 .modal-pop {
 	color: white;
-	display: none; /* Hidden by default */
 	position: fixed; /* Stay in place */
 	z-index: 1; /* Sit on top */
 	left: 0;
@@ -711,6 +789,7 @@ iframe {
 	margin: auto;
 	background-color: black;
 	border: 3px solid #f1f1f1;
+	z-index:150;
 }
 
 /* The Close Button */

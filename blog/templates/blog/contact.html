@@ -2,8 +2,8 @@
 {% load widget_tweaks %}
 {% load staticfiles %}
 {% block content %}
-<div class="img3" style="background-image:url('{% static 'images/main(3).jpg' %}');"></div>
-<div class="header-name" style="margin-top:19.3em">
+<div class="img3 topless" style="background-image:url('{% static 'images/main(3).jpg' %}');"></div>
+<div class="header-name">
 	<h1>Contact</h1>
 	<p>If you have any questions, thoughts or any general ideas to improve this website and its content, please do not
 	hesitate to ask. Please note that I am only one person and it will take time to reach you and your question, but do not 
@@ -14,13 +14,16 @@
 	<div class="list-container">
 
 		<form method="post" class="post-form">
-				{% csrf_token %}
 				{% for field in form %}
 				<p>
-					{% render_field field placeholder=field.label %}
-					{% for error in field.errors %}
-						<small style="color: red">{{ error }}</small>
-					{% endfor %}
+					{% if field.errors %}
+						{% render_field field style="border-bottom: 0.5px solid red;" placeholder=field.label %}
+						{% for error in field.errors %}
+							<small style="color: red">{{ error }}</small>
+						{% endfor %}
+					{% else %}
+						{% render_field field placeholder=field.label %}
+					{% endif %}
 				</p>
 				{% endfor %}
 			<button type="submit">Send</button>

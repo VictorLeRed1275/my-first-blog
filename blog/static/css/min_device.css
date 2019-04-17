@@ -14,4 +14,30 @@
 	.button-half {
 		width: 100%;
 	}
+	.modal-pop-content {
+		top:0;
+		width: 100%;
+		height: 100%
+	}
+}
+
+@media only screen and (max-width: 409px) {
+	.main {
+		display:none;
+	}
+	.main-menu {
+		background-color: black;
+		display:none;
+		transition: 1s ease;
+	}
+	.main-menu a {
+		width:100%;
+		text-align:left;
+	}
+	.navigation-menu a {
+		text-align:left;
+	}
+	.menu-bars {
+		display: inline-block;
+	}
 }
