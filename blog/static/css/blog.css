@@ -25,7 +25,7 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-	-webkit-box-shadow: 0 0 0 30px #fff inset;
+	-webkit-box-shadow: 0 0 0 2em #fff inset;
 	background-color:rgba(0, 0, 0, 0.5);
 }
 
@@ -109,7 +109,7 @@ iframe {
 	right: 0;
 	bottom: 0;
 	z-index: -3;
-	transform: translate3d(0px, 0px, 0px);
+	transform: translate3d(0, 0, 0);
 }
 
 .slide-center {
@@ -183,8 +183,8 @@ iframe {
 
 /* Rotate first bar */
 .change .bar1 {
-	-webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
-	transform: rotate(-45deg) translate(-9px, 6px) ;
+	-webkit-transform: rotate(-45deg) translate(-0.65em, 0.43em) ;
+	transform: rotate(-45deg) translate(-0.65em, 0.43em) ;
 }
 
 /* Fade out the second bar */
@@ -194,8 +194,8 @@ iframe {
 
 /* Rotate last bar */
 .change .bar3 {
-	-webkit-transform: rotate(45deg) translate(-8px, -8px) ;
-	transform: rotate(45deg) translate(-8px, -8px) ;
+	-webkit-transform: rotate(45deg) translate(-0.57em, -0.57em) ;
+	transform: rotate(45deg) translate(-0.57em, -0.57em) ;
 }
 
 .navigation-menu {
@@ -234,6 +234,11 @@ iframe {
 #user:hover {
 	border-radius: 22%;
 	cursor: pointer;
+}
+
+.username {
+	font-size: 1.45em;
+	padding: 0.78em;
 }
 
 .user {
@@ -342,6 +347,28 @@ iframe {
 	display: block;
 }
 
+.popular-picture {
+	margin-bottom: -25em;
+}
+
+.popular {
+	left: 0;
+	right: 0;
+	width: 35em;
+	margin: auto auto 10em auto;
+	padding: 1em;
+	background-color: black;
+	background: rgb(0, 0, 0);
+	background: rgba(0, 0, 0, 0.5);
+	border: 0.3em solid #f1f1f1;
+	transition: opacity 1s ease-in-out;
+}
+
+.popular h1 {
+	color: white;
+	text-align: center;
+}
+
 .post-picture-detail {
 	height:100vh;
 }
@@ -363,12 +390,14 @@ iframe {
 .list-container {
 	background-color: #fff;
 	padding: 1em;
-	box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 0.1em 0.15em rgba(0, 0, 0, 0.05);
 }
 
 .about-photo {
 	text-align: center;
 	display:block;
+	width:15em;
+	height:15em;
 	margin: 2em auto;
 	border-radius: 50%;
 	opacity:0;
@@ -376,10 +405,11 @@ iframe {
 }
 
 .skill {
-	width: 100%; /* Full width */
-	background-color: #ddd; /* Grey background */
+	width: 100%;
+	background-color: #ddd;
 	transition: all 1.8s ease;
 	opacity:0;
+	margin-bottom: 1em;
 }
 
 .skill-progress {
@@ -445,6 +475,18 @@ iframe {
 	text-decoration: none;
 }
 
+.read-more {
+	display:inline-block;
+	float:none;
+	margin:10 0 0 0;
+}
+
+.reads {
+	float: right;
+	display: inline-block;
+	margin: 25 0 0 0;
+}
+
 .button-half {
 	width:50%;
 	display:inline-block;
@@ -467,7 +509,7 @@ iframe {
 .vote {
 	float: right;
 	background-color: black;
-	height:26px;
+	height:1.85em;
 }
 
 .vote a {
@@ -481,16 +523,24 @@ iframe {
 	padding: 3 6 3 6;
 	display:inline-block;
 	background-color: black;
-	height:26px;
+	height:1.85em;
 }
 
 .vote a:hover {
 	background-color: #464646;
 }
 
+.votes {
+	background-color: #fff;
+	display: inline-block;
+	padding: 2 0 4 0;
+	margin-right:-0.25em;
+}
+
 .vote-count {
 	display:inline-block;
 	color: white;
+	padding: 0 6 0 6;
 }
 
 .comment-count {
@@ -549,19 +599,24 @@ iframe {
 .post-form textarea, .post-form input {
     width: 100%;
 	border: none;
-	border-bottom: 0.5px solid #999;
-	padding: 5px;
-	font-size: 18.5px;
+	border-bottom: 0.05em solid #999;
+	padding: 0.3em;
 	background: none;
-	margin-bottom: 10px;
-	max-height: 150px;
-	transition: all 0.3s ease;
+	margin-bottom: 0.6em;
+}
+
+.post-form textarea {
+	height: 8em;
+	min-height: 8em;
+	max-height: 20em;
+	max-width: 100%;
+	min-width: 100%;
 }
 
 .post-form textarea:focus, .post-form input:focus {
     width: 100%;
 	border: none;
-	border-bottom: 0.5px solid #000;
+	border-bottom: 0.05em solid #000;
 	background: none;
 	outline-width: 0;
 }
@@ -569,32 +624,41 @@ iframe {
 .post-form select {
 	border: none;
 	padding: 5px;
-	font-size: 18.5px;
 	background: white;
-	margin-bottom: 10px;
-	max-height: 150px;
+	margin-bottom: 0.6em;
+	height: 8em;
+	min-height: 8em;
+	max-height: 20em;
+	max-width: 100%;
+	min-width: 100%;
 }
 
 .post-form p {
-	font-size: 18.5px;
 	color: black;
+}
+.error-field {
+	border-bottom: 0.05em solid #red;
+}
+
+.error {
+	color:red;
 }
 
 .profile-menu {
 	top: 0;
 	overflow: hidden;
 	background-color: black;
-	margin:-10 -10 20 -10;
+	margin:-1em -1em 2em -1em;
 	
 }
 
 .profile-menu a {
 	float: left;
 	text-align: center;
-	padding: 12px;
+	padding: 0.8em;
 	transition: all 0.3s ease;
 	color: white;
-	font-size: 15px;
+	font-size: 1em;
 	font-family: "NemoyMedium";
 	text-decoration:none;
 }
@@ -609,15 +673,15 @@ iframe {
 }
 
 .account-login a {
-	padding: 9px;
+	padding: 0.5em;
 	color: white;
 	cursor: pointer;
 	transition: all 0.3s ease;
-	font-size: 18.5px;
+	font-size: 1.3em;
 	text-decoration: none;
 	width: 33.3%;
 	display: inline-block;
-	margin-right: -4;
+	margin-right: -0.2em;
 	text-align:center;
 }
 
@@ -628,27 +692,26 @@ iframe {
 
 .account-login i {
 	text-align:center;
-	font-size: 18.5px;
-	width: 30px;
+	width: 1.5em;
 }
 
 /* headlines with lines */
 .decorated{
-     overflow: hidden;
-     text-align: center;
-	 margin: 25 0 20 0;
+	overflow: hidden;
+	text-align: center;
+	margin: 25 0 20 0;
  }
 .decorated > span{
-    position: relative;
-    display: inline-block;
+	position: relative;
+	display: inline-block;
 }
 .decorated > span:before, .decorated > span:after{
     content: '';
     position: absolute;
     top: 50%;
-    border-bottom: 1px solid #999;
-    width: 592px; /* half of limiter */
-    margin: 0 20px;
+    border-bottom: 0.1em solid #999;
+    width: 100em; /* half of limiter */
+    margin: 0 2em;
 }
 .decorated > span:before{
     right: 0%;
@@ -658,14 +721,18 @@ iframe {
 }
 
 .comment {
-	margin: 20px 0 20px 0;
+	margin:0;
+}
+
+.comment-remove {
+	float:right;
 }
 
 .comment-user {
-	border-radius: 15px;
-	width: 30px;
-	height: 30px;
-	margin: 5 5 0 0;
+	border-radius: 50%;
+	width: 2.3em;
+	height: 2.3em;
+	margin: 0.2em 0.4em 0 0;
 	top: 0;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -674,28 +741,15 @@ iframe {
 	float: left;
 }
 
-.profile-view p label {
-	width: 100px;
-	float:left;
-	display: inline-block;
-}
-.profile-view p div {
-	display: inline-block;
-	max-width:400px;
-	float:left;
-}
-.profile-view h1 {
-	font-size: 28px;
-}
-
-.profile-detail {
-	max-width: 50%;
+.comment-author {
+	padding-top:0.4em;
+	display:inline-block
 }
 
 .profile-picture {
-	width:120;
-	height:120;
-	border-radius: 60px;
+	width:15em;
+	height:15em;
+	border-radius: 50%;
 	top:0;
 	display: block;
 	margin-left: auto;
@@ -760,7 +814,7 @@ iframe {
 }
 
 .copyright {
-	margin-top: 10px;
+	margin-top: 1em;
 }
 
 /* The Modal (background) */
@@ -780,15 +834,16 @@ iframe {
 /* Modal Content/Box */
 .modal-pop-content {
 	color: white;
-	padding: 20px;
-	width: 80%; /* Could be more or less, depending on screen size */
+	padding: 3em;
+	width: 80%;
+	height: 80%;	/* Could be more or less, depending on screen size */
 	position:absolute;
-	top:30%;
+	top:10%;
 	left: 0;
 	right: 0;
 	margin: auto;
 	background-color: black;
-	border: 3px solid #f1f1f1;
+	border: 0.3em solid #f1f1f1;
 	z-index:150;
 }
 
@@ -796,7 +851,6 @@ iframe {
 .modal-close {
 	color: #aaa;
 	float: right;
-	font-size: 28px;
 }
 
 .modal-close:hover,
@@ -804,4 +858,8 @@ iframe {
 	color: white;
 	text-decoration: none;
 	cursor: pointer;
+}
+
+.modal-pop-content h3, .modal-pop-content p {
+	color: white;
 }

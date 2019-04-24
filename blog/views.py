@@ -20,7 +20,6 @@ from django.core.mail import send_mail
 
 from django.contrib.auth.models import User
 
-from paypal.standard.forms import PayPalPaymentsForm
 from django.urls import reverse
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -58,14 +57,20 @@ def signup(request):
 			message = render_to_string('blog/account_activation_email.html', {
 				'user': user,
 				'domain': current_site.domain,
+				'protocol': current_site.protocol,
 				'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode,
 				'token': account_activation_token.make_token(user),
 			})
 			email_from = settings.EMAIL_HOST_USER
 			print(email_from)
 			recipient_list = [user.email,]
-			send_mail(subject, message, email_from, recipient_list)
-			return redirect('account_activation_sent')
+			send = send_mail(subject, message, email_from, recipient_list, fail_silently=False, auth_user=None, auth_password=None, connection=None)
+			if send:
+				print(email_from)
+				return redirect('account_activation_sent')
+			else:
+				print("Email not sent")
+				return redirect('home')
 	else:
 		form = SignUpForm()
 	return render(request, 'reg/signup.html', {'form': form})
@@ -92,9 +97,7 @@ def activate(request, uidb64, token, backend='django.contrib.auth.backends.Model
 def home(request):
 	posts = []
 	count = 0
-	hit_count = HitCount.objects.annotate(num_hit=Count('hit')).order_by('-num_hit')
-	print(hit_count)
-	first_posts = Post.objects.annotate(num_comments=Count('comments')).order_by('-num_comments')
+	first_posts = Post.objects.order_by('hit_count_generic__hits').reverse()
 	for post in first_posts:
 		if post not in posts:
 			if count < 3:

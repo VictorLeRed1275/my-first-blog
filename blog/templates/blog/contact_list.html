@@ -1,17 +1,16 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-<div class="list topless">
-	<div class="list-container">
-		{% for enquiry in enquiries %}
-		<h2>{{ enquiry.topic }}</h2>
-		<p style="float:left;width:50%;font-size:18px;"><strong>{{ enquiry.name }}</strong> ({{ enquiry.email }})</p>
-		<p style="float:right;width:50%;font-size:18px;">{{ enquiry.published_date }}</p>
-		<p>{{ enquiry.message }}</p>
-		<a class="button" href="{% url 'contact_remove' pk=enquiry.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
-		<a class="button" href=""><span class="glyphicon glyphicon-envelope"></span></a>
-		{% empty %}
-		<p>No one has tried to contact you yet</p>
-		{% endfor %}
-	</div>
-</div>
+			<div class="list topless">
+				<div class="list-container">
+					{% for enquiry in enquiries %}		
+					<p style="" class="date">{{ enquiry.published_date|date:'F d, Y' }}</p>
+					<a class="button" href="{% url 'contact_remove' pk=enquiry.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+					<a class="button" href=""><span class="glyphicon glyphicon-envelope"></span></a>
+					<p style=""><strong>{{ enquiry.name }}</strong> ({{ enquiry.email }})</p>
+					<p>{{ enquiry.message }}</p>
+					{% empty %}
+					<p>No one has tried to contact you yet</p>
+					{% endfor %}
+				</div>
+			</div>
 {% endblock %}

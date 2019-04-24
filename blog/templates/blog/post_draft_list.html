@@ -1,35 +1,33 @@
 {% extends 'blog/base.html' %}
-
 {% block content %}
-<div class="list topless">
-	<div class="list-container">
-	{% if user.is_superuser %}
-		<div class="profile-menu">
-			<a href="{% url 'post_new' %}">New blog post</a>
-			<a href="{% url 'post_draft_list' %}">Blog post drafts</a>
-			<a href="{% url 'contact_list' %}">Support</a>
-		</div>
-	{% else %}
-		<h1>Warning</h3>
-		<p>You are not authorised to use development tools</p>
-	{% endif %}
-	</div>
-</div>
-{% for post in posts %}
-<div class="post-picture" style="background-image:url('/media/{{ post.post_picture }}');"></div>
-<div class="list">
-	<div class="list-container">
-
-        <div class="post">
-            <p class="date">Created: {{ post.created_date|date:'F d, Y' }}</p>
-            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
-            <p>{{ post.text|truncatechars:200 }}</p>
-        </div>
-	</div>
-</div>
-{% empty %}
-<div class="list">
-	<p>There are no drafts to be published</p>
-</div>
-{% endfor %}
+			<div class="list topless">
+				<div class="list-container">
+				{% if user.is_superuser %}
+					<div class="profile-menu">
+						<a href="{% url 'post_new' %}">New blog post</a>
+						<a href="{% url 'post_draft_list' %}">Blog post drafts</a>
+						<a href="{% url 'contact_list' %}">Support</a>
+					</div>
+				{% else %}
+					<h1>Warning</h3>
+					<p>You are not authorised to use development tools</p>
+				{% endif %}
+				</div>
+			</div>
+			{% for post in posts %}
+			<div class="post-picture" style="background-image:url('/media/{{ post.post_picture }}');"></div>
+			<div class="list">
+				<div class="list-container">
+					<div class="post">
+						<p class="date">Created: {{ post.created_date|date:'F d, Y' }}</p>
+						<h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+						<p>{{ post.text|truncatechars:200 }}</p>
+					</div>
+				</div>
+			</div>
+			{% empty %}
+			<div class="list">
+				<p>There are no drafts to be published</p>
+			</div>
+			{% endfor %}
 {% endblock %}

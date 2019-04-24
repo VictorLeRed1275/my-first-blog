@@ -1,18 +1,17 @@
 {% extends 'blog/base.html' %}
-
 {% block content %}
-<div class="list topless">
-	<div class="list-container">
-	{% if user.is_superuser %}
-		<div class="profile-menu">
-			<a href="{% url 'post_new' %}">New</a>
-			<a href="{% url 'post_draft_list' %}">Drafts</a>
-			<a href="{% url 'contact_list' %}">Contacts</a>
-		</div>
-	{% else %}
-		<h1>Warning</h3>
-		<p>You are not authorised to use development tools</p>
-	{% endif %}
-	</div>
-</div>
+			<div class="list topless">
+				<div class="list-container">
+				{% if user.is_superuser %}
+					<div class="profile-menu">
+						<a href="{% url 'post_new' %}">New</a>
+						<a href="{% url 'post_draft_list' %}">Drafts</a>
+						<a href="{% url 'contact_list' %}">Contacts</a>
+					</div>
+				{% else %}
+					<h1>Warning</h3>
+					<p>You are not authorised to use development tools</p>
+				{% endif %}
+				</div>
+			</div>
 {% endblock %}

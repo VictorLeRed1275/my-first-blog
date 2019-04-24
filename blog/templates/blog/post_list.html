@@ -2,73 +2,52 @@
 {% load staticfiles %}
 {% block content %}
 {% load hitcount_tags %}
-	<div class="img1" style="background-image:url('{% static 'images/main(1).jpg' %}');"></div>
-	<br>
-	<br>
-	<div class="header-name" style="">
-		<h1>Posts</h1>
-		<p>This is a list of all my posts. To see more detail on a post simply click on the title</p>
-	</div>
-
-		{% for post in posts %}
-		<div class="post-picture" style="background-image:url('/media/{{ post.post_picture }}');"></div>
-		<div class="list">
-			<div class="post list-container">
-				<h2>{{ post.title }}</h2>
-				<div class="date">
-					<p>{{ post.published_date|date:'F d, Y' }}</p>
-				</div>
-				<br/>
-				<p>{{ post.text|linebreaksbr|truncatewords:100 }}</p>
-				<a href="{% url 'post_detail' pk=post.pk %}" class="button" style="display:inline-block;float:none;margin:10 0 0 0;">Read more</a>
-				<div style="float:right;display:inline-block;margin:25 0 0 0;">Reads:
-					<div class="comment-count">{% get_hit_count for post %}</div>
+			<div class="img1" style="background-image:url('{% static 'images/main(1).jpg' %}');"></div>
+			<div class="header-name">
+				<h1>Posts</h1>
+				<p>This is a list of all my posts. To see more detail on a post simply click on the title</p>
+			</div>
+			{% for post in posts %}
+			<div class="post-picture" style="background-image:url('/media/{{ post.post_picture }}');"></div>
+			<div class="list">
+				<div class="post list-container">
+					<h2>{{ post.title }}</h2>
+					<div class="date">
+						<p>{{ post.published_date|date:'F d, Y' }}</p>
+					</div>
+					<br/>
+					<p>{{ post.text|linebreaksbr|truncatewords:100 }}</p>
+					<a href="{% url 'post_detail' pk=post.pk %}" class="button read-more">Read more</a>
+					<div class="reads">Reads:
+						<div class="comment-count">{% get_hit_count for post %}</div>
+					</div>
 				</div>
 			</div>
-		</div>
-		{% empty %}
-		<div class="list">
-			<p>There are no current posts available</p>
-		</div>
-		{% endfor %}
-	<div class="extra-picture" style="background-image:url('{% static 'images/extra(1).jpg' %}');"></div>
-	{% if posts.has_other_pages %}
-	<div class="paginator">
-		{% if posts.has_previous %}
-		<div><a href="?page={{ posts.previous_page_number }}" class="button">&laquo;</a></div>
-		{% else %}
-		<div class="disabled"><span class="button">&laquo;</span></div>
-		{% endif %}
-		{% for i in posts.paginator.page_range %}
-			{% if posts.number == i %}
-		<div class="active"><span class="button">{{ i }}</span></div>
-			{% else %}
-		<div><a href="?page={{ i }}" class="button">{{ i }}</a></div>
+			{% empty %}
+			<div class="list">
+				<p>There are no current posts available</p>
+			</div>
+			{% endfor %}
+			<div class="extra-picture" style="background-image:url('{% static 'images/extra(1).jpg' %}');"></div>
+			{% if posts.has_other_pages %}
+			<div class="paginator">
+				{% if posts.has_previous %}
+				<div><a href="?page={{ posts.previous_page_number }}" class="button">&laquo;</a></div>
+				{% else %}
+				<div class="disabled"><span class="button">&laquo;</span></div>
+				{% endif %}
+				{% for i in posts.paginator.page_range %}
+					{% if posts.number == i %}
+				<div class="active"><span class="button">{{ i }}</span></div>
+					{% else %}
+				<div><a href="?page={{ i }}" class="button">{{ i }}</a></div>
+					{% endif %}
+				{% endfor %}
+				{% if posts.has_next %}
+				<div><a href="?page={{ posts.next_page_number }}" class="button">&raquo;</a></div>
+				{% else %}
+				<div class="disabled"><span class="button">&raquo;</span></div>
+				{% endif %}
+			</div>
 			{% endif %}
-		{% endfor %}
-		{% if posts.has_next %}
-		<div><a href="?page={{ posts.next_page_number }}" class="button">&raquo;</a></div>
-		{% else %}
-		<div class="disabled"><span class="button">&raquo;</span></div>
-		{% endif %}
-	</div>
-	{% endif %}
-	{% block javascript %}
-<script>
-var image1 = document.querySelector(".img1");
-function setTranslate(xPos, yPos, el) {
-	el.style.transform = "translate3d(" + xPos + ", " + yPos + "px, 0)";
-}
-window.addEventListener("DOMContentLoaded", scrollLoop, false);
-var xScrollPosition;
-var yScrollPosition;
-
-function scrollLoop() {
-	xScrollPosition = window.scrollX;
-	yScrollPosition = window.scrollY;
-	setTranslate(0, yScrollPosition / -3, image1);
-	requestAnimationFrame(scrollLoop);
-}
-</script>
-	{% endblock %}
 {% endblock %}

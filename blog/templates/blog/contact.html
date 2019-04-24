@@ -2,51 +2,34 @@
 {% load widget_tweaks %}
 {% load staticfiles %}
 {% block content %}
-<div class="img3 topless" style="background-image:url('{% static 'images/main(3).jpg' %}');"></div>
-<div class="header-name">
-	<h1>Contact</h1>
-	<p>If you have any questions, thoughts or any general ideas to improve this website and its content, please do not
-	hesitate to ask. Please note that I am only one person and it will take time to reach you and your question, but do not 
-	let that dissuade you from asking a questions. There are, however, certain conditions to adhere to. If you are unsure of
-	what they are, please take the time to read the <a>Terms & conditions</a> before you submit your answer.</p><br/>
-</div>
-<div class="list">
-	<div class="list-container">
+			<div class="img3 topless" style="background-image:url('{% static 'images/main(3).jpg' %}');"></div>
+			<div class="header-name">
+				<h1>Contact</h1>
+				<p>If you have any questions, thoughts or any general ideas to improve this website and its content, please do not
+				hesitate to ask. Please note that I am only one person and it will take time to reach you and your question, but do not 
+				let that dissuade you from asking a questions. There are, however, certain conditions to adhere to. If you are unsure of
+				what they are, please take the time to read the <a>Terms & conditions</a> before you submit your answer.</p><br/>
+			</div>
+			<div class="list">
+				<div class="list-container">
 
-		<form method="post" class="post-form">
-				{% for field in form %}
-				<p>
-					{% if field.errors %}
-						{% render_field field style="border-bottom: 0.5px solid red;" placeholder=field.label %}
-						{% for error in field.errors %}
-							<small style="color: red">{{ error }}</small>
-						{% endfor %}
-					{% else %}
-						{% render_field field placeholder=field.label %}
-					{% endif %}
-				</p>
-				{% endfor %}
-			<button type="submit">Send</button>
-		</form>
-	</div>
-</div>
-<div class="extra-picture" style="background-image:url('{% static 'images/extra(1).jpg' %}');"></div>
-	{% block javascript %}
-<script>
-var image3 = document.querySelector(".img3");
-function setTranslate(xPos, yPos, el) {
-	el.style.transform = "translate3d(" + xPos + ", " + yPos + "px, 0)";
-}
-window.addEventListener("DOMContentLoaded", scrollLoop, false);
-var xScrollPosition;
-var yScrollPosition;
-
-function scrollLoop() {
-	xScrollPosition = window.scrollX;
-	yScrollPosition = window.scrollY;
-	setTranslate(0, yScrollPosition / -3, image3);
-	requestAnimationFrame(scrollLoop);
-}
-</script>
-	{% endblock %}
+					<form method="post" class="post-form">
+						{% csrf_token %}
+							{% for field in form %}
+							<p>
+								{% if field.errors %}
+									{% render_field field class="error-field" placeholder=field.label %}
+									{% for error in field.errors %}
+										<small class="error">{{ error }}</small>
+									{% endfor %}
+								{% else %}
+									{% render_field field placeholder=field.label %}
+								{% endif %}
+							</p>
+							{% endfor %}
+						<button type="submit">Send</button>
+					</form>
+				</div>
+			</div>
+			<div class="extra-picture" style="background-image:url('{% static 'images/extra(1).jpg' %}');"></div>
 {% endblock %}

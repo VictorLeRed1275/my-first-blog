@@ -1,3 +1,4 @@
+//Loader
 function onReady(callback) {
 	var intervalId = window.setInterval(function() {
 		if (document.getElementsByTagName('body')[0] !== undefined) {
@@ -12,10 +13,11 @@ function setVisible(selector, visible) {
 }
 
 onReady(function() {
-  setVisible('body', true);
-  setVisible('.load-container', false);
+	setVisible('body', true);
+	setVisible('.load-container', false);
 });
 
+//Slideshow
 var slideIndex = 0;
 showSlides();
 
@@ -36,7 +38,7 @@ function showSlides() {
 	slides[slideIndex-1].style.opacity = "1";
 	slide_center[slideIndex-1].style.opacity = "1";
 	dots[slideIndex-1].className += " active-dot";
-    setTimeout(showSlides, 5000); // Change image every 2 seconds
+    setTimeout(showSlides, 5000);
 }
 
 var slideIndex = 1;
@@ -65,6 +67,18 @@ function showDivs(n) {
 	dots[slideIndex-1].className += " active-dot";
 }
 
+var clickdots = document.getElementsByClassName("dot");
+clickdots[0].onclick = function(){
+	currentDiv(1);
+}
+clickdots[1].onclick = function(){
+	currentDiv(2);
+}
+clickdots[2].onclick = function(){
+	currentDiv(3);
+}
+
+//Animation
 window.onscroll = function() {scrollFunc()};
 var header = document.getElementById("navbar");
 var sticky = header.offsetTop;
@@ -102,6 +116,7 @@ function scrollFunc() {
 	}
 }
 
+//Parallax
 var image1 = document.querySelector(".img1");
 var image2 = document.querySelector(".img2");
 var image3 = document.querySelector(".img3");
@@ -121,31 +136,27 @@ function scrollLoop() {
 	requestAnimationFrame(scrollLoop);
 }
 
+//Scroll to top
 $(function() {
 	$('#top-scroll').bind('click', function(event) {
 		$("html, body").animate({ scrollTop: 0 }, 1000);
 		event.preventDefault();
 	});
 });
-	
-// Get the modal
+
+//Modal
 var modal = document.getElementById('myModal');
-
-// Get the <span> element that closes the modal
 var span = document.getElementsByClassName("modal-close")[0];
-
-// When the user clicks on <span> (x), close the modal
 span.onclick = function() {
-  modal.style.display = "none";
+	modal.style.display = "none";
 }
-
-// When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
+	if (event.target == modal) {
+		modal.style.display = "none";
+	}
 }
 
+//Counter
 $(window).scroll(startCounter);
 function startCounter() {
 	if ($(window).scrollTop() > 1150 && $(window).scrollTop() < 1160) {
@@ -163,6 +174,7 @@ function startCounter() {
 	}
 }
 
+//Mini-bar
 var menu_bars = document.getElementsByClassName("menu-bars")[0];
 menu_bars.onclick = function(){
 	var toggle = menu_bars.classList.toggle("change");

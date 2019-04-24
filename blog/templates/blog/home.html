@@ -2,70 +2,73 @@
 {% load staticfiles %}
 {% block content %}
 {% load hitcount_tags %}
-	<div class="list">
-		<div class="list-container">
-			<img src="{% static 'images/profile.jpg' %}" class="about-photo"/>
-			<div id="about">
-				<h1>About</h1>
-				<p>Hi. I am Vihan, also known as Victor. I consider myself a professional web designer, photographer, video 
-				editor and writer. I have about a year's worth of experience working as a front and back-end developer, but I still
-				know what I'm doing. I work only to impress my clients and their potential clients with amazing websites that are 
-				easily memorable. If you are looking for a website that will leave your competition in the dust please contact me.
-				</p>
-			</div>
-			<br/>
-			<h1 id="skill">Skills</h1>
-			<p>Web Design:</p>
-			<div class="skill">
-				<div class="skill-progress skill-one">90%</div>
-			</div>
-			<p>Writing:</p>
-			<div class="skill">
-				<div class="skill-progress skill-two">80%</div>
-			</div>
-			<p>Photography:</p>
-			<div class="skill">
-				<div class="skill-progress skill-three">65%</div>
-			</div>
-			<p>Photo and Video Editing:<p/>
-			<div class="skill">
-				<div class="skill-progress skill-four">60%</div>
-			</div>
-			<br/>
-			<h1>Reputation</h1>
-			<br/>
-			<br/>
-			<div class="job-board">
-				<div class="job-tile"><h3 class="amount" data="1">0</h3>Connections</div>
-				<div class="job-tile"><h3 class="amount" data="3">0</h3>Projects</div>
-				<div class="job-tile"><h3 class="amount" data="3">0</h3>Clients</div>
-				<div class="job-tile"><h3 class="amount" data="5">0</h3>Consultations</div>
-			</div>
-		</div>
-	</div>
-	<div class="post-picture" style="background-image:url('{% static 'images/extra(1).jpg' %}');"></div>
-	<div>
-		<h1>Popular posts</h1>
-	</div>
-		{% for post in posts %}
-		<div class="post-picture" style="background-image:url('/media/{{ post.post_picture }}');"></div>
-		<div class="list">
-			<div class="post list-container">
-				<h2>{{ post.title }}</h2>
-				<div class="date">
-					<p>{{ post.published_date|date:'F d, Y' }}</p>
-				</div>
-				<br/>
-				<p>{{ post.text|linebreaksbr|truncatewords:100 }}</p>
-				<a href="{% url 'post_detail' pk=post.pk %}" class="button" style="display:inline-block;float:none;margin:10 0 0 0;">Read more</a>
-				<div style="float:right;display:inline-block;margin:25 0 0 0;">Reads: 
-					<div class="comment-count">{% get_hit_count for post %}</div>
+			<div class="list">
+				<div class="list-container">
+					<img src="{% static 'images/profile.jpg' %}" class="about-photo" alt="About me"/>
+					<div id="about">
+						<h1>About</h1>
+						<p>Hi. I am Vihan, also known as Victor. I consider myself a professional web designer, photographer, 
+						video editor and writer. I have about a year's worth of experience working as a front and back-end 
+						developer, but I still know what I'm doing. I work only to impress my clients and their potential 
+						clients with amazing websites that are easily memorable. If you are looking for a website that will 
+						leave your competition in the dust please contact me.
+						</p>
+					</div>
+					<br/>
+					<h1 id="skill">Skills</h1>
+					<p>Web Design:</p>
+					<div class="skill">
+						<div class="skill-progress skill-one">90%</div>
+					</div>
+					<p>Writing:</p>
+					<div class="skill">
+						<div class="skill-progress skill-two">80%</div>
+					</div>
+					<p>Photography:</p>
+					<div class="skill">
+						<div class="skill-progress skill-three">65%</div>
+					</div>
+					<p>Photo and Video Editing:<p/>
+					<div class="skill">
+						<div class="skill-progress skill-four">60%</div>
+					</div>
+					<br/>
+					<h1>Reputation</h1>
+					<br/>
+					<br/>
+					<div class="job-board">
+						<div class="job-tile"><h3 class="amount" data="1">0</h3>Connections</div>
+						<div class="job-tile"><h3 class="amount" data="3">0</h3>Projects</div>
+						<div class="job-tile"><h3 class="amount" data="3">0</h3>Clients</div>
+						<div class="job-tile"><h3 class="amount" data="5">0</h3>Consultations</div>
+					</div>
 				</div>
 			</div>
-		</div>
-		{% empty %}
-		<div class="list">
-			<p>There are no current posts available</p>
-		</div>
-		{% endfor %}
+			<div class="post-picture popular-picture" style="background-image:url('{% static 'images/extra(1).jpg' %}');"></div>
+			<div class="popular">
+				<h1>Popular posts</h1>
+			</div>
+			{% for post in posts %}
+			<div class="post-picture" style="background-image:url('/media/{{ post.post_picture }}');"></div>
+			<div class="list">
+				<div class="post list-container">
+					<h2>{{ post.title }}</h2>
+					<div class="date">
+						<p>{{ post.published_date|date:'F d, Y' }}</p>
+					</div>
+					<br/>
+					<p>{{ post.text|linebreaksbr|truncatewords:100 }}</p>
+					<a href="{% url 'post_detail' pk=post.pk %}" class="button read-more">Read more</a>
+					<div class="reads">Reads: 
+						<div class="comment-count">{% get_hit_count for post %}</div>
+					</div>
+				</div>
+			</div>
+			{% empty %}
+			<div class="list">
+				<div class="list-container">
+					<p>There are no current posts available</p>
+				</div>
+			</div>
+			{% endfor %}
 {% endblock %}
