@@ -50,11 +50,9 @@ INSTALLED_APPS = [
 	'widget_tweaks',
 	'vote',
 	'hitcount',
+	'social_widgets',
 	'blog',
 ]
-
-PAYPAL_RECEIVER_EMAIL = 'nighthowler1275-facilitator@gmail.com'
-PAYPAL_TEST = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -65,7 +63,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 	'social_django.middleware.SocialAuthExceptionMiddleware',
+	'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
+
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 604800 			
+CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 CACHES = {
 	'default': {
@@ -102,8 +107,12 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'blog',
+        'USER': 'victorlered',
+        'PASSWORD': 'cabi201275',
+        'HOST': '127.0.0.1',
+        'PORT': '52571',
     }
 }
 

@@ -117,23 +117,25 @@ function scrollFunc() {
 }
 
 //Parallax
-var image1 = document.querySelector(".img1");
-var image2 = document.querySelector(".img2");
-var image3 = document.querySelector(".img3");
-function setTranslate(xPos, yPos, el) {
-	el.style.transform = "translate3d(" + xPos + ", " + yPos + "px, 0)";
-}
-window.addEventListener("DOMContentLoaded", scrollLoop, false);
-var xScrollPosition;
-var yScrollPosition;
+if ($(window).width() > 700) {
+	var image1 = document.querySelector(".img1");
+	var image2 = document.querySelector(".img2");
+	var image3 = document.querySelector(".img3");
+	function setTranslate(xPos, yPos, el) {
+		el.style.transform = "translate3d(" + xPos + ", " + yPos + "px, 0)";
+	}
+	window.addEventListener("DOMContentLoaded", scrollLoop, false);
+	var xScrollPosition;
+	var yScrollPosition;
 
-function scrollLoop() {
-	xScrollPosition = window.scrollX;
-	yScrollPosition = window.scrollY;
-	setTranslate(0, yScrollPosition / +3, image1);
-	setTranslate(0, yScrollPosition / +3, image2);
-	setTranslate(0, yScrollPosition / +3, image3);
-	requestAnimationFrame(scrollLoop);
+	function scrollLoop() {
+		xScrollPosition = window.scrollX;
+		yScrollPosition = window.scrollY;
+		setTranslate(0, yScrollPosition / +3, image1);
+		setTranslate(0, yScrollPosition / +3, image2);
+		setTranslate(0, yScrollPosition / +3, image3);
+		requestAnimationFrame(scrollLoop);
+	}
 }
 
 //Scroll to top

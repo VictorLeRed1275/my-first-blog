@@ -48,23 +48,25 @@ menu_bars.onclick = function(){
 	}
 }
 
-var image1 = document.querySelector(".img1");
-var image3 = document.querySelector(".img3");
-function setTranslate(xPos, yPos, el) {
-	el.style.transform = "translate3d(" + xPos + ", " + yPos + "px, 0)";
-}
-window.addEventListener("DOMContentLoaded", scrollLoop, false);
-var xScrollPosition;
-var yScrollPosition;
+if ($(window).width() > 700) {
+	var image1 = document.querySelector(".img1");
+	var image3 = document.querySelector(".img3");
+	function setTranslate(xPos, yPos, el) {
+		el.style.transform = "translate3d(" + xPos + ", " + yPos + "px, 0)";
+	}
+	window.addEventListener("DOMContentLoaded", scrollLoop, false);
+	var xScrollPosition;
+	var yScrollPosition;
 
-function scrollLoop() {
-	xScrollPosition = window.scrollX;
-	yScrollPosition = window.scrollY;
-	if(image1 != undefined){
-		setTranslate(0, yScrollPosition / -3, image1);
+	function scrollLoop() {
+		xScrollPosition = window.scrollX;
+		yScrollPosition = window.scrollY;
+		if(image1 != undefined){
+			setTranslate(0, yScrollPosition / -3, image1);
+		}
+		if(image3 != undefined){
+			setTranslate(0, yScrollPosition / -3, image3);
+		}
+		requestAnimationFrame(scrollLoop);
 	}
-	if(image3 != undefined){
-		setTranslate(0, yScrollPosition / -3, image3);
-	}
-	requestAnimationFrame(scrollLoop);
 }

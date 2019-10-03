@@ -4,16 +4,9 @@
 		<title>Victor's blog</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Cache-Control" content="max-age=604800" />
 		<link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}"/>
-		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap-theme.min.css">
-		<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
-		<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-theme.min.css' %}">
 		<link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
-		<link rel="stylesheet" href="{% static 'css/min_device.css' %}">
-		<link rel="stylesheet" type="text/css" href="{% static 'css/Dosis.css' %}">
-		<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="{% static 'js/blog.js' %}"></script>
 		<script src="{% static 'js/jquery.js' %}"></script>
 	</head>
@@ -24,21 +17,21 @@
 		<div id="top"></div>
 		<div class="banner">
 			<div class="mySlides">
-				<div class="img1 slide" style="background-image:url('{% static 'images/main(1).jpg' %}');"></div>
+				<div class="img1 slide"></div>
 				<div class="slide-center">
 					<h1>Photography</h1>
 					<p>Taking your photos so you don't have to</p>
 				</div>
 			</div>
 			<div class="mySlides">
-				<div class="img2 slide" style="background-image:url('{% static 'images/main(2).jpg' %}');"></div>
+				<div class="img2 slide"></div>
 				<div class="slide-center">
 					<h1>Web design</h1>
 					<p>A beautifull website without any hastle</p>
 				</div>
 			</div>
 			<div class="mySlides">
-				<div class="img3 slide" style="background-image:url('{% static 'images/main(3).jpg' %}');"></div>
+				<div class="img3 slide"></div>
 				<div class="slide-center">
 					<h1>Video editing</h1>
 					<p>Profesional level performance at ease</p>
@@ -59,7 +52,7 @@
 				<a href="{% url 'profile_view' pk=user.pk %}" id="user" style="background-image: url('/media/{{ user.profile.profile_picture }}');"></a>
 				<div class="greeting username">{{ user.username }}</div>
 			{% else %}
-				<a href="{% url 'login' %}" class="user" id="user" style="background-image: url('{% static 'images/user.png' %}');"></a>
+				<a href="{% url 'login' %}" class="user" id="user"></a>
 				<div class="greeting"><a href="{% url 'login' %}">Log in</a></div>
 				<div class="greeting"><a href="{% url 'signup' %}">Sign up</a></div>
 			{% endif %}

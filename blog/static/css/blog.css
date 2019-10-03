@@ -1,5 +1,12 @@
+{% load staticfiles %}
+
 @import url(../fonts/nemoy/nemoy.css);
-@import url(../fonts/dosis/Dosis.css);
+@import url(../fonts/raleway/Raleway.css);
+@import url(../fonts/fontawesome/fontawesome.css);
+
+@import url(../css/bootstrap/css/bootstrap.min.css);
+@import url(../css/bootstrap/css/bootstrap-themes.min.css);
+@import url(../css/min_device.css);
 
 @-webkit-keyframes fade {
 	from {opacity: .4} 
@@ -110,6 +117,18 @@ iframe {
 	bottom: 0;
 	z-index: -3;
 	transform: translate3d(0, 0, 0);
+}
+
+.img1 {
+	background-image:url('../images/main(1).jpg');
+}
+
+.img2 {
+	background-image:url('../images/main(2).jpg');
+}
+
+.img3 {
+	background-image:url('../images/main(3).jpg');
 }
 
 .slide-center {
@@ -243,6 +262,7 @@ iframe {
 
 .user {
 	display: none;
+	background-image: url('../images/user.png');
 }
 
 .greeting {
