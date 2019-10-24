@@ -32,15 +32,6 @@ from hitcount.views import HitCountMixin
 
 from django.core.cache import cache
 
-def cache_view(request):
-	cache_key = 'my_unique_key' # needs to be unique
-	cache_time = 86400 # time in seconds for cache to be valid
-	data = cache.get(cache_key) # returns None if no key-value pair
-	if not data:
-		my_service = Service()
-		data = service.get_data()
-		cache.set(cache_key, data, cache_time)
-	return JsonResponse(data, safe=False)
 
 def error_404_view(request, exception):
     return render(request,'blog/404.html')
@@ -49,55 +40,20 @@ def signup(request):
 	if request.method == 'POST':
 		form = SignUpForm(request.POST)
 		if form.is_valid():
-			user = form.save(commit=False)
-			user.is_active = False
-			user.save()
-			current_site = get_current_site(request)
-			subject = 'Activate Your MySite Account'
-			message = render_to_string('blog/account_activation_email.html', {
-				'user': user,
-				'domain': current_site.domain,
-				'protocol': current_site.protocol,
-				'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode,
-				'token': account_activation_token.make_token(user),
-			})
-			email_from = settings.EMAIL_HOST_USER
-			print(email_from)
-			recipient_list = [user.email,]
-			send = send_mail(subject, message, email_from, recipient_list, fail_silently=False, auth_user=None, auth_password=None, connection=None)
-			if send:
-				print(email_from)
-				return redirect('account_activation_sent')
-			else:
-				print("Email not sent")
-				return redirect('home')
+			form.save()
+			username = form.cleaned_data.get('username')
+			raw_password = form.cleaned_data.get('password1')
+			user = authenticate(username=username, password=raw_password)
+			login(request, user)
+			return redirect('home')
 	else:
 		form = SignUpForm()
-	return render(request, 'reg/signup.html', {'form': form})
-
-def account_activation_sent(request):
-    return render(request, 'blog/account_activation_sent.html')
-	
-def activate(request, uidb64, token, backend='django.contrib.auth.backends.ModelBackend'):
-    try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.profile.email_confirmed = True
-        user.save()
-        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-        return redirect('home')
-    else:
-        return render(request, 'blog/account_activation_invalid.html')
+	return render(request, 'registration/signup.html', {'form': form})
 
 def home(request):
 	posts = []
 	count = 0
-	first_posts = Post.objects.order_by('hit_count_generic__hits').reverse()
+	first_posts = Post.objects.all() # Fix me!!! .order_by('hit_count_generic__hits')
 	for post in first_posts:
 		if post not in posts:
 			if count < 3:
@@ -151,7 +107,6 @@ def post_list(request):
 	
 def post_detail(request, pk):
 	post = get_object_or_404(Post, pk=pk)
-	votecount = post.votes.count()
 	viewcount = HitCount.objects.get_for_object(post)
 	hit_count_response = HitCountMixin.hit_count(request, viewcount)
 	if request.method == "POST":
@@ -167,7 +122,6 @@ def post_detail(request, pk):
 	return render(request, 'blog/post_detail.html', {
 		'post': post,
 		'form': form,
-		'votecount': votecount
 	})
 	
 @login_required
@@ -219,18 +173,6 @@ def post_comment_remove(request, pk):
     comment = get_object_or_404(PostComment, pk=pk)
     comment.delete()
     return redirect('post_detail', pk=comment.post.pk)
-	
-@login_required
-def vote_up(request, pk):
-	post = get_object_or_404(Post, pk=pk)
-	post.votes.up(request.user.pk)
-	return redirect('post_detail', pk=post.pk)
-
-@login_required
-def vote_down(request, pk):
-	post = get_object_or_404(Post, pk=pk)
-	post.votes.down(request.user.pk)
-	return redirect('post_detail', pk=post.pk)
 	
 def contact(request):
 	if request.method == 'POST':

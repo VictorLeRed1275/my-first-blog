@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.validators import MaxValueValidator, MinValueValidator
-from vote.models import VoteModel
 
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
@@ -12,7 +11,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 
 from hitcount.models import HitCount, HitCountMixin
 
-class Post(VoteModel, models.Model):
+class Post(models.Model):
 	author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 	title = models.CharField(max_length=200, help_text='Needs to be short and catchy. A maximum of 200 characters')
 	text = models.TextField()
@@ -57,12 +56,12 @@ class Profile(models.Model):
 	
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-
+	if created:
+		Profile.objects.create(user=instance)
+		
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+	instance.profile.save()
 
 class Contact(models.Model):
 	email = models.CharField(max_length=254, help_text='Required. Inform a valid email address.')

@@ -1,7 +1,6 @@
 {% extends 'blog/base.html' %}
 {% load widget_tweaks %}
 {% load hitcount_tags %}
-{% load social_widgets %}
 {% block content %}
 			<div class="post-picture topless post-picture-detail" style="background-image:url('/media/{{ post.post_picture }}');"></div>
 			<div class="list">
@@ -24,18 +23,6 @@
 					</div>
 					<div class="analytics">
 						Reads: <div class="comment-count">{% get_hit_count for post %}</div>
-						<div class="vote">
-							<div class="votes"> Votes: </div>
-							{% if user.is_authenticated %}
-							<a href="{% url 'vote_up' pk=post.pk %}"><i class="glyphicon glyphicon-chevron-up"></i></a>
-							{% endif %}
-							<div class="vote-count">{{ votecount }}</div>
-							{% if user.is_authenticated %}
-							<a href="{% url 'vote_down' pk=post.pk %}"><i class="glyphicon glyphicon-chevron-down"></i></a>
-							{% endif %}
-						</div>
-						{% social_widget_render "facebook/share_button.html" href="developers.facebook.com" %}
-						{% social_widget_render "twitter/share_button.html" href="http://www.twitter.com" %}
 					</div>
 					<h3>Comments</h3>
 					{% if user.is_authenticated %}

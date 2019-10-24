@@ -18,6 +18,9 @@
 	to {opacity: 1}
 }
 
+html {
+	font-family: "Raleway", sans-serif;
+}
 body {
 	font-family: "Raleway", sans-serif;
 	background-color: #eee;
@@ -34,6 +37,7 @@ select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
 	-webkit-box-shadow: 0 0 0 2em #fff inset;
 	background-color:rgba(0, 0, 0, 0.5);
+	font-family: "Raleway", sans-serif;
 }
 
 h1, h2, h3, h4 {

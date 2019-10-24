@@ -30,6 +30,8 @@ ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = '/accounts/login/'
 
+LOGOUT_REDIRECT_URL = 'home'
+
 # Application definition
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -48,9 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 	'social_django',
 	'widget_tweaks',
-	'vote',
 	'hitcount',
-	'social_widgets',
 	'blog',
 ]
 
@@ -112,7 +112,7 @@ DATABASES = {
         'USER': 'victorlered',
         'PASSWORD': 'cabi201275',
         'HOST': '127.0.0.1',
-        'PORT': '52571',
+        'PORT': '5432',
     }
 }
 
