@@ -186,3 +186,21 @@ menu_bars.onclick = function(){
 		document.getElementsByClassName("main-menu")[0].style.display = "none";
 	}
 }
+
+var dropbtn = document.getElementsByClassName("dropbtn")[0];
+dropbtn.onclick = function() {
+	document.getElementById("myDropdown").classList.toggle("show");
+}
+
+window.onclick = function(event) {
+	if (!event.target.matches('.dropbtn')) {
+	  	var dropdowns = document.getElementsByClassName("dropdown-content");
+	  	var i;
+	  	for (i = 0; i < dropdowns.length; i++) {
+			var openDropdown = dropdowns[i];
+			if (openDropdown.classList.contains('show')) {
+		  		openDropdown.classList.remove('show');
+			}
+	  	}
+	}
+}

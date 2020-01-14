@@ -1,19 +1,6 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-			<div class="list topless">
-				<div class="list-container">
-				{% if user.is_superuser %}
-					<div class="profile-menu">
-						<a href="{% url 'post_new' %}">New blog post</a>
-						<a href="{% url 'post_draft_list' %}">Blog post drafts</a>
-						<a href="{% url 'contact_list' %}">Support</a>
-					</div>
-				{% else %}
-					<h1>Warning</h3>
-					<p>You are not authorised to use development tools</p>
-				{% endif %}
-				</div>
-			</div>
+			{% if user.is_superuser %}
 			{% for post in posts %}
 			<div class="post-picture" style="background-image:url('/media/{{ post.post_picture }}');"></div>
 			<div class="list">
@@ -30,4 +17,12 @@
 				<p>There are no drafts to be published</p>
 			</div>
 			{% endfor %}
+			{% else %}
+			<div class="list topless">
+				<div class="list-container">
+					<h1>Warning</h3>
+					<p>You are not authorised to use development tools</p>
+				</div>
+			</div>
+			{% endif %}
 {% endblock %}

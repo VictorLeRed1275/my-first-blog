@@ -1,37 +1,15 @@
-from django.shortcuts import render, get_object_or_404, render_to_response, redirect
-from django.db.models import Q
-from django.utils import timezone
-from .models import Post, PostComment, Profile, Contact
-from .forms import PostForm, PostCommentForm, SignUpForm, UserForm, ProfileForm, ContactForm
-from django.contrib.auth.decorators import login_required
-from django.db import models
+import datetime
+from .forms import *
+from .models import *
 from django.contrib.auth import login, authenticate
-from django.conf import settings
-from django.core.files.storage import FileSystemStorage
-
-from django.contrib.sites.shortcuts import get_current_site
-from django.utils.encoding import force_bytes, force_text
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.template.loader import render_to_string
-from .tokens import account_activation_token
-from django.views.decorators.http import condition
-
-from django.core.mail import send_mail
-
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-
-from django.urls import reverse
-
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
-from django.db.models import Count
-from django.views.decorators.csrf import csrf_exempt
-
-from hitcount.models import HitCount
+from django.shortcuts import render, get_object_or_404, render_to_response, redirect
+from django.urls import reverse
+from django.utils import timezone
 from hitcount.views import HitCountMixin
-
-from django.core.cache import cache
-
+from hitcount.models import HitCount
 
 def error_404_view(request, exception):
     return render(request,'blog/404.html')
@@ -65,12 +43,17 @@ def home(request):
 	
 @login_required
 def dev_tools(request):
-	return render(request, 'blog/development_tools.html')
+	enquiries = Contact.objects.order_by('published_date')
+	return render(request, 'blog/development_tools.html', {'enquiries': enquiries})
 
 @login_required
 def view_profile(request, pk):
 	profile = get_object_or_404(Profile, pk=pk)
-	return render(request, 'blog/profile_view.html', {'profile': profile})
+	posts = Post.objects.all().prefetch_related('likes').get()
+	return render(request, 'blog/profile_view.html', {
+		'profile': profile,
+		'posts': posts,
+	})
 	
 @login_required
 def update_profile(request):
@@ -106,6 +89,7 @@ def post_list(request):
 	})
 	
 def post_detail(request, pk):
+	likes = Like.objects.all()
 	post = get_object_or_404(Post, pk=pk)
 	viewcount = HitCount.objects.get_for_object(post)
 	hit_count_response = HitCountMixin.hit_count(request, viewcount)
@@ -122,6 +106,7 @@ def post_detail(request, pk):
 	return render(request, 'blog/post_detail.html', {
 		'post': post,
 		'form': form,
+		'likes': likes,
 	})
 	
 @login_required
@@ -185,12 +170,23 @@ def contact(request):
 	return render(request, 'blog/contact.html', {'form': form})
 	
 @login_required
-def contact_list(request):
-	enquiries = Contact.objects.order_by('published_date')
-	return render(request, 'blog/contact_list.html', {'enquiries': enquiries})
-	
-@login_required
 def contact_remove(request, pk):
     enquiry = get_object_or_404(Contact, pk=pk)
     enquiry.delete()
     return redirect('contact_list')
+
+@login_required
+def liked(user, pk):
+    post = Post.objects.get(pk=pk)
+    return Like.objects.filter(user=user, post=post).exists()
+
+@login_required
+def like(request, pk):
+	post = Post.objects.get(pk=pk)
+	if not Like.objects.filter(user=request.user, post=post).exists():
+		print("True")
+		Like.objects.create(user=request.user, post=post, timestamp=timezone.now())
+	else:
+		print("False")
+		Like.objects.filter(user=request.user, post=post).delete()
+	return redirect('home')

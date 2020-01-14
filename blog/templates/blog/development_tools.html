@@ -6,8 +6,17 @@
 					<div class="profile-menu">
 						<a href="{% url 'post_new' %}">New</a>
 						<a href="{% url 'post_draft_list' %}">Drafts</a>
-						<a href="{% url 'contact_list' %}">Contacts</a>
 					</div>
+					<h2>Recent contacts</h2>
+					{% for enquiry in enquiries %}		
+					<p class="date">{{ enquiry.published_date|date:'F d, Y' }}</p>
+					<a class="button" href="{% url 'contact_remove' pk=enquiry.pk %}">Delete</a>
+					<a class="button" href="">Email</a>
+					<p><strong>{{ enquiry.name }}</strong> ({{ enquiry.email }})</p>
+					<p>{{ enquiry.message }}</p>
+					{% empty %}
+					<p>No one has tried to contact you yet</p>
+					{% endfor %}
 				{% else %}
 					<h1>Warning</h3>
 					<p>You are not authorised to use development tools</p>

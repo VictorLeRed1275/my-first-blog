@@ -15,14 +15,15 @@
 						<a class="button" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
 						{% endif %}
 						{% if user.is_superuser %}
-						<a class="button" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-						<a class="button" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+						<a class="button" href="{% url 'post_edit' pk=post.pk %}">Edit</a>
+						<a class="button" href="{% url 'post_remove' pk=post.pk %}">Delete</span></a>
 						{% endif %}
 						<br/><h1>{{ post.title }}</h1>
 						<p>{{ post.text|linebreaksbr }}</p>
 					</div>
 					<div class="analytics">
 						Reads: <div class="comment-count">{% get_hit_count for post %}</div>
+						<a href="{% url 'like' pk=post.pk %}">Like:</a> <div class="comment-count">{{ likes.count }}</div>
 					</div>
 					<h3>Comments</h3>
 					{% if user.is_authenticated %}
@@ -50,7 +51,7 @@
 						{{ comment.created_date }}
 						{% if user.is_superuser %}
 							<a class="button comment-remove" href="{% url 'post_comment_remove' pk=comment.pk %}">
-								<span class="glyphicon glyphicon-remove"></span>
+								Delete
 							</a>
 						{% endif %}
 						</div>

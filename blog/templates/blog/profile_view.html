@@ -1,29 +1,22 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-			<div class="list topless">
-				<a href="/media/{{ profile.profile_picture }}" class="profile-picture" style="background-image: url('/media/{{ profile.profile_picture }}');"></a>
-				<h1>{{ profile.user }}</h1>
-				<div class="list-container">
+			<div class="list topless row">
+				<div class="list-container col-sm-3">
 					<div class="profile-view">
-						{% if user.username %}
-						<div class="profile-menu">
-							<a href="{% url 'profile_view' pk=user.pk %}">Profile</a>
-							<a href="{% url 'profile_edit' %}">Edit</a>
-							<a href="{% url 'logout' %}">Log out</a>
-						{% if user.is_superuser %}
-							<a href="{% url 'dev_tools' %}">Tools</a>
-						{% endif %}
-						</div>
-						{% endif %}
+						<a href="/media/{{ profile.profile_picture }}" class="profile-picture" style="background-image: url('/media/{{ profile.profile_picture }}');"></a>
+						<h2 class="text-center">{{ profile.user }}</h2>
 						<div class="profile-detail">
-							<h3>About</h3>
-							<p>Hi, my name is {{ profile.first_name }} {{ profile.last_name }}.<p>
-							<p>{{ profile.bio }}</p>
-							<p>I live in {{ profile.location }}.</p>
-							<p>My birthdate is {{ profile.birth_date }}.</p>
-							<p>And I like</p>
+							<h3 class="text-center">About</h3>
+							<p>{{ profile.about }}</p>
 						</div>
 					</div>
+				</div>
+				<div class="col-sm-1"></div>
+				<div class="list-container col-sm-8">
+					<h1>Liked posts</h1>
+					{% for post in posts %}
+					{{ post }}
+					{% endfor %}
 				</div>
 			</div>
 {% endblock %}

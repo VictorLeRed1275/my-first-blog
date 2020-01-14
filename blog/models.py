@@ -39,6 +39,11 @@ class PostComment(models.Model):
 
 	def __str__(self):
 		return self.text
+
+class Like(models.Model):
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='likes')
+    timestamp = models.DateTimeField(auto_now_add=True)
 	
 def user_pic_dir(instance, filename):
     return 'profile_pictures/user_{0}/{1}'.format(instance.user.id, filename)
@@ -47,12 +52,7 @@ def user_pic_dir(instance, filename):
 class Profile(models.Model):
 	profile_picture = models.ImageField(upload_to=user_pic_dir, default='../static/images/user.png')
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
-	first_name = models.CharField(max_length=30, null=True, blank=True, help_text='A maximum of 30 characters')
-	last_name = models.CharField(max_length=30, null=True, blank=True, help_text='A maximum of 30 characters')
-	bio = models.TextField(max_length=500, blank=True, help_text='A maximum of 500 characters')
-	location = models.CharField(max_length=30, blank=True, help_text='A maximum of 30 characters')
-	birth_date = models.DateField(null=True, blank=True, help_text='Format: YYYY-MM-DD.')
-	email_confirmed = models.BooleanField(default=False)
+	about = models.TextField(max_length=500, blank=True, help_text='A maximum of 500 characters')
 	
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
